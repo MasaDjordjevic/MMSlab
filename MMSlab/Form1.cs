@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using MMSlab.Views;
 
 namespace MMSlab
 {
@@ -14,7 +15,8 @@ namespace MMSlab
     {
 
         Models.Model model = new Models.Model();
-        private Views.IView simpleView, ycbcrView;
+        private IView simpleView, ycbcrView;
+        private IView currentView;
 
 
         public Form1()
@@ -26,24 +28,42 @@ namespace MMSlab
 
         private void loadComponents()
         {
-            this.simpleView = new Views.SimpleImageView();    
+            this.simpleView = new SimpleImageView();    
             this.simpleView.Location = new System.Drawing.Point(0, 0);
             this.simpleView.Name = "simple view";
             this.Controls.Add(this.simpleView);
 
-            this.ycbcrView = new Views.YcbCrView();
+            this.ycbcrView = new YcbCrView();
             this.ycbcrView.Location = new System.Drawing.Point(0, 0);
             this.ycbcrView.Name = "ycbcr view";            
             this.Controls.Add(this.ycbcrView);
-            this.ycbcrView.BringToFront();
 
         }
 
         private void loadImage()
         {
             this.model.SetBitmap("G:\\mob slike\\5.7. bekstvo\\CameraZOOM-20140706061246.jpg");
-            this.ycbcrView.Bitmap = this.model.GetBitmap();
-           
+            this.simpleView.Bitmap = this.model.GetBitmap();           
+        }
+
+        private void ycbcrToolStripMenuItem_CheckedChanged(object sender, EventArgs e)
+        {
+            if(ycbcrToolStripMenuItem.Checked)
+            {
+                this.setView(this.ycbcrView);
+            }
+            else
+            {
+                this.setView(this.simpleView);
+            }
+
+            this.currentView.Bitmap = this.model.GetBitmap();
+        }
+
+        private void setView(IView view)
+        {
+            this.currentView = view;
+            this.currentView.BringToFront();
         }
 
         private void loadToolStripMenuItem_Click(object sender, EventArgs e)
@@ -61,7 +81,7 @@ namespace MMSlab
                 {
                     this.model.SetBitmap(openFileDialog.FileName);                    
                     
-                    this.simpleView.Bitmap = this.model.GetBitmap();
+                    this.currentView.Bitmap = this.model.GetBitmap();
 
                 }
                 catch (Exception ex)

@@ -33,7 +33,7 @@
             this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.filtersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.kanalskeSlikeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ycbcrToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.brightnessFilterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.guassialBlurToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.contrastToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -49,32 +49,35 @@
             this.saveToolStripMenuItem,
             this.exitToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
+            this.fileToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
             this.fileToolStripMenuItem.Text = "File";
             // 
             // loadToolStripMenuItem
             // 
             this.loadToolStripMenuItem.Name = "loadToolStripMenuItem";
-            this.loadToolStripMenuItem.Size = new System.Drawing.Size(100, 22);
+            this.loadToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.L)));
+            this.loadToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
             this.loadToolStripMenuItem.Text = "Load";
             this.loadToolStripMenuItem.Click += new System.EventHandler(this.loadToolStripMenuItem_Click);
             // 
             // saveToolStripMenuItem
             // 
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(100, 22);
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
             this.saveToolStripMenuItem.Text = "Save";
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(100, 22);
+            this.exitToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.F4)));
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             // 
             // filtersToolStripMenuItem
             // 
             this.filtersToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.kanalskeSlikeToolStripMenuItem,
+            this.ycbcrToolStripMenuItem,
             this.brightnessFilterToolStripMenuItem,
             this.guassialBlurToolStripMenuItem,
             this.contrastToolStripMenuItem});
@@ -82,28 +85,31 @@
             this.filtersToolStripMenuItem.Size = new System.Drawing.Size(50, 20);
             this.filtersToolStripMenuItem.Text = "Filters";
             // 
-            // kanalskeSlikeToolStripMenuItem
+            // ycbcrToolStripMenuItem
             // 
-            this.kanalskeSlikeToolStripMenuItem.Name = "kanalskeSlikeToolStripMenuItem";
-            this.kanalskeSlikeToolStripMenuItem.Size = new System.Drawing.Size(179, 22);
-            this.kanalskeSlikeToolStripMenuItem.Text = "kanalske slike YcbCr";
+            this.ycbcrToolStripMenuItem.CheckOnClick = true;
+            this.ycbcrToolStripMenuItem.Name = "ycbcrToolStripMenuItem";
+            this.ycbcrToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.D)));
+            this.ycbcrToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
+            this.ycbcrToolStripMenuItem.Text = "YcbCr";
+            this.ycbcrToolStripMenuItem.CheckedChanged += new System.EventHandler(this.ycbcrToolStripMenuItem_CheckedChanged);
             // 
             // brightnessFilterToolStripMenuItem
             // 
             this.brightnessFilterToolStripMenuItem.Name = "brightnessFilterToolStripMenuItem";
-            this.brightnessFilterToolStripMenuItem.Size = new System.Drawing.Size(179, 22);
+            this.brightnessFilterToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
             this.brightnessFilterToolStripMenuItem.Text = "Brightness filter";
             // 
             // guassialBlurToolStripMenuItem
             // 
             this.guassialBlurToolStripMenuItem.Name = "guassialBlurToolStripMenuItem";
-            this.guassialBlurToolStripMenuItem.Size = new System.Drawing.Size(179, 22);
+            this.guassialBlurToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
             this.guassialBlurToolStripMenuItem.Text = "Guassial Blur";
             // 
             // contrastToolStripMenuItem
             // 
             this.contrastToolStripMenuItem.Name = "contrastToolStripMenuItem";
-            this.contrastToolStripMenuItem.Size = new System.Drawing.Size(179, 22);
+            this.contrastToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
             this.contrastToolStripMenuItem.Text = "Contrast";
             // 
             // optionsToolStripMenuItem
@@ -147,7 +153,7 @@
         private System.Windows.Forms.ToolStripMenuItem saveToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem filtersToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem kanalskeSlikeToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem ycbcrToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem brightnessFilterToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem guassialBlurToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem contrastToolStripMenuItem;
