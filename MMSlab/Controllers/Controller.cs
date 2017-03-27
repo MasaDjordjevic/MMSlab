@@ -20,14 +20,14 @@ namespace MMSlab.Controllers
         public void SetView(Views.IView view)
         {
             this.view = view;
-            this.view.Bitmap = this.model.GetBitmap();
+            this.view.Bitmap = this.model.Bitmap;
             this.view.BringToFront();
         }
 
         public void LoadImage(string fileLocation)
         {
-            this.model.SetBitmap(fileLocation);
-            this.view.Bitmap = this.model.GetBitmap();
+            this.model.LoadBitmap(fileLocation);
+            this.view.Bitmap = this.model.Bitmap;
         }
     }
 }

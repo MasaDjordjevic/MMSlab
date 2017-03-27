@@ -8,7 +8,8 @@ namespace MMSlab.Models
 {
     public interface IModel
     {
-        void SetBitmap(string fileLocation);
-        System.Drawing.Bitmap GetBitmap();
+        System.Drawing.Bitmap Bitmap { get; set; }
+        void LoadBitmap(string fileLocation);
+        
     }
 }

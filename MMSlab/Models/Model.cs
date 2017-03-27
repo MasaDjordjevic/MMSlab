@@ -9,16 +9,14 @@ namespace MMSlab.Models
 {
     public class Model : IModel
     {
-        Bitmap bitmap;
+        
+        public Bitmap Bitmap { get; set; }
 
-        public void SetBitmap(string fileLocation)
+        public void LoadBitmap(string fileLocation)
         {
-            this.bitmap = (Bitmap)Bitmap.FromFile(fileLocation);
+            this.Bitmap = (Bitmap)Bitmap.FromFile(fileLocation);
         }
 
-        public Bitmap GetBitmap()
-        {
-            return this.bitmap;
-        }
+        
     }
 }
