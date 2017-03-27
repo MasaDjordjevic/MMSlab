@@ -1,6 +1,6 @@
-﻿namespace MMSlab.Controls
+﻿namespace MMSlab.Views
 {
-    partial class test
+    partial class SimpleImageView
     {
         /// <summary> 
         /// Required designer variable.
@@ -30,12 +30,12 @@
         {
             this.SuspendLayout();
             // 
-            // test
+            // SimpleImageView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Name = "test";
-            this.Size = new System.Drawing.Size(369, 297);
+            this.Name = "SimpleImageView";
+            this.Size = new System.Drawing.Size(361, 352);
             this.ResumeLayout(false);
 
         }

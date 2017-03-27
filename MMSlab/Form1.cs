@@ -14,10 +14,31 @@ namespace MMSlab
     {
 
         Models.Model model = new Models.Model();
+        private Views.IView simpleView;
+
 
         public Form1()
         {
+            loadComponents();
+            loadImage();
             InitializeComponent();
+        }
+
+        private void loadComponents()
+        {
+            this.simpleView = new Views.SimpleImageView();                       
+           
+            this.simpleView.Location = new System.Drawing.Point(0, 0);
+            this.simpleView.Name = "simple view";
+
+            this.Controls.Add(this.simpleView);
+        }
+
+        private void loadImage()
+        {
+            this.model.SetBitmap("G:\\mob slike\\5.7. bekstvo\\CameraZOOM-20140706061246.jpg");
+            this.simpleView.Bitmap = this.model.GetBitmap();
+           
         }
 
         private void loadToolStripMenuItem_Click(object sender, EventArgs e)
@@ -35,7 +56,7 @@ namespace MMSlab
                 {
                     this.model.SetBitmap(openFileDialog.FileName);                    
                     
-                    this.test1.Bitmap = this.model.GetBitmap();
+                    this.simpleView.Bitmap = this.model.GetBitmap();
 
                 }
                 catch (Exception ex)

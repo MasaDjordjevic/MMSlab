@@ -8,14 +8,18 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace MMSlab.Controls
+namespace MMSlab.Views
 {
-    public partial class test : UserControl
+    public partial class SimpleImageView : IView
     {
 
+        #region Variables
         private Bitmap bitmap = null;
         private double zoom = 0.5;
-        public Bitmap Bitmap
+        #endregion
+
+        #region Properties
+        public override Bitmap Bitmap
         {
             get
             {
@@ -24,17 +28,16 @@ namespace MMSlab.Controls
 
             set
             {
-                if (value == null) return;
-                this.AutoScroll = true;
+                if (value == null) return;                
                 this.AutoScrollMinSize = new Size((int)(value.Width * zoom), (int)(value.Height * zoom));
                 this.bitmap = value;
-                Invalidate();
+                base.Invalidate();
             }
         }
+        #endregion
 
-        public test()
-        {
-            this.Dock = DockStyle.Fill;
+        public SimpleImageView()
+        {           
             InitializeComponent();
         }
 
