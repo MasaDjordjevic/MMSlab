@@ -7,7 +7,7 @@ using System.Drawing;
 
 namespace MMSlab.Models
 {
-    public class Model
+    public class Model : IModel
     {
         Bitmap bitmap;
 

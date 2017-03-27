@@ -14,9 +14,9 @@ namespace MMSlab
     public partial class Form1 : Form
     {
 
-        Models.Model model = new Models.Model();
+        Models.IModel model = new Models.Model();
         private IView simpleView, ycbcrView;
-        private IView currentView;
+        private Controllers.Controller controller;
 
 
         public Form1()
@@ -28,43 +28,30 @@ namespace MMSlab
 
         private void loadComponents()
         {
-            this.simpleView = new SimpleImageView();    
+            this.simpleView = new SimpleImageView();
             this.simpleView.Location = new System.Drawing.Point(0, 0);
             this.simpleView.Name = "simple view";
             this.Controls.Add(this.simpleView);
 
             this.ycbcrView = new YcbCrView();
             this.ycbcrView.Location = new System.Drawing.Point(0, 0);
-            this.ycbcrView.Name = "ycbcr view";            
+            this.ycbcrView.Name = "ycbcr view";
             this.Controls.Add(this.ycbcrView);
+
+            this.controller = new Controllers.Controller(this.model, this.simpleView);
 
         }
 
         private void loadImage()
         {
-            this.model.SetBitmap("G:\\mob slike\\5.7. bekstvo\\CameraZOOM-20140706061246.jpg");
-            this.simpleView.Bitmap = this.model.GetBitmap();           
+            this.controller.LoadImage("G:\\mob slike\\5.7. bekstvo\\CameraZOOM-20140706061246.jpg");
         }
 
         private void ycbcrToolStripMenuItem_CheckedChanged(object sender, EventArgs e)
         {
-            if(ycbcrToolStripMenuItem.Checked)
-            {
-                this.setView(this.ycbcrView);
-            }
-            else
-            {
-                this.setView(this.simpleView);
-            }
-
-            this.currentView.Bitmap = this.model.GetBitmap();
+            this.controller.SetView(ycbcrToolStripMenuItem.Checked ? this.ycbcrView : this.simpleView);       
         }
-
-        private void setView(IView view)
-        {
-            this.currentView = view;
-            this.currentView.BringToFront();
-        }
+        
 
         private void loadToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -79,9 +66,7 @@ namespace MMSlab
             {
                 try
                 {
-                    this.model.SetBitmap(openFileDialog.FileName);                    
-                    
-                    this.currentView.Bitmap = this.model.GetBitmap();
+                    this.controller.LoadImage(openFileDialog.FileName);
 
                 }
                 catch (Exception ex)
