@@ -10,7 +10,7 @@ using System.Windows.Forms;
 
 namespace MMSlab.Views
 {
-    public partial class SimpleImageView : IView
+    public partial class SimpleImageView : UserControl, IView
     {
 
         #region Variables
@@ -19,7 +19,7 @@ namespace MMSlab.Views
         #endregion
 
         #region Properties
-        public override Bitmap Bitmap
+        public Bitmap Bitmap
         {
             get
             {
@@ -36,8 +36,16 @@ namespace MMSlab.Views
         }
         #endregion
 
+        public new void BringToFront()
+        {
+            base.BringToFront();
+        }
+
         public SimpleImageView()
-        {           
+        {
+            this.Dock = DockStyle.Fill;
+            this.AutoScroll = true;
+            this.AutoSize = true;
             InitializeComponent();
         }
 

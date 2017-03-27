@@ -10,7 +10,7 @@ using System.Windows.Forms;
 
 namespace MMSlab.Views
 {
-    public partial class YcbCrView : IView
+    public partial class YcbCrView : UserControl, IView
     {
         #region Variables
         private Bitmap bitmap = null;
@@ -18,7 +18,7 @@ namespace MMSlab.Views
         #endregion
 
         #region Properties
-        public override Bitmap Bitmap
+        public Bitmap Bitmap
         {
             get
             {
@@ -35,8 +35,16 @@ namespace MMSlab.Views
         }
         #endregion
 
+        public new void BringToFront()
+        {
+            base.BringToFront();
+        }
+
         public YcbCrView()
         {
+            this.Dock = DockStyle.Fill;
+            this.AutoScroll = true;
+            this.AutoSize = true;
             InitializeComponent();
         }
 

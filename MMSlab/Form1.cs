@@ -29,18 +29,21 @@ namespace MMSlab
         private void loadComponents()
         {
             this.simpleView = new SimpleImageView();
-            this.simpleView.Location = new System.Drawing.Point(0, 0);
-            this.simpleView.Name = "simple view";
-            this.Controls.Add(this.simpleView);
+            UserControl simpleView = (UserControl)this.simpleView;
+            simpleView.Location = new System.Drawing.Point(0, 0);
+            simpleView.Name = "simple view";
+            Controls.Add(simpleView);
 
             this.ycbcrView = new YcbCrView();
-            this.ycbcrView.Location = new System.Drawing.Point(0, 0);
-            this.ycbcrView.Name = "ycbcr view";
-            this.Controls.Add(this.ycbcrView);
+            UserControl ycbcrView = (UserControl)this.ycbcrView;
+            ycbcrView.Location = new System.Drawing.Point(0, 0);
+            ycbcrView.Name = "ycbcr view";
+            Controls.Add(ycbcrView);
 
             this.controller = new Controllers.Controller(this.model, this.simpleView);
 
         }
+
 
         private void loadImage()
         {
