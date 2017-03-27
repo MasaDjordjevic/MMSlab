@@ -30,6 +30,11 @@ public class LollipopToggleText : CheckBox
     
     int PointAnimationNum = 4;
 
+    int toggleWidth = 47;
+    FontManager font = new FontManager();
+    Color stringColor = ColorTranslator.FromHtml("#999999");
+
+
     #endregion
     #region  Properties
 
@@ -65,14 +70,15 @@ public class LollipopToggleText : CheckBox
 
     protected override void OnResize(EventArgs e)
     {
-        Height = 19; Width = 47;
-        
+        Height = 19;
+        Width = toggleWidth + (int)CreateGraphics().MeasureString(Text, font.Roboto_Medium10).Width;
+
         RoundedRectangle = new GraphicsPath();
         int radius = 10;
-
+        int W = toggleWidth;
         RoundedRectangle.AddArc(11, 4, radius - 1, radius, 180, 90);
-        RoundedRectangle.AddArc(Width - 21, 4, radius - 1, radius, -90, 90);
-        RoundedRectangle.AddArc(Width - 21, Height - 15, radius - 1, radius, 0, 90);
+        RoundedRectangle.AddArc(W - 21, 4, radius - 1, radius, -90, 90);
+        RoundedRectangle.AddArc(W - 21, Height - 15, radius - 1, radius, 0, 90);
         RoundedRectangle.AddArc(11, Height - 15, radius - 1, radius, 90, 90);
 
         RoundedRectangle.CloseAllFigures();
@@ -82,7 +88,7 @@ public class LollipopToggleText : CheckBox
     #endregion
     public LollipopToggleText()
     {
-        Height = 19; Width = 47; DoubleBuffered = true;
+        DoubleBuffered = true;
         AnimationTimer.Tick += new EventHandler(AnimationTick);
     }
 
@@ -99,7 +105,10 @@ public class LollipopToggleText : CheckBox
         G.DrawPath(new Pen(Color.FromArgb(50, Enabled ? Checked ? EllipseBackColor : EnabledUnCheckedColor : EnabledUnCheckedColor)), RoundedRectangle);
 
         G.FillEllipse(new SolidBrush(Enabled ? Checked ? EllipseBackColor : Color.White : DisabledEllipseBackColor), PointAnimationNum, 0, 18, 18);
-        G.DrawEllipse(new Pen(Enabled ? Checked ? EllipseBorderBackColor : EnabledUnCheckedEllipseBorderColor : DisabledEllipseBorderBackColor), PointAnimationNum, 0, 18, 18);       
+        G.DrawEllipse(new Pen(Enabled ? Checked ? EllipseBorderBackColor : EnabledUnCheckedEllipseBorderColor : DisabledEllipseBorderBackColor), PointAnimationNum, 0, 18, 18);
+
+        //Toggle Text
+        G.DrawString(Text, font.Roboto_Medium10, new SolidBrush(stringColor), toggleWidth, 0);
     }
 
     void AnimationTick(object sender, EventArgs e)
