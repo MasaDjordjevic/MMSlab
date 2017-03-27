@@ -106,6 +106,12 @@
     <Compile Include="Views\SimpleImageView.Designer.cs">
       <DependentUpon>SimpleImageView.cs</DependentUpon>
     </Compile>
+    <Compile Include="Views\YcbCrView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Views\YcbCrView.Designer.cs">
+      <DependentUpon>YcbCrView.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>

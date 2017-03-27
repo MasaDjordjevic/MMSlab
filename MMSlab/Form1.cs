@@ -14,7 +14,7 @@ namespace MMSlab
     {
 
         Models.Model model = new Models.Model();
-        private Views.IView simpleView;
+        private Views.IView simpleView, ycbcrView;
 
 
         public Form1()
@@ -26,18 +26,23 @@ namespace MMSlab
 
         private void loadComponents()
         {
-            this.simpleView = new Views.SimpleImageView();                       
-           
+            this.simpleView = new Views.SimpleImageView();    
             this.simpleView.Location = new System.Drawing.Point(0, 0);
             this.simpleView.Name = "simple view";
-
             this.Controls.Add(this.simpleView);
+
+            this.ycbcrView = new Views.YcbCrView();
+            this.ycbcrView.Location = new System.Drawing.Point(0, 0);
+            this.ycbcrView.Name = "ycbcr view";            
+            this.Controls.Add(this.ycbcrView);
+            this.ycbcrView.BringToFront();
+
         }
 
         private void loadImage()
         {
             this.model.SetBitmap("G:\\mob slike\\5.7. bekstvo\\CameraZOOM-20140706061246.jpg");
-            this.simpleView.Bitmap = this.model.GetBitmap();
+            this.ycbcrView.Bitmap = this.model.GetBitmap();
            
         }
 
