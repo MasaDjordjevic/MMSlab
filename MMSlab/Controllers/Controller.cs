@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.Drawing.Imaging;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -39,5 +41,24 @@ namespace MMSlab.Controllers
             this.view.Bitmap = this.model.Bitmap;
             this.commonControls.status = bitmap.Width.ToString() + " x " + bitmap.Height.ToString() + "         " + (this.model.FileSize/1024).ToString() + "KB";
         }
+
+        public void BrightnessFilter()
+        {
+            Filters.Brightness(this.model.Bitmap, 40);
+            this.view.Bitmap = this.model.Bitmap;
+        }
+
+        public void ContrastFilter()
+        {
+            Filters.Contrast(this.model.Bitmap, 40);
+            this.view.Bitmap = this.model.Bitmap;
+        }
+
+        public void GaussianBlur()
+        {
+            Filters.GaussianBlur(this.model.Bitmap, 4);
+            this.view.Bitmap = this.model.Bitmap;
+        }
+
     }
 }

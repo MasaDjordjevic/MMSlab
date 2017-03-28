@@ -44,7 +44,7 @@ namespace MMSlab
 
         private void loadImage()
         {
-            this.controller.LoadImage("G:\\mob slike\\5.7. bekstvo\\CameraZOOM-20140706061246.jpg");
+            this.controller.LoadImage("G:\\mob slike\\5.7. bekstvo\\testSlika.jpg");
         }
 
         private void ycbcrToolStripMenuItem_CheckedChanged(object sender, EventArgs e)
@@ -57,6 +57,21 @@ namespace MMSlab
             this.controller = new Controllers.Controller(this.model, this.simpleView);
             this.controller.commonControls = new CommonControls(this.statusLabel, this.progressBar);
             loadImage();
+        }
+
+        private void brightnessFilterToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.controller.BrightnessFilter();
+        }
+
+        private void contrastToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.controller.ContrastFilter();
+        }
+
+        private void guassialBlurToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.controller.GaussianBlur();
         }
 
         private void loadToolStripMenuItem_Click(object sender, EventArgs e)

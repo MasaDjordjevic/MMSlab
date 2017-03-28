@@ -104,18 +104,21 @@
             this.brightnessFilterToolStripMenuItem.Name = "brightnessFilterToolStripMenuItem";
             this.brightnessFilterToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
             this.brightnessFilterToolStripMenuItem.Text = "Brightness filter";
+            this.brightnessFilterToolStripMenuItem.Click += new System.EventHandler(this.brightnessFilterToolStripMenuItem_Click);
             // 
             // guassialBlurToolStripMenuItem
             // 
             this.guassialBlurToolStripMenuItem.Name = "guassialBlurToolStripMenuItem";
             this.guassialBlurToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
             this.guassialBlurToolStripMenuItem.Text = "Guassial Blur";
+            this.guassialBlurToolStripMenuItem.Click += new System.EventHandler(this.guassialBlurToolStripMenuItem_Click);
             // 
             // contrastToolStripMenuItem
             // 
             this.contrastToolStripMenuItem.Name = "contrastToolStripMenuItem";
             this.contrastToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
             this.contrastToolStripMenuItem.Text = "Contrast";
+            this.contrastToolStripMenuItem.Click += new System.EventHandler(this.contrastToolStripMenuItem_Click);
             // 
             // optionsToolStripMenuItem
             // 
