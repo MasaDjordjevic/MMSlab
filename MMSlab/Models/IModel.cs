@@ -9,6 +9,7 @@ namespace MMSlab.Models
     public interface IModel
     {
         System.Drawing.Bitmap Bitmap { get; set; }
+        long FileSize { get; set; }
         void LoadBitmap(string fileLocation);
         
     }

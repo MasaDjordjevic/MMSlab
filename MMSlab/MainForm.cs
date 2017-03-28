@@ -11,7 +11,7 @@ using MMSlab.Views;
 
 namespace MMSlab
 {
-    public partial class Form1 : Form
+    public partial class MainForm : Form
     {
 
         Models.IModel model = new Models.Model();
@@ -19,10 +19,10 @@ namespace MMSlab
         private Controllers.Controller controller;
 
 
-        public Form1()
+        public MainForm()
         {
             loadComponents();
-            loadImage();
+            
             InitializeComponent();
         }
 
@@ -39,9 +39,6 @@ namespace MMSlab
             ycbcrView.Location = new System.Drawing.Point(0, 0);
             ycbcrView.Name = "ycbcr view";
             Controls.Add(ycbcrView);
-
-            this.controller = new Controllers.Controller(this.model, this.simpleView);
-
         }
 
 
@@ -54,7 +51,13 @@ namespace MMSlab
         {
             this.controller.SetView(ycbcrToolStripMenuItem.Checked ? this.ycbcrView : this.simpleView);       
         }
-        
+
+        private void MainForm_Load(object sender, EventArgs e)
+        {
+            this.controller = new Controllers.Controller(this.model, this.simpleView);
+            this.controller.commonControls = new CommonControls(this.statusLabel, this.progressBar);
+            loadImage();
+        }
 
         private void loadToolStripMenuItem_Click(object sender, EventArgs e)
         {
