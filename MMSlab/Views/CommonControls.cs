@@ -22,9 +22,10 @@ namespace MMSlab.Views
             get { return this.progressBar.Value; }
             set
             {
-                if (this.progressBar != null)
-                {
+                if (this.progressBar != null && this.progressBar.Value != value)
+                {                    
                     this.progressBar.Value = value;
+                    //this.statusLabel.Text += value.ToString();
                 }
             }
         }

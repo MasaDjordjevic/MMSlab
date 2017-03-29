@@ -37,14 +37,16 @@
             this.filtersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ycbcrToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.brightnessFilterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.guassialBlurToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.guassianBlurToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.contrastToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.win32CoreToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.statusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.progressBar = new LollipopProgressBar();
-            this.textBox1 = new MMSlab.Controls.TextBox();
+            this.textBoxPlaceholder1 = new MMSlab.Controls.TextBoxPlaceholder();
+            this.guassianBlurInplaceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.statusStrip.SuspendLayout();
             this.SuspendLayout();
@@ -95,7 +97,8 @@
             this.filtersToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.ycbcrToolStripMenuItem,
             this.brightnessFilterToolStripMenuItem,
-            this.guassialBlurToolStripMenuItem,
+            this.guassianBlurToolStripMenuItem,
+            this.guassianBlurInplaceToolStripMenuItem,
             this.contrastToolStripMenuItem});
             this.filtersToolStripMenuItem.Name = "filtersToolStripMenuItem";
             this.filtersToolStripMenuItem.Size = new System.Drawing.Size(50, 20);
@@ -106,36 +109,48 @@
             this.ycbcrToolStripMenuItem.CheckOnClick = true;
             this.ycbcrToolStripMenuItem.Name = "ycbcrToolStripMenuItem";
             this.ycbcrToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.D)));
-            this.ycbcrToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
+            this.ycbcrToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
             this.ycbcrToolStripMenuItem.Text = "YcbCr";
             this.ycbcrToolStripMenuItem.CheckedChanged += new System.EventHandler(this.ycbcrToolStripMenuItem_CheckedChanged);
             // 
             // brightnessFilterToolStripMenuItem
             // 
             this.brightnessFilterToolStripMenuItem.Name = "brightnessFilterToolStripMenuItem";
-            this.brightnessFilterToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
+            this.brightnessFilterToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
             this.brightnessFilterToolStripMenuItem.Text = "Brightness filter";
             this.brightnessFilterToolStripMenuItem.Click += new System.EventHandler(this.brightnessFilterToolStripMenuItem_Click);
             // 
-            // guassialBlurToolStripMenuItem
+            // guassianBlurToolStripMenuItem
             // 
-            this.guassialBlurToolStripMenuItem.Name = "guassialBlurToolStripMenuItem";
-            this.guassialBlurToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
-            this.guassialBlurToolStripMenuItem.Text = "Guassial Blur";
-            this.guassialBlurToolStripMenuItem.Click += new System.EventHandler(this.guassialBlurToolStripMenuItem_Click);
+            this.guassianBlurToolStripMenuItem.Name = "guassianBlurToolStripMenuItem";
+            this.guassianBlurToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
+            this.guassianBlurToolStripMenuItem.Text = "Guassian Blur";
+            this.guassianBlurToolStripMenuItem.Click += new System.EventHandler(this.guassialBlurToolStripMenuItem_Click);
             // 
             // contrastToolStripMenuItem
             // 
             this.contrastToolStripMenuItem.Name = "contrastToolStripMenuItem";
-            this.contrastToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
+            this.contrastToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
             this.contrastToolStripMenuItem.Text = "Contrast";
             this.contrastToolStripMenuItem.Click += new System.EventHandler(this.contrastToolStripMenuItem_Click);
             // 
             // optionsToolStripMenuItem
             // 
+            this.optionsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.win32CoreToolStripMenuItem});
             this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
             this.optionsToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
             this.optionsToolStripMenuItem.Text = "Options";
+            // 
+            // win32CoreToolStripMenuItem
+            // 
+            this.win32CoreToolStripMenuItem.Checked = true;
+            this.win32CoreToolStripMenuItem.CheckOnClick = true;
+            this.win32CoreToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.win32CoreToolStripMenuItem.Name = "win32CoreToolStripMenuItem";
+            this.win32CoreToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.win32CoreToolStripMenuItem.Text = "Win32 core";
+            this.win32CoreToolStripMenuItem.Click += new System.EventHandler(this.win32CoreToolStripMenuItem_Click);
             // 
             // menuStrip1
             // 
@@ -178,21 +193,33 @@
             this.progressBar.Text = "lollipopProgressBar1";
             this.progressBar.Value = 10;
             // 
-            // textBox1
+            // textBoxPlaceholder1
             // 
-            this.textBox1.FontColor = "#999999";
-            this.textBox1.Location = new System.Drawing.Point(336, 0);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Placeholder = "Enter text here";
-            this.textBox1.Size = new System.Drawing.Size(172, 29);
-            this.textBox1.TabIndex = 3;
+            this.textBoxPlaceholder1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBoxPlaceholder1.ForeColor = System.Drawing.Color.Gray;
+            this.textBoxPlaceholder1.Location = new System.Drawing.Point(205, 2);
+            this.textBoxPlaceholder1.MaxLength = 3;
+            this.textBoxPlaceholder1.Name = "textBoxPlaceholder1";
+            this.textBoxPlaceholder1.Placeholder = "Weight";
+            this.textBoxPlaceholder1.PlaceholderColor = System.Drawing.Color.Gray;
+            this.textBoxPlaceholder1.Size = new System.Drawing.Size(42, 20);
+            this.textBoxPlaceholder1.TabIndex = 3;
+            this.textBoxPlaceholder1.Text = "Weight";
+            this.textBoxPlaceholder1.KeyUp += new System.Windows.Forms.KeyEventHandler(this.textBoxPlaceholder1_KeyUp);
+            // 
+            // guassianBlurInplaceToolStripMenuItem
+            // 
+            this.guassianBlurInplaceToolStripMenuItem.Name = "guassianBlurInplaceToolStripMenuItem";
+            this.guassianBlurInplaceToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
+            this.guassianBlurInplaceToolStripMenuItem.Text = "Guassian Blur inplace";
+            this.guassianBlurInplaceToolStripMenuItem.Click += new System.EventHandler(this.guassianBlurInplaceToolStripMenuItem_Click);
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1129, 605);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.textBoxPlaceholder1);
             this.Controls.Add(this.progressBar);
             this.Controls.Add(this.statusStrip);
             this.Controls.Add(this.menuStrip1);
@@ -219,15 +246,17 @@
         private System.Windows.Forms.ToolStripMenuItem filtersToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem ycbcrToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem brightnessFilterToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem guassialBlurToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem guassianBlurToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem contrastToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem optionsToolStripMenuItem;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.StatusStrip statusStrip;
         private System.Windows.Forms.ToolStripStatusLabel statusLabel;
         private LollipopProgressBar progressBar;
-        private Controls.TextBox textBox1;
+        private Controls.TextBoxPlaceholder textBoxPlaceholder1;
+        private System.Windows.Forms.ToolStripMenuItem win32CoreToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem reloadToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem guassianBlurInplaceToolStripMenuItem;
     }
 }
 

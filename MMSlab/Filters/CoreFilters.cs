@@ -6,14 +6,27 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MMSlab
-{  
-    
-    public static class Filters
+namespace MMSlab.Filters
+{      
+    public class CoreFilters : IFilter
     {
-       
+        private Views.CommonControls commonControls;
 
-        public static bool GaussianBlur(Bitmap b, int nWeight = 4 /* default to 4*/)
+        public CoreFilters(Views.CommonControls commonControls)
+        {
+            this.commonControls = commonControls;
+        }
+        public bool GaussianBlurInplace(Bitmap b, int nWeight = 4)
+        {
+            return this.GaussianBlurAlg(b, nWeight, true);
+        }
+
+        public bool GaussianBlur(Bitmap b, int nWeight = 4)
+        {
+            return this.GaussianBlurAlg(b, nWeight, false);
+        }
+
+        public bool GaussianBlurAlg(Bitmap b, int nWeight = 4, bool inplace = false)
         {
             ConvMatrix m = new ConvMatrix();
             m.SetAll(1);
@@ -21,9 +34,9 @@ namespace MMSlab
             m.TopMid = m.MidLeft = m.MidRight = m.BottomMid = 2;
             m.Factor = nWeight + 12;
 
-            return ConvFilters.Conv3x3(b, m);
+            return ConvFilters.Conv3x3(b, m, inplace);
         }
-        public static bool Brightness(Bitmap b, int nBrightness)
+        public bool Brightness(Bitmap b, int nBrightness)
         {
             if (nBrightness < -255 || nBrightness > 255)
                 return false;
@@ -65,7 +78,7 @@ namespace MMSlab
             return true;
         }
 
-        public static bool Contrast(Bitmap b, sbyte nContrast)
+        public bool Contrast(Bitmap b, int nContrast)
         {
             if (nContrast < -100) return false;
             if (nContrast > 100) return false;
@@ -81,7 +94,9 @@ namespace MMSlab
 
             int stride = bmData.Stride;
             System.IntPtr Scan0 = bmData.Scan0;
-
+            commonControls.progress = 0;
+            double step = 100.0 / b.Height;
+            double progress = 0;
             unsafe
             {
                 byte* p = (byte*)(void*)Scan0;
@@ -92,33 +107,20 @@ namespace MMSlab
                 {
                     for (int x = 0; x < b.Width; ++x)
                     {
-                        blue = p[0];
-                        green = p[1];
-                        red = p[2];
-
-                        pixel = red / 255.0;
-                        pixel -= 0.5;
-                        pixel *= contrast;
-                        pixel += 0.5;
-                        pixel *= 255;
+                        //red
+                        pixel = ((((p[2] / 255.0) - 0.5) * contrast) + 0.5) * 255.0;
                         if (pixel < 0) pixel = 0;
                         if (pixel > 255) pixel = 255;
                         p[2] = (byte)pixel;
 
-                        pixel = green / 255.0;
-                        pixel -= 0.5;
-                        pixel *= contrast;
-                        pixel += 0.5;
-                        pixel *= 255;
+                        //green
+                        pixel = ((((p[1] / 255.0) - 0.5) * contrast) + 0.5) * 255.0;
                         if (pixel < 0) pixel = 0;
                         if (pixel > 255) pixel = 255;
                         p[1] = (byte)pixel;
 
-                        pixel = blue / 255.0;
-                        pixel -= 0.5;
-                        pixel *= contrast;
-                        pixel += 0.5;
-                        pixel *= 255;
+                        //blue
+                        pixel = ((((p[0] / 255.0) - 0.5) * contrast) + 0.5) * 255.0;
                         if (pixel < 0) pixel = 0;
                         if (pixel > 255) pixel = 255;
                         p[0] = (byte)pixel;
@@ -126,6 +128,9 @@ namespace MMSlab
                         p += 3;
                     }
                     p += nOffset;
+                    progress += step;
+                    commonControls.progress = (int) (progress);
+
                 }
             }
 

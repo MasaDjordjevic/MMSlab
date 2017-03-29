@@ -24,7 +24,7 @@ namespace MMSlab
 
     public static class ConvFilters
     {
-        public static bool Conv3x3(Bitmap b, ConvMatrix m)
+        public static bool Conv3x3(Bitmap b, ConvMatrix m, bool inplace = false)
         {
             // Avoid divide by zero errors
             if (0 == m.Factor) return false;
@@ -43,7 +43,7 @@ namespace MMSlab
             unsafe
             {
                 byte* p = (byte*)(void*)Scan0;
-                byte* pSrc = (byte*)(void*)SrcScan0;
+                byte* pSrc = inplace ? (byte*)(void*)Scan0 : (byte*)(void*)SrcScan0;
 
                 int nOffset = stride - b.Width * 3;
                 int nWidth = b.Width - 2;

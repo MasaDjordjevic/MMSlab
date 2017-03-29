@@ -5,6 +5,7 @@ using System.Drawing.Imaging;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace MMSlab.Controllers
 {
@@ -12,14 +13,33 @@ namespace MMSlab.Controllers
     {
         private Models.IModel model;
         private Views.IView view;
+        private delegate bool currentFilterDelegate(Bitmap b, int wight);
+        private currentFilterDelegate currentFilterFunction;
+        public Options options { get; set; }
+        private Filters.IFilter currentFilter;
+        
 
         public Views.CommonControls commonControls { get; set; }
 
-        public Controller(Models.IModel model, Views.IView view)
+        public Controller(Models.IModel model, Views.IView view, Views.CommonControls commonControls)
         {
             this.model = model;
             this.view = view;
             this.view.BringToFront();
+            this.commonControls = commonControls;
+            this.currentFilter = new Filters.CoreFilters(this.commonControls);
+        }
+
+        public void SetMode()
+        {
+            if(this.options.CoreMode)
+            {
+                this.currentFilter = new Filters.CoreFilters(this.commonControls);
+            }
+            else
+            {
+                this.currentFilter = new Filters.SimpleFilters(this.commonControls);
+            }
         }
 
         public void SetView(Views.IView view)
@@ -52,19 +72,41 @@ namespace MMSlab.Controllers
 
         public void BrightnessFilter()
         {
-            Filters.Brightness(this.model.Bitmap, 40);
+            this.currentFilter.Brightness(this.model.Bitmap, 40);
+            this.currentFilterFunction = this.currentFilter.Brightness;
             this.view.Bitmap = this.model.Bitmap;
         }
 
         public void ContrastFilter()
         {
-            Filters.Contrast(this.model.Bitmap, 40);
+            this.currentFilter.Contrast(this.model.Bitmap, 40);
+            this.currentFilterFunction = this.currentFilter.Contrast;
             this.view.Bitmap = this.model.Bitmap;
         }
 
-        public void GaussianBlur()
+        public void GaussianBlur(bool inplace = false)
+        {            
+            if(inplace)
+            {
+                this.currentFilterFunction = this.currentFilter.GaussianBlurInplace;
+            }
+            else
+            {
+                this.currentFilterFunction = this.currentFilter.GaussianBlur;
+
+            }
+            this.currentFilterFunction(this.model.Bitmap, 4);
+            this.view.Bitmap = this.model.Bitmap;
+        }
+
+        public void WeightChangedRedo()
         {
-            Filters.GaussianBlur(this.model.Bitmap, 4);
+            if(this.currentFilter == null)
+            {
+                MessageBox.Show("Select filter first");
+                return;
+            }
+            this.currentFilterFunction(this.model.Bitmap, this.options.Weight);
             this.view.Bitmap = this.model.Bitmap;
         }
 

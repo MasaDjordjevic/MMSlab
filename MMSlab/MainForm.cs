@@ -17,7 +17,7 @@ namespace MMSlab
         Models.IModel model = new Models.Model();
         private IView simpleView, ycbcrView;
         private Controllers.Controller controller;
-
+        private Options options;
 
         public MainForm()
         {
@@ -54,8 +54,9 @@ namespace MMSlab
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-            this.controller = new Controllers.Controller(this.model, this.simpleView);
-            this.controller.commonControls = new CommonControls(this.statusLabel, this.progressBar);
+            this.controller = new Controllers.Controller(this.model, this.simpleView, new CommonControls(this.statusLabel, this.progressBar));
+            this.options = new Options(this.controller);
+            this.controller.options = this.options;
             loadImage();
         }
 
@@ -74,11 +75,51 @@ namespace MMSlab
             this.controller.GaussianBlur();
         }
 
+        private void textBoxPlaceholder1_KeyUp(object sender, KeyEventArgs e)
+        {
+            if ((e.KeyCode == Keys.R || e.KeyCode == Keys.A) && textBoxPlaceholder1.Text.Length > 0)
+            {
+                textBoxPlaceholder1.Text = textBoxPlaceholder1.Text.Remove(textBoxPlaceholder1.Text.Length - 1);
+                int val;
+                try
+                {
+                    val = Convert.ToInt32(textBoxPlaceholder1.Text);
+                }
+                catch(Exception ex)
+                {
+                    MessageBox.Show("Enter a number");
+                    textBoxPlaceholder1.Text = "";
+                    return;
+                }
+
+                if(e.KeyCode == Keys.A)
+                {
+                    this.controller.ReloadImage();
+                }
+
+                this.options.Weight = val;
+                textBoxPlaceholder1.SelectionStart = textBoxPlaceholder1.Text.Length;
+                textBoxPlaceholder1.SelectionLength = 0;
+                return;
+            }
+        }
+
+        private void win32CoreToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.options.CoreMode = !this.options.CoreMode;
+        }
+
         private void reloadToolStripMenuItem_Click(object sender, EventArgs e)
         {
             this.controller.ReloadImage();
             this.textBoxPlaceholder1.Text = "";
         }
+
+        private void guassianBlurInplaceToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.controller.GaussianBlur(true);
+        }
+
         private void loadToolStripMenuItem_Click(object sender, EventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
