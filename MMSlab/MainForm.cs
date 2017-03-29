@@ -49,7 +49,8 @@ namespace MMSlab
 
         private void ycbcrToolStripMenuItem_CheckedChanged(object sender, EventArgs e)
         {
-            this.controller.SetView(ycbcrToolStripMenuItem.Checked ? this.ycbcrView : this.simpleView);       
+            this.controller.SetView(ycbcrToolStripMenuItem.Checked ? this.ycbcrView : this.simpleView);
+            this.trackBar1.Enabled = !ycbcrToolStripMenuItem.Checked;
         }
 
         private void MainForm_Load(object sender, EventArgs e)
@@ -63,16 +64,19 @@ namespace MMSlab
         private void brightnessFilterToolStripMenuItem_Click(object sender, EventArgs e)
         {
             this.controller.BrightnessFilter();
+            this.textBoxPlaceholder1.Visible = true;
         }
 
         private void contrastToolStripMenuItem_Click(object sender, EventArgs e)
         {
             this.controller.ContrastFilter();
+            this.textBoxPlaceholder1.Visible = true;
         }
 
         private void guassialBlurToolStripMenuItem_Click(object sender, EventArgs e)
         {
             this.controller.GaussianBlur();
+            this.textBoxPlaceholder1.Visible = true;
         }
 
         private void textBoxPlaceholder1_KeyUp(object sender, KeyEventArgs e)
@@ -138,6 +142,11 @@ namespace MMSlab
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void trackBar1_ValueChanged(object sender, EventArgs e)
+        {
+            this.options.Zoom = (double)trackBar1.Value / 10.0;
         }
 
         private void loadToolStripMenuItem_Click(object sender, EventArgs e)

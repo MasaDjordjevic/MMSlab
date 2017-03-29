@@ -15,9 +15,9 @@ namespace MMSlab.Views
 
         #region Variables
         private Bitmap bitmap = null;
-        private double zoom = 0.5;
         #endregion
 
+        public double Zoom { get; set; }
         #region Properties
         public Bitmap Bitmap
         {
@@ -29,7 +29,7 @@ namespace MMSlab.Views
             set
             {
                 if (value == null) return;                
-                this.AutoScrollMinSize = new Size((int)(value.Width * zoom), (int)(value.Height * zoom));
+                this.AutoScrollMinSize = new Size((int)(value.Width * Zoom), (int)(value.Height * Zoom));
                 this.bitmap = value;
                 base.Invalidate();
             }
@@ -46,6 +46,7 @@ namespace MMSlab.Views
             this.Dock = DockStyle.Fill;
             this.AutoScroll = true;
             this.AutoSize = true;
+            this.Zoom = 1;
             InitializeComponent();
         }
 
@@ -54,7 +55,7 @@ namespace MMSlab.Views
             var g = pevent.Graphics;
             if (this.Bitmap != null)
             {
-                g.DrawImage(this.Bitmap, new Rectangle(this.AutoScrollPosition.X, this.AutoScrollPosition.Y, (int)(this.Bitmap.Width * zoom), (int)(this.Bitmap.Height * zoom)));
+                g.DrawImage(this.Bitmap, new Rectangle(this.AutoScrollPosition.X, this.AutoScrollPosition.Y, (int)(this.Bitmap.Width * Zoom), (int)(this.Bitmap.Height * Zoom)));
             }
 
         }

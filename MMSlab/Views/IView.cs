@@ -9,6 +9,7 @@ namespace MMSlab.Views
     public interface IView
     {
         System.Drawing.Bitmap Bitmap { get; set; }
+        double Zoom { get; set; }
         void BringToFront();
     }
 }

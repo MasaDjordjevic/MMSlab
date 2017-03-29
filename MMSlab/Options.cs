@@ -21,6 +21,22 @@ namespace MMSlab
                 this.controller.WeightChangedRedo();
             }
         }
+
+        private double zoom;
+        public double Zoom
+        {
+            get
+            {
+                return this.zoom;
+            }
+            set
+            {
+                this.zoom = value;
+                this.controller.ZoomChanged();
+            }
+        }
+
+
         private bool coreMode = true;
         public bool CoreMode
         {

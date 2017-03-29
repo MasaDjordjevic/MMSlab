@@ -41,6 +41,9 @@ namespace MMSlab.Views
             }
         }
         #endregion
+        //unused
+        public double Zoom { get; set; }
+
 
         public new void BringToFront()
         {

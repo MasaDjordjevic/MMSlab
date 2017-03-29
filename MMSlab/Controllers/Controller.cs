@@ -110,5 +110,11 @@ namespace MMSlab.Controllers
             this.view.Bitmap = this.model.Bitmap;
         }
 
+        public void ZoomChanged()
+        {
+            this.view.Zoom = this.options.Zoom;
+            this.view.Bitmap = this.model.Bitmap;
+        }
+
     }
 }
