@@ -16,6 +16,8 @@ namespace MMSlab.Controls
         private string placeholder = "Enter text here...";
         private Color placeholderColor = Color.Gray;
         private Color foreColor;
+
+
         public string Placeholder
         {
             get
@@ -41,13 +43,14 @@ namespace MMSlab.Controls
                 this.ForeColor = this.placeholderColor;
             }
         }
-        
 
+        public string Tooltip { get; set; }
 
         public TextBoxPlaceholder()
         {
             this.Text = this.placeholder;
             this.Enter += new System.EventHandler(this.RemovePlaceholder);
+            this.Enter += new System.EventHandler(this.ShowTooltip);
             this.Leave += new System.EventHandler(this.AddPlaceholder);
             
             InitializeComponent();
@@ -57,6 +60,12 @@ namespace MMSlab.Controls
         protected override void OnPaint(PaintEventArgs pe)
         {
             base.OnPaint(pe);
+        }
+
+        public void ShowTooltip(object sender, EventArgs e)
+        {
+            ToolTip tt = new ToolTip();
+            tt.Show(this.Tooltip, this, 0, 0, 2000);
         }
 
         public void RemovePlaceholder(object sender, EventArgs e)

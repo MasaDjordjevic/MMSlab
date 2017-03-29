@@ -101,7 +101,7 @@ namespace MMSlab.Controllers
 
         public void WeightChangedRedo()
         {
-            if(this.currentFilter == null)
+            if(this.currentFilterFunction == null)
             {
                 MessageBox.Show("Select filter first");
                 return;
