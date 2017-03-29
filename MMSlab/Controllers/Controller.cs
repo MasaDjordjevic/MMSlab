@@ -29,9 +29,17 @@ namespace MMSlab.Controllers
             this.view.BringToFront();
         }        
 
+        
+
         public void LoadImage(string fileLocation)
         {
             this.model.LoadBitmap(fileLocation);
+            this.SetImage(this.model.Bitmap);
+        }
+
+        public void ReloadImage()
+        {
+            this.model.LoadBitmap(this.model.FileLocation);
             this.SetImage(this.model.Bitmap);
         }
 

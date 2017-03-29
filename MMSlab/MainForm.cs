@@ -74,6 +74,11 @@ namespace MMSlab
             this.controller.GaussianBlur();
         }
 
+        private void reloadToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.controller.ReloadImage();
+            this.textBoxPlaceholder1.Text = "";
+        }
         private void loadToolStripMenuItem_Click(object sender, EventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();

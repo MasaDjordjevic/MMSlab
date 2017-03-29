@@ -10,6 +10,7 @@ namespace MMSlab.Models
     {
         System.Drawing.Bitmap Bitmap { get; set; }
         long FileSize { get; set; }
+        string FileLocation { get; set; }
         void LoadBitmap(string fileLocation);
         
     }
