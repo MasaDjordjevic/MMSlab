@@ -16,36 +16,35 @@ namespace MMSlab.Filters
             this.commonControls = commonControls;
         }
 
-        private byte fixByte(int x)
+        private static byte fixByte(int x)
         {
             return (byte)Math.Max(0, Math.Min(255, x));
         }
 
-        private Color newColor(int r, int g, int b)
+        public static Color newColor(int r, int g, int b)
         {
             return Color.FromArgb(fixByte(r), fixByte(g), fixByte(b));
         }
 
-        public bool GaussianBlur(Bitmap b, int nWeight = 4)
+        public bool GaussianBlurArg(Bitmap b, int nWeight = 4, bool inplace = false)
         {
             ConvMatrix m = new ConvMatrix();
             m.SetAll(1);
             m.Pixel = nWeight;
             m.TopMid = m.MidLeft = m.MidRight = m.BottomMid = 2;
             m.Factor = nWeight + 12;
-            return true;
-            //return ConvFilters.Conv3x3(b, m);
+
+            return ConvFilters.Conv3x3Safe(b, m, inplace);
+        }
+
+        public bool GaussianBlur(Bitmap b, int nWeight = 4)
+        {
+            return this.GaussianBlurArg(b, nWeight, false);
         }
 
         public bool GaussianBlurInplace(Bitmap b, int nWeight = 4)
         {
-            ConvMatrix m = new ConvMatrix();
-            m.SetAll(1);
-            m.Pixel = nWeight;
-            m.TopMid = m.MidLeft = m.MidRight = m.BottomMid = 2;
-            m.Factor = nWeight + 12;
-            return true;
-            //return ConvFilters.Conv3x3(b, m);
+            return this.GaussianBlurArg(b, nWeight, true);
         }
         public bool Brightness(Bitmap b, int nBrightness)
         {
@@ -61,12 +60,12 @@ namespace MMSlab.Filters
                 for (int x = 0; x < b.Width; ++x)
                 {
                     Color c = b.GetPixel(x, y);
-                    b.SetPixel(x, y, newColor(c.R + nBrightness, c.G + nBrightness, c.B + nBrightness));                    
+                    b.SetPixel(x, y, newColor(c.R + nBrightness, c.G + nBrightness, c.B + nBrightness));
                 }
                 progress += step;
                 commonControls.progress = (int)(progress);
             }
-           
+
 
             return true;
         }
@@ -88,8 +87,8 @@ namespace MMSlab.Filters
                 for (int x = 0; x < b.Width; ++x)
                 {
                     Color c = b.GetPixel(x, y);
-                    int red, green, blue;                    
-                    red = (int)(((((c.R/ 255.0) - 0.5) * contrast) +0.5) *255.0);
+                    int red, green, blue;
+                    red = (int)(((((c.R / 255.0) - 0.5) * contrast) + 0.5) * 255.0);
                     green = (int)(((((c.G / 255.0) - 0.5) * contrast) + 0.5) * 255.0);
                     blue = (int)(((((c.B / 255.0) - 0.5) * contrast) + 0.5) * 255.0);
 
@@ -102,5 +101,9 @@ namespace MMSlab.Filters
             return true;
         }
 
+
+
+
+       
     }
 }

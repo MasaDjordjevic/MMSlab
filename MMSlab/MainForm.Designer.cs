@@ -38,6 +38,7 @@
             this.ycbcrToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.brightnessFilterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.guassianBlurToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.guassianBlurInplaceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.contrastToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.win32CoreToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -46,7 +47,6 @@
             this.statusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.progressBar = new LollipopProgressBar();
             this.textBoxPlaceholder1 = new MMSlab.Controls.TextBoxPlaceholder();
-            this.guassianBlurInplaceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.statusStrip.SuspendLayout();
             this.SuspendLayout();
@@ -67,7 +67,7 @@
             // 
             this.loadToolStripMenuItem.Name = "loadToolStripMenuItem";
             this.loadToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.L)));
-            this.loadToolStripMenuItem.Size = new System.Drawing.Size(151, 22);
+            this.loadToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.loadToolStripMenuItem.Text = "Load";
             this.loadToolStripMenuItem.Click += new System.EventHandler(this.loadToolStripMenuItem_Click);
             // 
@@ -75,22 +75,24 @@
             // 
             this.reloadToolStripMenuItem.Name = "reloadToolStripMenuItem";
             this.reloadToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.R)));
-            this.reloadToolStripMenuItem.Size = new System.Drawing.Size(151, 22);
+            this.reloadToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.reloadToolStripMenuItem.Text = "Reload";
             this.reloadToolStripMenuItem.Click += new System.EventHandler(this.reloadToolStripMenuItem_Click);
             // 
             // saveToolStripMenuItem
             // 
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(151, 22);
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.saveToolStripMenuItem.Text = "Save";
+            this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
             this.exitToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.F4)));
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(151, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.exitToolStripMenuItem.Text = "Exit";
+            this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
             // filtersToolStripMenuItem
             // 
@@ -127,6 +129,13 @@
             this.guassianBlurToolStripMenuItem.Text = "Guassian Blur";
             this.guassianBlurToolStripMenuItem.Click += new System.EventHandler(this.guassialBlurToolStripMenuItem_Click);
             // 
+            // guassianBlurInplaceToolStripMenuItem
+            // 
+            this.guassianBlurInplaceToolStripMenuItem.Name = "guassianBlurInplaceToolStripMenuItem";
+            this.guassianBlurInplaceToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
+            this.guassianBlurInplaceToolStripMenuItem.Text = "Guassian Blur inplace";
+            this.guassianBlurInplaceToolStripMenuItem.Click += new System.EventHandler(this.guassianBlurInplaceToolStripMenuItem_Click);
+            // 
             // contrastToolStripMenuItem
             // 
             this.contrastToolStripMenuItem.Name = "contrastToolStripMenuItem";
@@ -148,7 +157,7 @@
             this.win32CoreToolStripMenuItem.CheckOnClick = true;
             this.win32CoreToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.win32CoreToolStripMenuItem.Name = "win32CoreToolStripMenuItem";
-            this.win32CoreToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.win32CoreToolStripMenuItem.Size = new System.Drawing.Size(133, 22);
             this.win32CoreToolStripMenuItem.Text = "Win32 core";
             this.win32CoreToolStripMenuItem.Click += new System.EventHandler(this.win32CoreToolStripMenuItem_Click);
             // 
@@ -206,13 +215,6 @@
             this.textBoxPlaceholder1.TabIndex = 3;
             this.textBoxPlaceholder1.Text = "Weight";
             this.textBoxPlaceholder1.KeyUp += new System.Windows.Forms.KeyEventHandler(this.textBoxPlaceholder1_KeyUp);
-            // 
-            // guassianBlurInplaceToolStripMenuItem
-            // 
-            this.guassianBlurInplaceToolStripMenuItem.Name = "guassianBlurInplaceToolStripMenuItem";
-            this.guassianBlurInplaceToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
-            this.guassianBlurInplaceToolStripMenuItem.Text = "Guassian Blur inplace";
-            this.guassianBlurInplaceToolStripMenuItem.Click += new System.EventHandler(this.guassianBlurInplaceToolStripMenuItem_Click);
             // 
             // MainForm
             // 
