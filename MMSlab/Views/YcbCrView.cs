@@ -77,14 +77,14 @@ namespace MMSlab.Views
                 int wOffset = (int)((width - imgWidth) / 2.0);
                 int hOffset = (int)((height - imgHeight) / 2.0);
                 int wStart = this.AutoScrollPosition.X + wOffset;
-                int hStart = this.AutoScrollPosition.Y + hOffset;
+                int hStart = this.AutoScrollPosition.Y;
 
                 this.SetChannels();
 
                 g.DrawImage(this.Bitmap, new Rectangle(wStart, hStart, imgWidth, imgHeight));
                 g.DrawImage(this.channels[0], new Rectangle(wStart + width, hStart, imgWidth, imgHeight));
-                g.DrawImage(this.channels[1], new Rectangle(wStart, hStart + height, imgWidth, imgHeight));
-                g.DrawImage(this.channels[2], new Rectangle(wStart + width, hStart + height, imgWidth, imgHeight));
+                g.DrawImage(this.channels[1], new Rectangle(wStart, hStart + height + 2*hOffset, imgWidth, imgHeight));
+                g.DrawImage(this.channels[2], new Rectangle(wStart + width, hStart + height + 2*hOffset, imgWidth, imgHeight));
 
             }
 
@@ -129,22 +129,21 @@ namespace MMSlab.Views
                         YCbCr ycbcr = ColorModels.RGBtoYCbCr(new RGB(red, green, blue));
 
                         //Y
-                        RGB yRGB = new RGB(ycbcr.Y, ycbcr.Y, ycbcr.Y);
-                        Y[2] = yRGB.R;
-                        Y[1] = yRGB.G;
-                        Y[0] = yRGB.B;
+                        Y[2] = ycbcr.Y;
+                        Y[1] = ycbcr.Y;
+                        Y[0] = ycbcr.Y;
 
                         //Cb
-                        RGB cbRGB = ColorModels.YCbCrToRGB(new YCbCr(0, ycbcr.Cb, 0));
+                        RGB cbRGB = ColorModels.YCbCrToRGB(new YCbCr(ycbcr.Y, ycbcr.Cb, ycbcr.Y));
                         Cb[2] = cbRGB.R;
                         Cb[1] = cbRGB.G;
-                        Cb[0] = cbRGB.B;
+                        Cb[0] = (byte)(cbRGB.B + ycbcr.Cb);
 
                         //Cr
-                        RGB crRGB = ColorModels.YCbCrToRGB(new YCbCr(0, 0, ycbcr.Cr));
-                        Cr[2] = crRGB.R;
-                        Cr[1] = crRGB.G;
-                        Cr[0] = crRGB.B;
+                        RGB crRGB = ColorModels.YCbCrToRGB(new YCbCr(ycbcr.Y, ycbcr.Y, ycbcr.Cr));
+                        Cr[2] = (byte)(crRGB.R + ycbcr.Cr);
+                        Cr[1] = 0;
+                        Cr[0] = 0;
 
 
 
