@@ -43,6 +43,7 @@
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.statusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.progressBar = new LollipopProgressBar();
+            this.textBox1 = new MMSlab.Controls.TextBox();
             this.menuStrip1.SuspendLayout();
             this.statusStrip.SuspendLayout();
             this.SuspendLayout();
@@ -167,11 +168,21 @@
             this.progressBar.Text = "lollipopProgressBar1";
             this.progressBar.Value = 10;
             // 
+            // textBox1
+            // 
+            this.textBox1.FontColor = "#999999";
+            this.textBox1.Location = new System.Drawing.Point(336, 0);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Placeholder = "Enter text here";
+            this.textBox1.Size = new System.Drawing.Size(172, 29);
+            this.textBox1.TabIndex = 3;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1129, 605);
+            this.Controls.Add(this.textBox1);
             this.Controls.Add(this.progressBar);
             this.Controls.Add(this.statusStrip);
             this.Controls.Add(this.menuStrip1);
@@ -205,6 +216,7 @@
         private System.Windows.Forms.StatusStrip statusStrip;
         private System.Windows.Forms.ToolStripStatusLabel statusLabel;
         private LollipopProgressBar progressBar;
+        private Controls.TextBox textBox1;
     }
 }
 
