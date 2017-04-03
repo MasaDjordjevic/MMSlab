@@ -122,64 +122,26 @@ namespace MMSlab.Filters
                 for (int x = 3; x < b.Width - 3; ++x)
                 {
                     //Red
-                    int red = bmTemp.GetPixel(x - 3, y + 1).R
-                         + bmTemp.GetPixel(x - 2, y + 1).R
-                         + bmTemp.GetPixel(x - 1, y + 1).R
-                         + bmTemp.GetPixel(x, y + 1).R
-                         + bmTemp.GetPixel(x + 1, y + 1).R
-                         + bmTemp.GetPixel(x + 2, y + 1).R
-                         + bmTemp.GetPixel(x + 3, y + 1).R
-                         - bmTemp.GetPixel(x - 3, y - 1).R
-                         - bmTemp.GetPixel(x - 2, y - 1).R
-                         - bmTemp.GetPixel(x - 1, y - 1).R
-                         - bmTemp.GetPixel(x, y - 1).R
-                         - bmTemp.GetPixel(x + 1, y - 1).R
-                         - bmTemp.GetPixel(x + 2, y - 1).R
-                         - bmTemp.GetPixel(x + 3, y - 1).R;
+                    RGBInt pixel = (RGBInt)bmTemp.GetPixel(x - 3, y + 1)
+                         + (RGBInt)bmTemp.GetPixel(x - 2, y + 1)
+                         + (RGBInt)bmTemp.GetPixel(x - 1, y + 1)
+                         + (RGBInt)bmTemp.GetPixel(x, y + 1)
+                         + (RGBInt)bmTemp.GetPixel(x + 1, y + 1)
+                         + (RGBInt)bmTemp.GetPixel(x + 2, y + 1)
+                         + (RGBInt)bmTemp.GetPixel(x + 3, y + 1)
+                         - (RGBInt)bmTemp.GetPixel(x - 3, y - 1)
+                         - (RGBInt)bmTemp.GetPixel(x - 2, y - 1)
+                         - (RGBInt)bmTemp.GetPixel(x - 1, y - 1)
+                         - (RGBInt)bmTemp.GetPixel(x, y - 1)
+                         - (RGBInt)bmTemp.GetPixel(x + 1, y - 1)
+                         - (RGBInt)bmTemp.GetPixel(x + 2, y - 1)
+                         - (RGBInt)bmTemp.GetPixel(x + 3, y - 1);
 
-                    //Green
-                    int green = bmTemp.GetPixel(x - 3, y + 1).G
-                         + bmTemp.GetPixel(x - 2, y + 1).G
-                         + bmTemp.GetPixel(x - 1, y + 1).G
-                         + bmTemp.GetPixel(x, y + 1).G
-                         + bmTemp.GetPixel(x + 1, y + 1).G
-                         + bmTemp.GetPixel(x + 2, y + 1).G
-                         + bmTemp.GetPixel(x + 3, y + 1).G
-                         - bmTemp.GetPixel(x - 3, y - 1).G
-                         - bmTemp.GetPixel(x - 2, y - 1).G
-                         - bmTemp.GetPixel(x - 1, y - 1).G
-                         - bmTemp.GetPixel(x, y - 1).G
-                         - bmTemp.GetPixel(x + 1, y - 1).G
-                         - bmTemp.GetPixel(x + 2, y - 1).G
-                         - bmTemp.GetPixel(x + 3, y - 1).G;
+                    RGB fixedPixel = pixel.fix();
 
-                    //Blue
-                    int blue = bmTemp.GetPixel(x - 3, y + 1).B
-                         + bmTemp.GetPixel(x - 2, y + 1).B
-                         + bmTemp.GetPixel(x - 1, y + 1).B
-                         + bmTemp.GetPixel(x, y + 1).B
-                         + bmTemp.GetPixel(x + 1, y + 1).B
-                         + bmTemp.GetPixel(x + 2, y + 1).B
-                         + bmTemp.GetPixel(x + 3, y + 1).B
-                         - bmTemp.GetPixel(x - 3, y - 1).B
-                         - bmTemp.GetPixel(x - 2, y - 1).B
-                         - bmTemp.GetPixel(x - 1, y - 1).B
-                         - bmTemp.GetPixel(x, y - 1).B
-                         - bmTemp.GetPixel(x + 1, y - 1).B
-                         - bmTemp.GetPixel(x + 2, y - 1).B
-                         - bmTemp.GetPixel(x + 3, y - 1).B;
+                
 
-
-                    if (red < 0) red = 0;
-                    if (red > 255) red = 255;
-
-                    if (green < 0) green = 0;
-                    if (green > 255) green = 255;
-
-                    if (blue < 0) blue = 0;
-                    if (blue > 255) blue = 255;
-
-                    b.SetPixel(x, y + 1, Color.FromArgb(red, green, blue));
+                    b.SetPixel(x, y + 1, Color.FromArgb(fixedPixel.R, fixedPixel.G, fixedPixel.B));
                 }
             }
 

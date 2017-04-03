@@ -34,11 +34,11 @@ namespace MMSlab
             this.G = g;
         }
 
-        public RGB RGBFix(int r, int g, int b)
+        public RGB fix()
         {
-            byte R = (byte)Math.Max(0, Math.Min(255, r));
-            byte G = (byte)Math.Max(0, Math.Min(255, g));
-            byte B = (byte)Math.Max(0, Math.Min(255, b));
+            byte R = (byte)Math.Max(0, Math.Min(255, this.R));
+            byte G = (byte)Math.Max(0, Math.Min(255, this.G));
+            byte B = (byte)Math.Max(0, Math.Min(255, this.B));
             return new RGB(R, G, B);
         }
 
