@@ -38,6 +38,7 @@ namespace MMSlab
             UserControl ycbcrView = (UserControl)this.ycbcrView;
             ycbcrView.Location = new System.Drawing.Point(0, 0);
             ycbcrView.Name = "ycbcr view";
+            ((YcbCrView)ycbcrView).Strategy = new YCbCrStrategy();
             Controls.Add(ycbcrView);
         }
 
@@ -147,6 +148,24 @@ namespace MMSlab
         private void trackBar1_ValueChanged(object sender, EventArgs e)
         {
             this.options.Zoom = (double)trackBar1.Value / 10.0;
+        }
+
+        private void ycbcrToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.historamToggle.Visible = ycbcrToolStripMenuItem.Checked;
+        }
+
+        private void historamToggle_CheckedChanged(object sender, EventArgs e)
+        {
+            if(historamToggle.Checked)
+            {
+                ((YcbCrView)ycbcrView).Strategy = new YCbCrHistogramStrategy(false);
+                return;
+            }
+            else
+            {
+                ((YcbCrView)ycbcrView).Strategy = new YCbCrStrategy();
+            }
         }
 
         private void loadToolStripMenuItem_Click(object sender, EventArgs e)

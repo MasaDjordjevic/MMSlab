@@ -124,6 +124,9 @@
     <Compile Include="Views\SimpleImageView.Designer.cs">
       <DependentUpon>SimpleImageView.cs</DependentUpon>
     </Compile>
+    <Compile Include="Views\splitViewStrategy.cs" />
+    <Compile Include="Views\YCbCrHistogramStrategy.cs" />
+    <Compile Include="Views\YCbCrStrategy.cs" />
     <Compile Include="Views\YcbCrView.cs">
       <SubType>UserControl</SubType>
     </Compile>

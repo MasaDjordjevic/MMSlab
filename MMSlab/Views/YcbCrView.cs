@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Drawing.Imaging;
+using System.Windows.Forms.DataVisualization.Charting;
 
 namespace MMSlab.Views
 {
@@ -16,7 +17,9 @@ namespace MMSlab.Views
         #region Variables
         private Bitmap bitmap = null;
         private Bitmap[] channels = new Bitmap[3];
+        private Rectangle[] rectangles = new Rectangle[4];
         private double zoom = 0.2;
+        private Chart[] charts = new Chart[4];
         #endregion
 
         #region Properties
@@ -32,18 +35,32 @@ namespace MMSlab.Views
                 if (value == null) return;
                 this.AutoScrollMinSize = new Size((int)(value.Width * zoom), (int)(value.Height * zoom));
                 this.bitmap = value;
-                for (int i = 0; i < 3; i++)
-                {
-                    this.channels[i] = (Bitmap)value.Clone();
-                }
-
-                base.Invalidate();
+                
+                this.OnResize(null);
             }
         }
         #endregion
         //unused
         public double Zoom { get; set; }
 
+        private splitViewStrategy strategy;
+        public splitViewStrategy Strategy
+        {
+            get
+            {
+                return this.strategy;
+            }
+
+            set
+            {
+                this.strategy = value;
+                for (int i = 1; i < 4; i++)
+                {
+                    this.charts[i].Visible = false;
+                }
+                this.OnResize(null);
+            }
+        }
 
         public new void BringToFront()
         {
@@ -56,12 +73,21 @@ namespace MMSlab.Views
             this.AutoScroll = true;
             this.AutoSize = true;
             InitializeComponent();
-            this.chart1.Series.Add("Y");
-            this.chart1.Series["Y"].ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Column;
-            this.chart1.Series["Y"]["PointWidth"] = "1";
+            
+            this.charts[1] = this.chart1;
+            this.charts[2] = this.chart2;
+            this.charts[3] = this.chart3;
+            for(int i = 1; i < 4; i ++)
+            {
+                this.charts[i].Series.Add("s");
+                this.charts[i].Series["s"]["PointWidth"] = "1";
+                this.charts[i].Visible = false;
+            }
+
         }
 
-        protected override void OnResize(EventArgs e)
+
+        private void SetRectangles()
         {
             if (this.Bitmap != null)
             {
@@ -77,9 +103,23 @@ namespace MMSlab.Views
                 int wStart = this.AutoScrollPosition.X + wOffset;
                 int hStart = this.AutoScrollPosition.Y;
 
-              
-                this.chart1.Location = new Point(wStart + width, hStart);
-                this.chart1.Size = new Size(imgWidth, imgHeight);
+                this.rectangles[0] = new Rectangle(wStart, hStart, imgWidth, imgHeight);
+                this.rectangles[1] = new Rectangle(wStart + width, hStart, imgWidth, imgHeight);
+                this.rectangles[2] = new Rectangle(wStart, hStart + height + 2 * hOffset, imgWidth, imgHeight);
+                this.rectangles[3] = new Rectangle(wStart + width, hStart + height + 2 * hOffset, imgWidth, imgHeight);
+            }
+        }
+
+        protected override void OnResize(EventArgs e)
+        {
+            if (this.Bitmap != null && !this.Strategy.ImageType)
+            {
+                this.SetRectangles();
+                for (int i = 1; i <= 3; i++)
+                {
+                    this.charts[i].Location = new Point(this.rectangles[i].X, this.rectangles[i].Y);
+                    this.charts[i].Size = new Size(this.rectangles[i].Width, this.rectangles[i].Height);
+                }                
             }
             base.OnResize(e);
             Invalidate();
@@ -91,117 +131,31 @@ namespace MMSlab.Views
 
             if (this.Bitmap != null)
             {
-                int width = (this.ClientSize.Width - this.AutoScrollPosition.X) / 2;
-                int height = (this.ClientSize.Height - this.AutoScrollPosition.Y) / 2;
 
-                double scale = Math.Min((double)width / (double)this.Bitmap.Width, (double)height / (double)this.Bitmap.Height);
-
-                int imgWidth = (int)(this.Bitmap.Width * scale);
-                int imgHeight = (int)(this.Bitmap.Height * scale);
-                int wOffset = (int)((width - imgWidth) / 2.0);
-                int hOffset = (int)((height - imgHeight) / 2.0);
-                int wStart = this.AutoScrollPosition.X + wOffset;
-                int hStart = this.AutoScrollPosition.Y;
-
-              //  this.SetChannels();
-
-                g.DrawImage(this.Bitmap, new Rectangle(wStart, hStart, imgWidth, imgHeight));
-                this.chart1.Series["Y"].Points.Clear();
-                //this.chart1.Location = new Point(wStart + width, hStart);
-                //this.chart1.Size = new Size(imgWidth, imgHeight);
-
-                this.chart1.Series["Y"].Points.AddXY(10, 20);
-                this.chart1.Series["Y"].Points.AddXY(20, 30);
-                this.chart1.Series["Y"].Points.AddXY(30, 40);
-                this.chart1.Series["Y"].Points.AddXY(130, 60);
-                this.chart1.Series["Y"].Points.AddXY(230, 20);
-                this.chart1.Series["Y"].Points.AddXY(150, 150);
-                this.chart1.Series["Y"].Points.AddXY(200, 5);
-                this.chart1.Series["Y"].Points.AddXY(170, 180);
-                
-
-                // g.DrawImage(this.channels[0], new Rectangle(wStart + width, hStart, imgWidth, imgHeight));
-                // g.DrawImage(this.channels[1], new Rectangle(wStart, hStart + height + 2*hOffset, imgWidth, imgHeight));
-                // g.DrawImage(this.channels[2], new Rectangle(wStart + width, hStart + height + 2*hOffset, imgWidth, imgHeight));
-
-            }
-
-        }
-
-        private void SetChannels()
-        {
-            Bitmap b = this.Bitmap;
-            BitmapData bmData = b.LockBits(new Rectangle(0, 0, b.Width, b.Height), ImageLockMode.ReadWrite, b.PixelFormat);// PixelFormat.Format24bppRgb);
-
-            int stride = bmData.Stride;
-            System.IntPtr Scan0 = bmData.Scan0;
-
-            BitmapData[] channelsBmData = new BitmapData[3];
-            System.IntPtr[] cScan0 = new IntPtr[3];
-            for (int i = 0; i < 3; i++)
-            {
-                channelsBmData[i] = this.channels[i].LockBits(new Rectangle(0, 0, this.channels[i].Width, this.channels[i].Height), ImageLockMode.ReadWrite, this.channels[i].PixelFormat);
-                cScan0[i] = channelsBmData[i].Scan0;
-            }
-
-            unsafe
-            {
-                byte* p = (byte*)(void*)Scan0;
-                byte* Y = (byte*)(void*)cScan0[0];
-                byte* Cb = (byte*)(void*)cScan0[1];
-                byte* Cr = (byte*)(void*)cScan0[2];
-
-
-                int nOffset = stride - b.Width * 3;
-
-                byte red, green, blue;
-
-                for (int y = 0; y < b.Height; ++y)
+                if (this.Strategy.ImageType)
                 {
-                    for (int x = 0; x < b.Width; ++x)
-                    {
-                        blue = p[0];
-                        green = p[1];
-                        red = p[2];
+                    this.SetRectangles();
+                    this.channels = this.Strategy.generateImages(this.Bitmap);
+                    g.DrawImage(this.Bitmap, this.rectangles[0]);
+                    g.DrawImage(this.channels[0], this.rectangles[1]);
+                    g.DrawImage(this.channels[1], this.rectangles[2]);
+                    g.DrawImage(this.channels[2], this.rectangles[3]);
 
-                        YCbCr ycbcr = ColorModels.RGBtoYCbCr(new RGB(red, green, blue));
-
-                        //Y
-                        Y[2] = ycbcr.Y;
-                        Y[1] = ycbcr.Y;
-                        Y[0] = ycbcr.Y;
-
-                        //Cb
-                        RGB cbRGB = ColorModels.YCbCrToRGB(new YCbCr(ycbcr.Y, ycbcr.Cb, ycbcr.Y));
-                        Cb[2] = cbRGB.R;
-                        Cb[1] = cbRGB.G;
-                        Cb[0] = (byte)(cbRGB.B + ycbcr.Cb);
-
-                        //Cr
-                        RGB crRGB = ColorModels.YCbCrToRGB(new YCbCr(ycbcr.Y, ycbcr.Y, ycbcr.Cr));
-                        Cr[2] = (byte)(crRGB.R + ycbcr.Cr);
-                        Cr[1] = 0;
-                        Cr[0] = 0;
+                    return;
+                }
 
 
+                g.DrawImage(this.Bitmap, this.rectangles[0]);
 
-                        p += 3;
-                        Y += 3;
-                        Cb += 3;
-                        Cr += 3;
-                    }
-                    p += nOffset;
-                    Y += nOffset;
-                    Cb += nOffset;
-                    Cr += nOffset;
+                int[][] data = this.Strategy.generateCharts(this.Bitmap);
+                for (int j = 0; j < 3; j++)
+                {
+                    this.charts[j + 1].Series["s"].Points.Clear();
+                    this.charts[j + 1].Series["s"].Points.DataBindY(data[j]);
+                    this.charts[j + 1].Visible = true;
                 }
             }
 
-            b.UnlockBits(bmData);
-            for (int i = 0; i < 3; i++)
-            {
-                this.channels[i].UnlockBits(channelsBmData[i]);
-            }
         }
 
     }

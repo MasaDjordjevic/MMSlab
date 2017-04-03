@@ -48,6 +48,7 @@
             this.progressBar = new LollipopProgressBar();
             this.trackBar1 = new System.Windows.Forms.TrackBar();
             this.textBoxPlaceholder1 = new MMSlab.Controls.TextBoxPlaceholder();
+            this.historamToggle = new LollipopToggleText();
             this.menuStrip1.SuspendLayout();
             this.statusStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
@@ -117,6 +118,7 @@
             this.ycbcrToolStripMenuItem.Size = new System.Drawing.Size(197, 22);
             this.ycbcrToolStripMenuItem.Text = "YcbCr";
             this.ycbcrToolStripMenuItem.CheckedChanged += new System.EventHandler(this.ycbcrToolStripMenuItem_CheckedChanged);
+            this.ycbcrToolStripMenuItem.Click += new System.EventHandler(this.ycbcrToolStripMenuItem_Click);
             // 
             // brightnessFilterToolStripMenuItem
             // 
@@ -239,11 +241,26 @@
             this.textBoxPlaceholder1.Visible = false;
             this.textBoxPlaceholder1.KeyUp += new System.Windows.Forms.KeyEventHandler(this.textBoxPlaceholder1_KeyUp);
             // 
+            // historamToggle
+            // 
+            this.historamToggle.AutoSize = true;
+            this.historamToggle.EllipseBorderColor = "#3b73d1";
+            this.historamToggle.EllipseColor = "#508ef5";
+            this.historamToggle.Location = new System.Drawing.Point(296, 1);
+            this.historamToggle.Name = "historamToggle";
+            this.historamToggle.Size = new System.Drawing.Size(157, 19);
+            this.historamToggle.TabIndex = 6;
+            this.historamToggle.Text = "show histograms";
+            this.historamToggle.UseVisualStyleBackColor = true;
+            this.historamToggle.Visible = false;
+            this.historamToggle.CheckedChanged += new System.EventHandler(this.historamToggle_CheckedChanged);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1129, 605);
+            this.Controls.Add(this.historamToggle);
             this.Controls.Add(this.textBoxPlaceholder1);
             this.Controls.Add(this.progressBar);
             this.Controls.Add(this.trackBar1);
@@ -286,6 +303,7 @@
         private System.Windows.Forms.ToolStripMenuItem guassianBlurInplaceToolStripMenuItem;
         private System.Windows.Forms.TrackBar trackBar1;
         private Controls.TextBoxPlaceholder textBoxPlaceholder1;
+        private LollipopToggleText historamToggle;
     }
 }
 
