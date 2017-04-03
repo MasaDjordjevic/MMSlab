@@ -123,6 +123,7 @@ namespace MMSlab
         private void guassianBlurInplaceToolStripMenuItem_Click(object sender, EventArgs e)
         {
             this.controller.GaussianBlur(true);
+            this.textBoxPlaceholder1.Visible = true;
         }
 
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
@@ -166,6 +167,17 @@ namespace MMSlab
             {
                 ((YcbCrView)ycbcrView).Strategy = new YCbCrStrategy();
             }
+        }
+
+        private void edgeDetectonHorisontalToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.controller.EdgeDetectionHorizontal();
+        }
+
+        private void waterToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.controller.Water();
+            this.textBoxPlaceholder1.Visible = true;
         }
 
         private void loadToolStripMenuItem_Click(object sender, EventArgs e)

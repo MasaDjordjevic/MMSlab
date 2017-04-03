@@ -40,6 +40,7 @@
             this.guassianBlurToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.guassianBlurInplaceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.contrastToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.edgeDetectonHorisontalToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.win32CoreToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
@@ -49,6 +50,7 @@
             this.trackBar1 = new System.Windows.Forms.TrackBar();
             this.textBoxPlaceholder1 = new MMSlab.Controls.TextBoxPlaceholder();
             this.historamToggle = new LollipopToggleText();
+            this.waterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.statusStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
@@ -105,7 +107,9 @@
             this.brightnessFilterToolStripMenuItem,
             this.guassianBlurToolStripMenuItem,
             this.guassianBlurInplaceToolStripMenuItem,
-            this.contrastToolStripMenuItem});
+            this.contrastToolStripMenuItem,
+            this.edgeDetectonHorisontalToolStripMenuItem,
+            this.waterToolStripMenuItem});
             this.filtersToolStripMenuItem.Name = "filtersToolStripMenuItem";
             this.filtersToolStripMenuItem.Size = new System.Drawing.Size(50, 20);
             this.filtersToolStripMenuItem.Text = "Filters";
@@ -115,7 +119,7 @@
             this.ycbcrToolStripMenuItem.CheckOnClick = true;
             this.ycbcrToolStripMenuItem.Name = "ycbcrToolStripMenuItem";
             this.ycbcrToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.D)));
-            this.ycbcrToolStripMenuItem.Size = new System.Drawing.Size(197, 22);
+            this.ycbcrToolStripMenuItem.Size = new System.Drawing.Size(246, 22);
             this.ycbcrToolStripMenuItem.Text = "YcbCr";
             this.ycbcrToolStripMenuItem.CheckedChanged += new System.EventHandler(this.ycbcrToolStripMenuItem_CheckedChanged);
             this.ycbcrToolStripMenuItem.Click += new System.EventHandler(this.ycbcrToolStripMenuItem_Click);
@@ -124,21 +128,21 @@
             // 
             this.brightnessFilterToolStripMenuItem.Name = "brightnessFilterToolStripMenuItem";
             this.brightnessFilterToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.B)));
-            this.brightnessFilterToolStripMenuItem.Size = new System.Drawing.Size(197, 22);
+            this.brightnessFilterToolStripMenuItem.Size = new System.Drawing.Size(246, 22);
             this.brightnessFilterToolStripMenuItem.Text = "Brightness filter";
             this.brightnessFilterToolStripMenuItem.Click += new System.EventHandler(this.brightnessFilterToolStripMenuItem_Click);
             // 
             // guassianBlurToolStripMenuItem
             // 
             this.guassianBlurToolStripMenuItem.Name = "guassianBlurToolStripMenuItem";
-            this.guassianBlurToolStripMenuItem.Size = new System.Drawing.Size(197, 22);
+            this.guassianBlurToolStripMenuItem.Size = new System.Drawing.Size(246, 22);
             this.guassianBlurToolStripMenuItem.Text = "Guassian Blur";
             this.guassianBlurToolStripMenuItem.Click += new System.EventHandler(this.guassialBlurToolStripMenuItem_Click);
             // 
             // guassianBlurInplaceToolStripMenuItem
             // 
             this.guassianBlurInplaceToolStripMenuItem.Name = "guassianBlurInplaceToolStripMenuItem";
-            this.guassianBlurInplaceToolStripMenuItem.Size = new System.Drawing.Size(197, 22);
+            this.guassianBlurInplaceToolStripMenuItem.Size = new System.Drawing.Size(246, 22);
             this.guassianBlurInplaceToolStripMenuItem.Text = "Guassian Blur inplace";
             this.guassianBlurInplaceToolStripMenuItem.Click += new System.EventHandler(this.guassianBlurInplaceToolStripMenuItem_Click);
             // 
@@ -146,9 +150,17 @@
             // 
             this.contrastToolStripMenuItem.Name = "contrastToolStripMenuItem";
             this.contrastToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.C)));
-            this.contrastToolStripMenuItem.Size = new System.Drawing.Size(197, 22);
+            this.contrastToolStripMenuItem.Size = new System.Drawing.Size(246, 22);
             this.contrastToolStripMenuItem.Text = "Contrast";
             this.contrastToolStripMenuItem.Click += new System.EventHandler(this.contrastToolStripMenuItem_Click);
+            // 
+            // edgeDetectonHorisontalToolStripMenuItem
+            // 
+            this.edgeDetectonHorisontalToolStripMenuItem.Name = "edgeDetectonHorisontalToolStripMenuItem";
+            this.edgeDetectonHorisontalToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.E)));
+            this.edgeDetectonHorisontalToolStripMenuItem.Size = new System.Drawing.Size(246, 22);
+            this.edgeDetectonHorisontalToolStripMenuItem.Text = "Edge detecton horisontal";
+            this.edgeDetectonHorisontalToolStripMenuItem.Click += new System.EventHandler(this.edgeDetectonHorisontalToolStripMenuItem_Click);
             // 
             // optionsToolStripMenuItem
             // 
@@ -164,8 +176,8 @@
             this.win32CoreToolStripMenuItem.CheckOnClick = true;
             this.win32CoreToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.win32CoreToolStripMenuItem.Name = "win32CoreToolStripMenuItem";
-            this.win32CoreToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.W)));
-            this.win32CoreToolStripMenuItem.Size = new System.Drawing.Size(178, 22);
+            this.win32CoreToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Q)));
+            this.win32CoreToolStripMenuItem.Size = new System.Drawing.Size(176, 22);
             this.win32CoreToolStripMenuItem.Text = "Win32 core";
             this.win32CoreToolStripMenuItem.Click += new System.EventHandler(this.win32CoreToolStripMenuItem_Click);
             // 
@@ -255,6 +267,14 @@
             this.historamToggle.Visible = false;
             this.historamToggle.CheckedChanged += new System.EventHandler(this.historamToggle_CheckedChanged);
             // 
+            // waterToolStripMenuItem
+            // 
+            this.waterToolStripMenuItem.Name = "waterToolStripMenuItem";
+            this.waterToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.W)));
+            this.waterToolStripMenuItem.Size = new System.Drawing.Size(246, 22);
+            this.waterToolStripMenuItem.Text = "Water";
+            this.waterToolStripMenuItem.Click += new System.EventHandler(this.waterToolStripMenuItem_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -304,6 +324,8 @@
         private System.Windows.Forms.TrackBar trackBar1;
         private Controls.TextBoxPlaceholder textBoxPlaceholder1;
         private LollipopToggleText historamToggle;
+        private System.Windows.Forms.ToolStripMenuItem edgeDetectonHorisontalToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem waterToolStripMenuItem;
     }
 }
 

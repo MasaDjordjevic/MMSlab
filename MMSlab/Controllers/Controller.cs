@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MMSlab.Filters;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
@@ -13,7 +14,7 @@ namespace MMSlab.Controllers
     {
         private Models.IModel model;
         private Views.IView view;
-        private delegate bool currentFilterDelegate(Bitmap b, int wight);
+        private delegate bool currentFilterDelegate(Bitmap b, Filters.FilterOptions opt);
         private currentFilterDelegate currentFilterFunction;
         public Options options { get; set; }
         private Filters.IFilter currentFilter;
@@ -72,14 +73,14 @@ namespace MMSlab.Controllers
 
         public void BrightnessFilter()
         {
-            this.currentFilter.Brightness(this.model.Bitmap, 40);
+            this.currentFilter.Brightness(this.model.Bitmap, new FilterOptions(40));
             this.currentFilterFunction = this.currentFilter.Brightness;
             this.view.Bitmap = this.model.Bitmap;
         }
 
         public void ContrastFilter()
         {
-            this.currentFilter.Contrast(this.model.Bitmap, 40);
+            this.currentFilter.Contrast(this.model.Bitmap, new FilterOptions(40));
             this.currentFilterFunction = this.currentFilter.Contrast;
             this.view.Bitmap = this.model.Bitmap;
         }
@@ -95,7 +96,21 @@ namespace MMSlab.Controllers
                 this.currentFilterFunction = this.currentFilter.GaussianBlur;
 
             }
-            this.currentFilterFunction(this.model.Bitmap, 4);
+            this.currentFilterFunction(this.model.Bitmap, new FilterOptions(4));
+            this.view.Bitmap = this.model.Bitmap;
+        }
+
+        public void EdgeDetectionHorizontal()
+        {
+            this.currentFilter.EdgeDetectHorizontal(this.model.Bitmap, null);
+            this.currentFilterFunction = this.currentFilter.EdgeDetectHorizontal;
+            this.view.Bitmap = this.model.Bitmap;
+        }
+
+        public void Water()
+        {
+            this.currentFilter.Water(this.model.Bitmap, new FilterOptions(15));
+            this.currentFilterFunction = this.currentFilter.Water;
             this.view.Bitmap = this.model.Bitmap;
         }
 
@@ -106,7 +121,7 @@ namespace MMSlab.Controllers
                 MessageBox.Show("Select filter first");
                 return;
             }
-            this.currentFilterFunction(this.model.Bitmap, this.options.Weight);
+            this.currentFilterFunction(this.model.Bitmap, new FilterOptions(this.options.Weight));
             this.view.Bitmap = this.model.Bitmap;
         }
 

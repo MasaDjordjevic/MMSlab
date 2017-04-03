@@ -37,16 +37,21 @@ namespace MMSlab.Filters
             return ConvFilters.Conv3x3Safe(b, m, inplace);
         }
 
-        public bool GaussianBlur(Bitmap b, int nWeight = 4)
+        public bool GaussianBlur(Bitmap b, FilterOptions opt)
         {
-            return this.GaussianBlurArg(b, nWeight, false);
+            return this.GaussianBlurArg(b, opt.Weight, false);
         }
 
-        public bool GaussianBlurInplace(Bitmap b, int nWeight = 4)
+        public bool GaussianBlurInplace(Bitmap b, FilterOptions opt)
         {
-            return this.GaussianBlurArg(b, nWeight, true);
+            return this.GaussianBlurArg(b, opt.Weight, true);
         }
-        public bool Brightness(Bitmap b, int nBrightness)
+
+        public bool Brightness(Bitmap b, FilterOptions opt)
+        {
+            return this.BrightnessAlg(b, opt.Weight);
+        }
+        public bool BrightnessAlg(Bitmap b, int nBrightness)
         {
             if (nBrightness < -255 || nBrightness > 255)
                 return false;
@@ -70,7 +75,13 @@ namespace MMSlab.Filters
             return true;
         }
 
-        public bool Contrast(Bitmap b, int nContrast)
+
+        public bool Contrast(Bitmap b, FilterOptions opt)
+        {
+            return this.ContrastAlg(b, opt.Weight);
+        }
+
+        public bool ContrastAlg(Bitmap b, int nContrast)
         {
             if (nContrast < -100) return false;
             if (nContrast > 100) return false;
@@ -101,9 +112,140 @@ namespace MMSlab.Filters
             return true;
         }
 
+        public bool EdgeDetectHorizontalAlg(Bitmap b)
+        {
+            Bitmap bmTemp = (Bitmap)b.Clone();
 
 
+            for (int y = 1; y < b.Height - 1; ++y)
+            {
+                for (int x = 3; x < b.Width - 3; ++x)
+                {
+                    //Red
+                    int red = bmTemp.GetPixel(x - 3, y + 1).R
+                         + bmTemp.GetPixel(x - 2, y + 1).R
+                         + bmTemp.GetPixel(x - 1, y + 1).R
+                         + bmTemp.GetPixel(x, y + 1).R
+                         + bmTemp.GetPixel(x + 1, y + 1).R
+                         + bmTemp.GetPixel(x + 2, y + 1).R
+                         + bmTemp.GetPixel(x + 3, y + 1).R
+                         - bmTemp.GetPixel(x - 3, y - 1).R
+                         - bmTemp.GetPixel(x - 2, y - 1).R
+                         - bmTemp.GetPixel(x - 1, y - 1).R
+                         - bmTemp.GetPixel(x, y - 1).R
+                         - bmTemp.GetPixel(x + 1, y - 1).R
+                         - bmTemp.GetPixel(x + 2, y - 1).R
+                         - bmTemp.GetPixel(x + 3, y - 1).R;
 
-       
+                    //Green
+                    int green = bmTemp.GetPixel(x - 3, y + 1).G
+                         + bmTemp.GetPixel(x - 2, y + 1).G
+                         + bmTemp.GetPixel(x - 1, y + 1).G
+                         + bmTemp.GetPixel(x, y + 1).G
+                         + bmTemp.GetPixel(x + 1, y + 1).G
+                         + bmTemp.GetPixel(x + 2, y + 1).G
+                         + bmTemp.GetPixel(x + 3, y + 1).G
+                         - bmTemp.GetPixel(x - 3, y - 1).G
+                         - bmTemp.GetPixel(x - 2, y - 1).G
+                         - bmTemp.GetPixel(x - 1, y - 1).G
+                         - bmTemp.GetPixel(x, y - 1).G
+                         - bmTemp.GetPixel(x + 1, y - 1).G
+                         - bmTemp.GetPixel(x + 2, y - 1).G
+                         - bmTemp.GetPixel(x + 3, y - 1).G;
+
+                    //Blue
+                    int blue = bmTemp.GetPixel(x - 3, y + 1).B
+                         + bmTemp.GetPixel(x - 2, y + 1).B
+                         + bmTemp.GetPixel(x - 1, y + 1).B
+                         + bmTemp.GetPixel(x, y + 1).B
+                         + bmTemp.GetPixel(x + 1, y + 1).B
+                         + bmTemp.GetPixel(x + 2, y + 1).B
+                         + bmTemp.GetPixel(x + 3, y + 1).B
+                         - bmTemp.GetPixel(x - 3, y - 1).B
+                         - bmTemp.GetPixel(x - 2, y - 1).B
+                         - bmTemp.GetPixel(x - 1, y - 1).B
+                         - bmTemp.GetPixel(x, y - 1).B
+                         - bmTemp.GetPixel(x + 1, y - 1).B
+                         - bmTemp.GetPixel(x + 2, y - 1).B
+                         - bmTemp.GetPixel(x + 3, y - 1).B;
+
+
+                    if (red < 0) red = 0;
+                    if (red > 255) red = 255;
+
+                    if (green < 0) green = 0;
+                    if (green > 255) green = 255;
+
+                    if (blue < 0) blue = 0;
+                    if (blue > 255) blue = 255;
+
+                    b.SetPixel(x, y + 1, Color.FromArgb(red, green, blue));
+                }
+            }
+
+
+            return true;
+        }
+
+        public bool EdgeDetectHorizontal(Bitmap b, FilterOptions opt)
+        {
+            return this.EdgeDetectHorizontalAlg(b);
+        }
+
+        public bool Water(Bitmap b, FilterOptions opt)
+        {
+            return this.WaterAlg(b, opt.Weight);
+        }
+
+        public bool WaterAlg(Bitmap b, int nWave = 15)
+        {
+            int nWidth = b.Width;
+            int nHeight = b.Height;
+
+            Point[,] pt = new Point[nWidth, nHeight];
+
+
+            double newX, newY;
+
+            for (int x = 0; x < nWidth; ++x)
+                for (int y = 0; y < nHeight; ++y)
+                {
+                    newX = x + ((double)nWave * Math.Sin(2.0 * Math.PI * (float)y / 128.0));
+                    newY = y + ((double)nWave * Math.Cos(2.0 * Math.PI * (float)x / 128.0));
+
+                    pt[x, y].X = (newX > 0 && newX < nWidth) ? (int)newX : 0;
+                    pt[x, y].Y = (newY > 0 && newY < nHeight) ? (int)newY : 0;
+                }
+
+            OffsetFilterAbs(b, pt);
+
+            return true;
+        }
+
+        public static bool OffsetFilterAbs(Bitmap b, Point[,] offset)
+        {
+            Bitmap bSrc = (Bitmap)b.Clone();
+
+            int xOffset, yOffset;
+
+
+            for (int y = 0; y < b.Height; ++y)
+            {
+                for (int x = 0; x < b.Width; ++x)
+                {
+                    xOffset = offset[x, y].X;
+                    yOffset = offset[x, y].Y;
+
+                    if (yOffset >= 0 && yOffset < b.Height && xOffset >= 0 && xOffset < b.Width)
+                    {
+                        b.SetPixel(x, y, bSrc.GetPixel(xOffset, yOffset));
+                    }
+                    
+                }
+            }
+
+            return true;
+        }
+
     }
 }

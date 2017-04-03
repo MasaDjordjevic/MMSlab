@@ -101,6 +101,7 @@
     </Compile>
     <Compile Include="Filters\ConvFilters.cs" />
     <Compile Include="Filters\CoreFilters.cs" />
+    <Compile Include="Filters\FilterOptions.cs" />
     <Compile Include="Filters\IFilter.cs" />
     <Compile Include="Filters\SimpleFilters.cs" />
     <Compile Include="MainForm.cs">

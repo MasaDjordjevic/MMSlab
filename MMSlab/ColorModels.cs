@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,6 +18,34 @@ namespace MMSlab
             this.R = r;
             this.B = b;
             this.G = g;
+        }
+
+        public RGB(int r, int g, int b)
+        {
+            this.R = (byte)Math.Max(0, Math.Min(255, r));
+            this.G = (byte)Math.Max(0, Math.Min(255, g));
+            this.B = (byte)Math.Max(0, Math.Min(255, b));
+        }
+
+        public RGB(Color color)
+        {
+            this.R = color.R;
+            this.B = color.B;
+            this.G = color.G;
+        }
+
+        public static implicit operator RGB(Color c)
+        {
+            return new RGB(c);
+        }
+
+        public static RGB operator +(RGB left, RGB right)
+        {
+            return new RGB((int)left.R + (int)right.R, (int)left.G + (int)right.G, (int)left.B + (int)right.B);
+        }
+        public static RGB operator -(RGB left, RGB right)
+        {
+            return new RGB((int)left.R - (int)right.R, (int)left.G - (int)right.G, (int)left.B - (int)right.B);
         }
     }
 
@@ -38,9 +67,9 @@ namespace MMSlab
     {
         public static RGB YCbCrToRGB(YCbCr ycbcr)
         {
-            float r = Math.Max(0.0f, Math.Min(1.0f, (float)(ycbcr.Y + 1.4022 * (ycbcr.Cr-128))));
-            float g = Math.Max(0.0f, Math.Min(1.0f, (float)(ycbcr.Y - 0.3456 * (ycbcr.Cb-128) - 0.7145 * (ycbcr.Cr-128))));
-            float b = Math.Max(0.0f, Math.Min(1.0f, (float)(ycbcr.Y + 1.7710 * (ycbcr.Cb-128))));
+            float r = Math.Max(0.0f, Math.Min(1.0f, (float)(ycbcr.Y + 1.4022 * (ycbcr.Cr - 128))));
+            float g = Math.Max(0.0f, Math.Min(1.0f, (float)(ycbcr.Y - 0.3456 * (ycbcr.Cb - 128) - 0.7145 * (ycbcr.Cr - 128))));
+            float b = Math.Max(0.0f, Math.Min(1.0f, (float)(ycbcr.Y + 1.7710 * (ycbcr.Cb - 128))));
 
             return new RGB((byte)(r * 255), (byte)(g * 255), (byte)(b * 255));
         }
@@ -56,6 +85,6 @@ namespace MMSlab
         }
 
     }
-  
+
 
 }
