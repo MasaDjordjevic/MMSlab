@@ -56,10 +56,31 @@ namespace MMSlab.Views
             this.AutoScroll = true;
             this.AutoSize = true;
             InitializeComponent();
+            this.chart1.Series.Add("Y");
+            this.chart1.Series["Y"].ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Column;
+            this.chart1.Series["Y"]["PointWidth"] = "1";
         }
 
         protected override void OnResize(EventArgs e)
         {
+            if (this.Bitmap != null)
+            {
+                int width = (this.ClientSize.Width - this.AutoScrollPosition.X) / 2;
+                int height = (this.ClientSize.Height - this.AutoScrollPosition.Y) / 2;
+
+                double scale = Math.Min((double)width / (double)this.Bitmap.Width, (double)height / (double)this.Bitmap.Height);
+
+                int imgWidth = (int)(this.Bitmap.Width * scale);
+                int imgHeight = (int)(this.Bitmap.Height * scale);
+                int wOffset = (int)((width - imgWidth) / 2.0);
+                int hOffset = (int)((height - imgHeight) / 2.0);
+                int wStart = this.AutoScrollPosition.X + wOffset;
+                int hStart = this.AutoScrollPosition.Y;
+
+              
+                this.chart1.Location = new Point(wStart + width, hStart);
+                this.chart1.Size = new Size(imgWidth, imgHeight);
+            }
             base.OnResize(e);
             Invalidate();
         }
@@ -82,12 +103,26 @@ namespace MMSlab.Views
                 int wStart = this.AutoScrollPosition.X + wOffset;
                 int hStart = this.AutoScrollPosition.Y;
 
-                this.SetChannels();
+              //  this.SetChannels();
 
                 g.DrawImage(this.Bitmap, new Rectangle(wStart, hStart, imgWidth, imgHeight));
-                g.DrawImage(this.channels[0], new Rectangle(wStart + width, hStart, imgWidth, imgHeight));
-                g.DrawImage(this.channels[1], new Rectangle(wStart, hStart + height + 2*hOffset, imgWidth, imgHeight));
-                g.DrawImage(this.channels[2], new Rectangle(wStart + width, hStart + height + 2*hOffset, imgWidth, imgHeight));
+                this.chart1.Series["Y"].Points.Clear();
+                //this.chart1.Location = new Point(wStart + width, hStart);
+                //this.chart1.Size = new Size(imgWidth, imgHeight);
+
+                this.chart1.Series["Y"].Points.AddXY(10, 20);
+                this.chart1.Series["Y"].Points.AddXY(20, 30);
+                this.chart1.Series["Y"].Points.AddXY(30, 40);
+                this.chart1.Series["Y"].Points.AddXY(130, 60);
+                this.chart1.Series["Y"].Points.AddXY(230, 20);
+                this.chart1.Series["Y"].Points.AddXY(150, 150);
+                this.chart1.Series["Y"].Points.AddXY(200, 5);
+                this.chart1.Series["Y"].Points.AddXY(170, 180);
+                
+
+                // g.DrawImage(this.channels[0], new Rectangle(wStart + width, hStart, imgWidth, imgHeight));
+                // g.DrawImage(this.channels[1], new Rectangle(wStart, hStart + height + 2*hOffset, imgWidth, imgHeight));
+                // g.DrawImage(this.channels[2], new Rectangle(wStart + width, hStart + height + 2*hOffset, imgWidth, imgHeight));
 
             }
 

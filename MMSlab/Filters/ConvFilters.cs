@@ -14,12 +14,33 @@ namespace MMSlab
         public int TopLeft = 0, TopMid = 0, TopRight = 0;
         public int MidLeft = 0, Pixel = 1, MidRight = 0;
         public int BottomLeft = 0, BottomMid = 0, BottomRight = 0;
+        //public int dim;
+        //public int[,] coefArray;
         public int Factor = 1;
         public int Offset = 0;
+
+        //public ConvMatrix(int dim)
+        //{
+        //    this.dim = dim;
+        //    this.coefArray = new int[dim, dim];
+        //}
+
+        //public void SetAll(int nVal)
+        //{            
+        //    for (int i = 0; i < dim; i++)
+        //    {
+        //        for (int j = 0; j < dim; j++)
+        //        {
+        //            coefArray[i, j] = nVal;
+        //        }
+        //    }
+        //}
+
         public void SetAll(int nVal)
         {
             TopLeft = TopMid = TopRight = MidLeft = Pixel = MidRight = BottomLeft = BottomMid = BottomRight = nVal;
         }
+
     }
 
 
