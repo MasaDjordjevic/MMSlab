@@ -18,34 +18,49 @@ namespace MMSlab
             this.R = r;
             this.B = b;
             this.G = g;
-        }
+        }        
+    }
 
-        public RGB(int r, int g, int b)
+    public class RGBInt
+    {
+        public int R { get; set; }
+        public int G { get; set; }
+        public int B { get; set; }
+
+        public RGBInt(int r, int g, int b)
         {
-            this.R = (byte)Math.Max(0, Math.Min(255, r));
-            this.G = (byte)Math.Max(0, Math.Min(255, g));
-            this.B = (byte)Math.Max(0, Math.Min(255, b));
+            this.R = r;
+            this.B = b;
+            this.G = g;
         }
 
-        public RGB(Color color)
+        public RGB RGBFix(int r, int g, int b)
+        {
+            byte R = (byte)Math.Max(0, Math.Min(255, r));
+            byte G = (byte)Math.Max(0, Math.Min(255, g));
+            byte B = (byte)Math.Max(0, Math.Min(255, b));
+            return new RGB(R, G, B);
+        }
+
+        public RGBInt(Color color)
         {
             this.R = color.R;
             this.B = color.B;
             this.G = color.G;
         }
 
-        public static implicit operator RGB(Color c)
+        public static implicit operator RGBInt(Color c)
         {
-            return new RGB(c);
+            return new RGBInt(c);
         }
 
-        public static RGB operator +(RGB left, RGB right)
+        public static RGBInt operator +(RGBInt left, RGBInt right)
         {
-            return new RGB((int)left.R + (int)right.R, (int)left.G + (int)right.G, (int)left.B + (int)right.B);
+            return new RGBInt(left.R + right.R, left.G + right.G, left.B + right.B);
         }
-        public static RGB operator -(RGB left, RGB right)
+        public static RGBInt operator -(RGBInt left, RGBInt right)
         {
-            return new RGB((int)left.R - (int)right.R, (int)left.G - (int)right.G, (int)left.B - (int)right.B);
+            return new RGBInt(left.R - right.R, left.G - right.G, left.B - right.B);
         }
     }
 
