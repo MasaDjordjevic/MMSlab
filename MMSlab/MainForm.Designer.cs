@@ -41,6 +41,7 @@
             this.guassianBlurInplaceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.contrastToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.edgeDetectonHorisontalToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.waterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.win32CoreToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
@@ -50,7 +51,6 @@
             this.trackBar1 = new System.Windows.Forms.TrackBar();
             this.textBoxPlaceholder1 = new MMSlab.Controls.TextBoxPlaceholder();
             this.historamToggle = new LollipopToggleText();
-            this.waterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.statusStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
@@ -162,6 +162,14 @@
             this.edgeDetectonHorisontalToolStripMenuItem.Text = "Edge detecton horisontal";
             this.edgeDetectonHorisontalToolStripMenuItem.Click += new System.EventHandler(this.edgeDetectonHorisontalToolStripMenuItem_Click);
             // 
+            // waterToolStripMenuItem
+            // 
+            this.waterToolStripMenuItem.Name = "waterToolStripMenuItem";
+            this.waterToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.W)));
+            this.waterToolStripMenuItem.Size = new System.Drawing.Size(246, 22);
+            this.waterToolStripMenuItem.Text = "Water";
+            this.waterToolStripMenuItem.Click += new System.EventHandler(this.waterToolStripMenuItem_Click);
+            // 
             // optionsToolStripMenuItem
             // 
             this.optionsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -266,14 +274,6 @@
             this.historamToggle.UseVisualStyleBackColor = true;
             this.historamToggle.Visible = false;
             this.historamToggle.CheckedChanged += new System.EventHandler(this.historamToggle_CheckedChanged);
-            // 
-            // waterToolStripMenuItem
-            // 
-            this.waterToolStripMenuItem.Name = "waterToolStripMenuItem";
-            this.waterToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.W)));
-            this.waterToolStripMenuItem.Size = new System.Drawing.Size(246, 22);
-            this.waterToolStripMenuItem.Text = "Water";
-            this.waterToolStripMenuItem.Click += new System.EventHandler(this.waterToolStripMenuItem_Click);
             // 
             // MainForm
             // 

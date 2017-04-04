@@ -15,29 +15,19 @@ namespace MMSlab
         public int MidLeft = 0, Pixel = 1, MidRight = 0;
         public int BottomLeft = 0, BottomMid = 0, BottomRight = 0;
         //public int dim;
-        //public int[,] coefArray;
+        public int[,] matrix = new int[3, 3];
         public int Factor = 1;
         public int Offset = 0;
 
-        //public ConvMatrix(int dim)
-        //{
-        //    this.dim = dim;
-        //    this.coefArray = new int[dim, dim];
-        //}
-
-        //public void SetAll(int nVal)
-        //{            
-        //    for (int i = 0; i < dim; i++)
-        //    {
-        //        for (int j = 0; j < dim; j++)
-        //        {
-        //            coefArray[i, j] = nVal;
-        //        }
-        //    }
-        //}
-
         public void SetAll(int nVal)
         {
+            for (int i = 0; i < 3; i++)
+            {
+                for (int j = 0; j < 3; j++)
+                {
+                    matrix[i, j] = nVal;
+                }
+            }
             TopLeft = TopMid = TopRight = MidLeft = Pixel = MidRight = BottomLeft = BottomMid = BottomRight = nVal;
         }
 
@@ -46,6 +36,50 @@ namespace MMSlab
 
     public static class ConvFilters
     {
+        public static bool Conv3x3NewSafe(Bitmap b, ConvMatrix m, bool inplace = false)
+        {
+            // Avoid divide by zero errors
+            if (0 == m.Factor) return false;
+
+            Bitmap bSrc = (Bitmap)b.Clone();
+
+            int nWidth = b.Width - 2;
+            int nHeight = b.Height - 2;
+
+            for (int y = 0; y < nHeight; ++y)
+            {
+                for (int x = 0; x < nWidth; ++x)
+                {
+
+                    RGBInt pixel = new RGBInt(0, 0, 0);
+                    for (int i = 0; i < 3; i++)
+                    {
+                        for (int j = 0; j < 3; j++)
+                        {
+
+                            if (inplace)
+                            {
+                                pixel += m.matrix[i, j] * (RGBInt)b.GetPixel(x + i, y + j);
+                            }
+                            else
+                            {
+                                pixel += m.matrix[i, j] * (RGBInt)bSrc.GetPixel(x + i, y + j);
+                            }
+                        }
+                    }
+
+                    pixel = (pixel / m.Factor) + m.Offset;
+
+                    Color newColor = pixel.ConvertToColor();
+                    b.SetPixel(x + 1, y + 1, newColor);
+
+                }
+
+            }
+
+            return true;
+        }
+
         public static bool Conv3x3Safe(Bitmap b, ConvMatrix m, bool inplace = false)
         {
             // Avoid divide by zero errors

@@ -33,8 +33,22 @@ namespace MMSlab.Filters
             m.Pixel = nWeight;
             m.TopMid = m.MidLeft = m.MidRight = m.BottomMid = 2;
             m.Factor = nWeight + 12;
+            m.matrix[0, 1] = m.matrix[1, 0] = m.matrix[1, 2] = m.matrix[2, 1] = 2;
+            m.matrix[1, 1] = nWeight;
 
-            return ConvFilters.Conv3x3Safe(b, m, inplace);
+            return ConvFilters.Conv3x3NewSafe(b, m, inplace);
+        }
+
+        public bool GaussianBlurNew(Bitmap b, FilterOptions opt)
+        {
+            ConvMatrix m = new ConvMatrix();
+            m.SetAll(1);
+            m.Pixel = opt.Weight;
+            m.matrix[0, 1] = m.matrix[1, 0] = m.matrix[1, 2] = m.matrix[2, 1] = 2;
+            //m.TopMid = m.MidLeft = m.MidRight = m.BottomMid = 2;
+            m.Factor = opt.Weight + 12;
+
+            return ConvFilters.Conv3x3NewSafe(b, m, false);
         }
 
         public bool GaussianBlur(Bitmap b, FilterOptions opt)
@@ -137,7 +151,7 @@ namespace MMSlab.Filters
                          - (RGBInt)bmTemp.GetPixel(x + 2, y - 1)
                          - (RGBInt)bmTemp.GetPixel(x + 3, y - 1);
 
-                    RGB fixedPixel = pixel.fix();
+                    RGB fixedPixel = pixel.ConvertToRGB();
 
                 
 

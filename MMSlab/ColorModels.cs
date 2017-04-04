@@ -34,12 +34,19 @@ namespace MMSlab
             this.G = g;
         }
 
-        public RGB fix()
+        public RGB ConvertToRGB()
         {
             byte R = (byte)Math.Max(0, Math.Min(255, this.R));
             byte G = (byte)Math.Max(0, Math.Min(255, this.G));
             byte B = (byte)Math.Max(0, Math.Min(255, this.B));
             return new RGB(R, G, B);
+        }
+        public Color ConvertToColor()
+        {
+            byte R = (byte)Math.Max(0, Math.Min(255, this.R));
+            byte G = (byte)Math.Max(0, Math.Min(255, this.G));
+            byte B = (byte)Math.Max(0, Math.Min(255, this.B));
+            return Color.FromArgb(R, G, B);
         }
 
         public RGBInt(Color color)
@@ -58,9 +65,23 @@ namespace MMSlab
         {
             return new RGBInt(left.R + right.R, left.G + right.G, left.B + right.B);
         }
+
+        public static RGBInt operator +(RGBInt left, int right)
+        {
+            return new RGBInt(left.R + right, left.G + right, left.B + right);
+        }
         public static RGBInt operator -(RGBInt left, RGBInt right)
         {
             return new RGBInt(left.R - right.R, left.G - right.G, left.B - right.B);
+        }
+        public static RGBInt operator *(int left, RGBInt right)
+        {
+            return new RGBInt(left * right.R, left * right.G, left * right.B);
+        }
+
+        public static RGBInt operator /(RGBInt left, int right)
+        {
+            return new RGBInt(left.R / right, left.G / right, left.B / right);
         }
     }
 

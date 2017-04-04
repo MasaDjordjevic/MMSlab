@@ -96,7 +96,7 @@ namespace MMSlab.Controllers
                 this.currentFilterFunction = this.currentFilter.GaussianBlur;
 
             }
-            this.currentFilterFunction(this.model.Bitmap, new FilterOptions(4));
+            this.currentFilterFunction(this.model.Bitmap, new FilterOptions(10));
             this.view.Bitmap = this.model.Bitmap;
         }
 
