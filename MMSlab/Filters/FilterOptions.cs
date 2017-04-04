@@ -10,9 +10,18 @@ namespace MMSlab.Filters
     {
         public int Weight { get; set; }
 
+        public int Dimension { get; set; }
+
         public FilterOptions(int weight)
         {
             this.Weight = weight;
+            this.Dimension = 3;
+        }
+
+        public FilterOptions(int weight, int dimension)
+        {
+            this.Weight = weight;
+            this.Dimension = dimension;
         }
     }
 }

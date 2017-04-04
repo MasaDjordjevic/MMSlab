@@ -30,25 +30,11 @@ namespace MMSlab.Filters
         {
             ConvMatrix m = new ConvMatrix();
             m.SetAll(1);
-            m.Pixel = nWeight;
-            m.TopMid = m.MidLeft = m.MidRight = m.BottomMid = 2;
+            m.e = nWeight;
+            m.b = m.d = m.f = m.h = 2;
             m.Factor = nWeight + 12;
-            m.matrix[0, 1] = m.matrix[1, 0] = m.matrix[1, 2] = m.matrix[2, 1] = 2;
-            m.matrix[1, 1] = nWeight;
-
-            return ConvFilters.Conv3x3NewSafe(b, m, inplace);
-        }
-
-        public bool GaussianBlurNew(Bitmap b, FilterOptions opt)
-        {
-            ConvMatrix m = new ConvMatrix();
-            m.SetAll(1);
-            m.Pixel = opt.Weight;
-            m.matrix[0, 1] = m.matrix[1, 0] = m.matrix[1, 2] = m.matrix[2, 1] = 2;
-            //m.TopMid = m.MidLeft = m.MidRight = m.BottomMid = 2;
-            m.Factor = opt.Weight + 12;
-
-            return ConvFilters.Conv3x3NewSafe(b, m, false);
+          
+            return ConvFilters.ConvSafe(b, m, 3, inplace);
         }
 
         public bool GaussianBlur(Bitmap b, FilterOptions opt)

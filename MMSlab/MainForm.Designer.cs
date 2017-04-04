@@ -51,6 +51,7 @@
             this.trackBar1 = new System.Windows.Forms.TrackBar();
             this.textBoxPlaceholder1 = new MMSlab.Controls.TextBoxPlaceholder();
             this.historamToggle = new LollipopToggleText();
+            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.statusStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
@@ -107,6 +108,7 @@
             this.brightnessFilterToolStripMenuItem,
             this.guassianBlurToolStripMenuItem,
             this.guassianBlurInplaceToolStripMenuItem,
+            this.toolStripMenuItem1,
             this.contrastToolStripMenuItem,
             this.edgeDetectonHorisontalToolStripMenuItem,
             this.waterToolStripMenuItem});
@@ -275,6 +277,13 @@
             this.historamToggle.Visible = false;
             this.historamToggle.CheckedChanged += new System.EventHandler(this.historamToggle_CheckedChanged);
             // 
+            // toolStripMenuItem1
+            // 
+            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(246, 22);
+            this.toolStripMenuItem1.Text = "Gussian Blur 2x2";
+            this.toolStripMenuItem1.Click += new System.EventHandler(this.toolStripMenuItem1_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -326,6 +335,7 @@
         private LollipopToggleText historamToggle;
         private System.Windows.Forms.ToolStripMenuItem edgeDetectonHorisontalToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem waterToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
     }
 }
 

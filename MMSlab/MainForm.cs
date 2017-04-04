@@ -180,6 +180,12 @@ namespace MMSlab
             this.textBoxPlaceholder1.Visible = true;
         }
 
+        private void toolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            ((YcbCrView)ycbcrView).Strategy = new GuassianBlurStrategy();
+            this.controller.SetView(this.ycbcrView);
+        }
+
         private void loadToolStripMenuItem_Click(object sender, EventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();

@@ -118,6 +118,7 @@
     <Compile Include="UIManagers\DrawHelper.cs" />
     <Compile Include="UIManagers\FontManager.cs" />
     <Compile Include="Views\CommonControls.cs" />
+    <Compile Include="Views\GuassianBlurStrategy.cs" />
     <Compile Include="Views\IView.cs" />
     <Compile Include="Views\SimpleImageView.cs">
       <SubType>UserControl</SubType>

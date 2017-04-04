@@ -18,23 +18,34 @@ namespace MMSlab.Filters
         }
         public bool GaussianBlurInplace(Bitmap b, FilterOptions opt)
         {
-            return this.GaussianBlurAlg(b, opt.Weight, true);
+            return this.GaussianBlurAlg(b, opt.Weight, opt.Dimension, true);
         }
 
         public bool GaussianBlur(Bitmap b, FilterOptions opt)
         {
-            return this.GaussianBlurAlg(b, opt.Weight, false);
+            return this.GaussianBlurAlg(b, opt.Weight, opt.Dimension, false);
         }
 
-        public bool GaussianBlurAlg(Bitmap b, int nWeight = 4, bool inplace = false)
+        public bool GaussianBlurOld(Bitmap b, FilterOptions opt)
+        {
+            int nWeight = opt.Weight;
+            ConvMatrix m = new ConvMatrix();
+            m.SetAll(1);
+            m.e = nWeight;
+            m.b = m.d = m.f = m.h = 2;
+            m.Factor = nWeight + 12;
+
+            return ConvFilters.Conv3x3(b, m, false);
+        }
+        public bool GaussianBlurAlg(Bitmap b, int nWeight = 4, int dimension = 3, bool inplace = false)
         {
             ConvMatrix m = new ConvMatrix();
             m.SetAll(1);
-            m.Pixel = nWeight;
-            m.TopMid = m.MidLeft = m.MidRight = m.BottomMid = 2;
+            m.e = nWeight;
+            m.b = m.d = m.f = m.h = 2;
             m.Factor = nWeight + 12;
 
-            return ConvFilters.Conv3x3(b, m, inplace);
+            return ConvFilters.Conv(b, m, dimension, inplace);
         }
 
         public bool Brightness(Bitmap b, FilterOptions opt)
