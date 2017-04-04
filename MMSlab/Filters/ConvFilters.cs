@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Linq;
+using System.Runtime.ExceptionServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -115,6 +116,7 @@ namespace MMSlab
             return true;
         }
 
+        [HandleProcessCorruptedStateExceptions]
         public static bool Conv(Bitmap b, ConvMatrix m, int dimension = 3, bool inplace = false)
         {
             // Avoid divide by zero errors
@@ -140,7 +142,10 @@ namespace MMSlab
                 int nHeight = b.Height - 2;
                 int max = b.Width * b.Height;
                 int nPixel;
+                m.Factor = m.Factor / 3 * dimension;
                 int[,] matrix = m.GetMatix(dimension);
+                int dim2 = dimension / 2;
+                //Parallel.For(0, nHeight, y =>
                 for (int y = 0; y < nHeight; ++y)
                 {
                     for (int x = 0; x < nWidth; ++x)
@@ -149,35 +154,28 @@ namespace MMSlab
                         for (int r = 0; r < 3; r++)
                         {
                             nPixel = 0;
-                            for (int i = 0; i < dimension ; i++)
+                            for (int i = 0; i < dimension; i++)
                             {
-                                for (int j =0; j < dimension ; j++)
+                                for (int j = 0; j < dimension; j++)
                                 {
-                                    //int src;
-                                    //if (x + j < 0 || x + j > b.Width)
-                                    //{
-                                    //    src = 255;
-                                    //}
-                                    //else
-                                    //{
-                                    //    if (y + i < 0 || y + i > b.Height)
-                                    //    {
-                                    //        src = 255;
-                                    //    }
-                                    //    else
-                                    //    {
-                                    //        src = pSrc[j * 3 + r + stride * i];
-                                    //    }
-                                    //}
+                                    int src = 255;
+                                    try
+                                    {
+                                        src = pSrc[j * 3 + r + stride * i];
+                                    }
+                                    catch
+                                    {
 
-                                    nPixel += pSrc[j * 3 + r + stride * i] * matrix[i , j];
+                                    }
+                                    nPixel += src * matrix[i, j];
                                 }
                             }
 
                             nPixel = nPixel / m.Factor + m.Offset;
                             if (nPixel < 0) nPixel = 0;
                             if (nPixel > 255) nPixel = 255;
-                            p[3 + r + stride] = (byte)nPixel;
+
+                            p[3 * dim2 + r + stride * dim2] = (byte)nPixel;
                         }
 
                         p += 3;
