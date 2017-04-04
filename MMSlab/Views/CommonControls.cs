@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace MMSlab.Views
 {
@@ -11,10 +12,13 @@ namespace MMSlab.Views
         private System.Windows.Forms.ToolStripStatusLabel statusLabel;
         private LollipopProgressBar progressBar { get; set; }
 
-        public CommonControls(System.Windows.Forms.ToolStripStatusLabel statusLabel, LollipopProgressBar progressBar)
+        public ListView listView { get; set; }
+
+        public CommonControls(System.Windows.Forms.ToolStripStatusLabel statusLabel, LollipopProgressBar progressBar, ListView listView)
         {
             this.statusLabel = statusLabel;
             this.progressBar = progressBar;
+            this.listView = listView;
         }
 
         public int progress

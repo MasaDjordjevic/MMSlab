@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using MMSlab.Views;
+using System.IO;
 
 namespace MMSlab
 {
@@ -42,11 +43,14 @@ namespace MMSlab
             Controls.Add(ycbcrView);
         }
 
-
         private void loadImage()
         {
             this.controller.LoadImage("G:\\mob slike\\5.7. bekstvo\\testSlika.jpg");
+            this.listView1.LargeImageList = new ImageList();
+            this.listView1.LargeImageList.ImageSize = new Size(70, 70);
+            this.listView1.View = View.LargeIcon;
         }
+    
 
         private void ycbcrToolStripMenuItem_CheckedChanged(object sender, EventArgs e)
         {
@@ -56,7 +60,7 @@ namespace MMSlab
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-            this.controller = new Controllers.Controller(this.model, this.simpleView, new CommonControls(this.statusLabel, this.progressBar));
+            this.controller = new Controllers.Controller(this.model, this.simpleView, new CommonControls(this.statusLabel, this.progressBar, this.listView1));
             this.options = new Options(this.controller);
             this.controller.options = this.options;
             loadImage();
@@ -184,6 +188,16 @@ namespace MMSlab
         {
             ((YcbCrView)ycbcrView).Strategy = new GuassianBlurStrategy();
             this.controller.SetView(this.ycbcrView);
+        }
+
+        private void undoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.controller.UndoAction();
+        }
+
+        private void redoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.controller.RedoAction();
         }
 
         private void loadToolStripMenuItem_Click(object sender, EventArgs e)

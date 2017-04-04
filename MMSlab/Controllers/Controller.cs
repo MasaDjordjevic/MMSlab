@@ -18,7 +18,10 @@ namespace MMSlab.Controllers
         private currentFilterDelegate currentFilterFunction;
         public Options options { get; set; }
         private Filters.IFilter currentFilter;
-        
+
+        private List<Action> undoList = new List<Action>(5);
+        private List<Action> redoListe = new List<Action>(5);
+       
 
         public Views.CommonControls commonControls { get; set; }
 
@@ -60,6 +63,7 @@ namespace MMSlab.Controllers
 
         public void ReloadImage()
         {
+            this.DoAction("Reload");
             this.model.LoadBitmap(this.model.FileLocation);
             this.SetImage(this.model.Bitmap);
         }
@@ -73,6 +77,7 @@ namespace MMSlab.Controllers
 
         public void BrightnessFilter()
         {
+            this.DoAction("Brightness");
             this.currentFilter.Brightness(this.model.Bitmap, new FilterOptions(40));
             this.currentFilterFunction = this.currentFilter.Brightness;
             this.view.Bitmap = this.model.Bitmap;
@@ -80,14 +85,18 @@ namespace MMSlab.Controllers
 
         public void ContrastFilter()
         {
+            this.DoAction("Contrast");
+
             this.currentFilter.Contrast(this.model.Bitmap, new FilterOptions(40));
             this.currentFilterFunction = this.currentFilter.Contrast;
             this.view.Bitmap = this.model.Bitmap;
         }
 
         public void GaussianBlur(bool inplace = false)
-        {            
-            if(inplace)
+        {
+            this.DoAction("GaussianBlur");
+
+            if (inplace)
             {
                 this.currentFilterFunction = this.currentFilter.GaussianBlurInplace;
             }
@@ -102,6 +111,7 @@ namespace MMSlab.Controllers
 
         public void EdgeDetectionHorizontal()
         {
+            this.DoAction("Edge");
             this.currentFilter.EdgeDetectHorizontal(this.model.Bitmap, null);
             this.currentFilterFunction = this.currentFilter.EdgeDetectHorizontal;
             this.view.Bitmap = this.model.Bitmap;
@@ -109,6 +119,7 @@ namespace MMSlab.Controllers
 
         public void Water()
         {
+            this.DoAction("Water");
             this.currentFilter.Water(this.model.Bitmap, new FilterOptions(15));
             this.currentFilterFunction = this.currentFilter.Water;
             this.view.Bitmap = this.model.Bitmap;
@@ -129,6 +140,53 @@ namespace MMSlab.Controllers
         {
             this.view.Zoom = this.options.Zoom;
             this.view.Bitmap = this.model.Bitmap;
+        }
+
+        public void showUndoStack()
+        {
+            this.commonControls.listView.LargeImageList.Images.Clear();
+            this.commonControls.listView.Items.Clear();
+            for(int i = 0; i < this.undoList.Count; i++)
+            {
+                this.commonControls.listView.LargeImageList.Images.Add(this.undoList[i].Bitmap);
+
+                ListViewItem item = new ListViewItem();
+                item.ImageIndex = i;
+                this.commonControls.listView.Items.Add(item);
+            }
+
+        }
+
+        public void DoAction(string name)
+        {
+            undoList.Push(new Action((Bitmap)this.model.Bitmap.Clone(), name));
+            this.showUndoStack();
+            this.view.Bitmap = this.model.Bitmap;
+            this.redoListe.Clear();
+        }
+
+        public void UndoAction()
+        {
+            Action a = undoList.Pop();
+            if (a == null)
+                return;
+            redoListe.Push(new Action((Bitmap)this.model.Bitmap.Clone(), a.Name));
+            this.showUndoStack();
+            this.model.Bitmap = a.Bitmap;
+            this.view.Bitmap = this.model.Bitmap;
+
+        }
+
+        public void RedoAction()
+        {
+            Action a = redoListe.Pop();
+            if (a == null)
+                return;
+            undoList.Push(new Action((Bitmap)this.model.Bitmap.Clone(), a.Name));
+            this.showUndoStack();
+            this.model.Bitmap = a.Bitmap;
+            this.view.Bitmap = this.model.Bitmap;
+
         }
 
     }
