@@ -318,6 +318,8 @@
             // 
             // listView1
             // 
+            this.listView1.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.listView1.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.listView1.Dock = System.Windows.Forms.DockStyle.Right;
             this.listView1.Location = new System.Drawing.Point(1008, 28);
             this.listView1.Name = "listView1";

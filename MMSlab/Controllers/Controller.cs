@@ -155,6 +155,17 @@ namespace MMSlab.Controllers
                 this.commonControls.listView.Items.Add(item);
             }
 
+            this.commonControls.listView.Items.Add("--Redo--");
+
+            for (int i = 0; i < this.redoListe.Count; i++)
+            {
+                this.commonControls.listView.LargeImageList.Images.Add(this.redoListe[i].Bitmap);
+
+                ListViewItem item = new ListViewItem();
+                item.ImageIndex = i + this.undoList.Count;
+                this.commonControls.listView.Items.Add(item);
+            }
+
         }
 
         public void DoAction(string name)
