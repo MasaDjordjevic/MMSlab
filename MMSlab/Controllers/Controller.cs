@@ -10,7 +10,7 @@ using System.Windows.Forms;
 
 namespace MMSlab.Controllers
 {
-    public class Controller: IController
+    public class Controller : IController
     {
         private Models.IModel model;
         private Views.IView view;
@@ -21,7 +21,7 @@ namespace MMSlab.Controllers
 
         private List<Action> undoList = new List<Action>(5);
         private List<Action> redoListe = new List<Action>(5);
-       
+
 
         public Views.CommonControls commonControls { get; set; }
 
@@ -36,7 +36,7 @@ namespace MMSlab.Controllers
 
         public void SetMode()
         {
-            if(this.options.CoreMode)
+            if (this.options.CoreMode)
             {
                 this.currentFilter = new Filters.CoreFilters(this.commonControls);
             }
@@ -51,12 +51,15 @@ namespace MMSlab.Controllers
             this.view = view;
             this.view.Bitmap = this.model.Bitmap;
             this.view.BringToFront();
-        }        
+        }
 
-        
+
 
         public void LoadImage(string fileLocation)
         {
+            if (this.model.Bitmap != null)
+                this.DoAction("Load");
+
             this.model.LoadBitmap(fileLocation);
             this.SetImage(this.model.Bitmap);
         }
@@ -72,7 +75,7 @@ namespace MMSlab.Controllers
         {
             this.model.Bitmap = bitmap;
             this.view.Bitmap = this.model.Bitmap;
-            this.commonControls.status = bitmap.Width.ToString() + " x " + bitmap.Height.ToString() + "         " + (this.model.FileSize/1024).ToString() + "KB";
+            this.commonControls.status = bitmap.Width.ToString() + " x " + bitmap.Height.ToString() + "         " + (this.model.FileSize / 1024).ToString() + "KB";
         }
 
         public void BrightnessFilter()
@@ -127,7 +130,7 @@ namespace MMSlab.Controllers
 
         public void WeightChangedRedo()
         {
-            if(this.currentFilterFunction == null)
+            if (this.currentFilterFunction == null)
             {
                 MessageBox.Show("Select filter first");
                 return;
@@ -146,7 +149,7 @@ namespace MMSlab.Controllers
         {
             this.commonControls.listView.LargeImageList.Images.Clear();
             this.commonControls.listView.Items.Clear();
-            for(int i = 0; i < this.undoList.Count; i++)
+            for (int i = 0; i < this.undoList.Count; i++)
             {
                 this.commonControls.listView.LargeImageList.Images.Add(this.undoList[i].Bitmap);
 

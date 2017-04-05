@@ -204,7 +204,7 @@ namespace MMSlab
                 int srcOffset = strideSrc - bSrc.Width * 3;
                 int nWidth = b.Width * 3;
                 int nHeight = b.Height;
-                m.Factor = m.Factor / 3 * dimension;
+                m.Factor = (int)(m.Factor / (3*0.8) * (dimension * 0.8));
                 int[,] matrix = m.GetMatix(dimension);
 
                 //Parallel.For(0, nHeight, y =>
