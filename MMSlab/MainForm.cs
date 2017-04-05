@@ -54,6 +54,7 @@ namespace MMSlab
 
         private void ycbcrToolStripMenuItem_CheckedChanged(object sender, EventArgs e)
         {
+            ((YcbCrView)ycbcrView).Strategy = new YCbCrStrategy();
             this.controller.SetView(ycbcrToolStripMenuItem.Checked ? this.ycbcrView : this.simpleView);
             this.trackBar1.Enabled = !ycbcrToolStripMenuItem.Checked;
         }

@@ -5,6 +5,7 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.Linq;
 using System.Runtime.ExceptionServices;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -116,19 +117,81 @@ namespace MMSlab
             return true;
         }
 
-        [HandleProcessCorruptedStateExceptions]
+        public static Bitmap ExtendBitmap(Bitmap b, int pixelCount)
+        {
+            var white = new Bitmap(1, 1);
+            white.SetPixel(0, 0, Color.White);
+            Bitmap retVal = new Bitmap(white, b.Width + pixelCount * 2, b.Height + pixelCount * 2);
+            BitmapData bmData = b.LockBits(new Rectangle(0, 0, b.Width, b.Height), ImageLockMode.ReadWrite, PixelFormat.Format24bppRgb);
+            BitmapData bmRet = retVal.LockBits(new Rectangle(pixelCount, pixelCount, b.Width, b.Height), ImageLockMode.ReadWrite, PixelFormat.Format24bppRgb);
+
+
+            IntPtr srcPtr = bmData.Scan0;
+            IntPtr destPtr = bmRet.Scan0;
+            byte[] buffer = new byte[bmData.Stride];
+            for (int i = 0; i < bmData.Height; ++i)
+            {
+                Marshal.Copy(srcPtr, buffer, 0, buffer.Length);
+                Marshal.Copy(buffer, 0, destPtr, buffer.Length);
+
+                srcPtr += bmData.Stride;
+                destPtr += bmRet.Stride;
+            }
+
+            //int stride = bmData.Stride;
+            //int retStride = bmRet.Stride;
+            //System.IntPtr Scan0 = bmData.Scan0;
+            //System.IntPtr SrcScan0 = bmRet.Scan0;
+            //unsafe
+            //{
+            //    byte* p = (byte*)(void*)Scan0;
+            //    byte* pRet = (byte*)(void*)SrcScan0;
+            //    int nOffset = stride - b.Width * 3;
+            //    int retOffset = retStride - retVal.Width * 3;
+            //    int nWidth = b.Width * 3;
+
+            //    for (int y = 0; y < b.Height; y++)
+            //    {
+            //        for (int x = 0; x < nWidth; x++)
+            //        {
+            //            byte a = p[0];
+            //            pRet[0] = a;
+
+            //            p++;
+            //            pRet++;
+            //        }
+
+            //        p += nOffset;
+            //        pRet += retOffset;
+            //    }      
+            //}
+            b.UnlockBits(bmData);
+            retVal.UnlockBits(bmRet);
+
+            return retVal;
+        }
+
+        public static Bitmap Conv2(Bitmap b, ConvMatrix m, int dimension = 3, bool inplace = false)
+        {
+            int dim2 = dimension / 2;
+
+            Bitmap bSrc = ExtendBitmap(b, dim2);
+            return bSrc;
+        }
+
         public static bool Conv(Bitmap b, ConvMatrix m, int dimension = 3, bool inplace = false)
         {
             // Avoid divide by zero errors
             if (0 == m.Factor) return false;
+            int dim2 = dimension / 2;
 
-            Bitmap bSrc = (Bitmap)b.Clone();
+            Bitmap bSrc = ExtendBitmap((Bitmap)b.Clone(), dim2);
 
-            // GDI+ still lies to us - the return format is BGR, NOT RGB.
             BitmapData bmData = b.LockBits(new Rectangle(0, 0, b.Width, b.Height), ImageLockMode.ReadWrite, PixelFormat.Format24bppRgb);
             BitmapData bmSrc = bSrc.LockBits(new Rectangle(0, 0, bSrc.Width, bSrc.Height), ImageLockMode.ReadWrite, PixelFormat.Format24bppRgb);
 
             int stride = bmData.Stride;
+            int strideSrc = bmSrc.Stride;
             System.IntPtr Scan0 = bmData.Scan0;
             System.IntPtr SrcScan0 = bmSrc.Scan0;
 
@@ -138,51 +201,39 @@ namespace MMSlab
                 byte* pSrc = inplace ? (byte*)(void*)Scan0 : (byte*)(void*)SrcScan0;
 
                 int nOffset = stride - b.Width * 3;
-                int nWidth = b.Width - 2;
-                int nHeight = b.Height - 2;
-                int max = b.Width * b.Height;
-                int nPixel;
+                int srcOffset = strideSrc - bSrc.Width * 3;
+                int nWidth = b.Width * 3;
+                int nHeight = b.Height;
                 m.Factor = m.Factor / 3 * dimension;
                 int[,] matrix = m.GetMatix(dimension);
-                int dim2 = dimension / 2;
+
                 //Parallel.For(0, nHeight, y =>
                 for (int y = 0; y < nHeight; ++y)
                 {
                     for (int x = 0; x < nWidth; ++x)
                     {
 
-                        for (int r = 0; r < 3; r++)
+                        int nPixel = 0;
+                        for (int i = 0; i < dimension; i++)
                         {
-                            nPixel = 0;
-                            for (int i = 0; i < dimension; i++)
+                            for (int j = 0; j < dimension; j++)
                             {
-                                for (int j = 0; j < dimension; j++)
-                                {
-                                    int src = 255;
-                                    try
-                                    {
-                                        src = pSrc[j * 3 + r + stride * i];
-                                    }
-                                    catch
-                                    {
-
-                                    }
-                                    nPixel += src * matrix[i, j];
-                                }
+                                nPixel += pSrc[j * 3 + 0 + strideSrc * i] * matrix[i, j];
                             }
-
-                            nPixel = nPixel / m.Factor + m.Offset;
-                            if (nPixel < 0) nPixel = 0;
-                            if (nPixel > 255) nPixel = 255;
-
-                            p[3 * dim2 + r + stride * dim2] = (byte)nPixel;
                         }
 
-                        p += 3;
-                        pSrc += 3;
+                        nPixel = nPixel / m.Factor + m.Offset;
+                        if (nPixel < 0) nPixel = 0;
+                        if (nPixel > 255) nPixel = 255;
+
+                        p[0] = (byte)nPixel;
+
+
+                        p += 1;
+                        pSrc += 1;
                     }
                     p += nOffset;
-                    pSrc += nOffset;
+                    pSrc += srcOffset + dim2 * 2 * 3;
                 }
 
             }
