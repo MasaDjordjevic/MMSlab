@@ -52,12 +52,12 @@
             this.redoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.statusLabel = new System.Windows.Forms.ToolStripStatusLabel();
-            this.progressBar = new LollipopProgressBar();
             this.trackBar1 = new System.Windows.Forms.TrackBar();
-            this.textBoxPlaceholder1 = new MMSlab.Controls.TextBoxPlaceholder();
-            this.historamToggle = new LollipopToggleText();
             this.listView1 = new System.Windows.Forms.ListView();
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
+            this.historamToggle = new LollipopToggleText();
+            this.textBoxPlaceholder1 = new MMSlab.Controls.TextBoxPlaceholder();
+            this.progressBar = new LollipopProgressBar();
             this.menuStrip1.SuspendLayout();
             this.statusStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
@@ -79,7 +79,7 @@
             // 
             this.loadToolStripMenuItem.Name = "loadToolStripMenuItem";
             this.loadToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.L)));
-            this.loadToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.loadToolStripMenuItem.Size = new System.Drawing.Size(151, 22);
             this.loadToolStripMenuItem.Text = "Load";
             this.loadToolStripMenuItem.Click += new System.EventHandler(this.loadToolStripMenuItem_Click);
             // 
@@ -87,7 +87,7 @@
             // 
             this.reloadToolStripMenuItem.Name = "reloadToolStripMenuItem";
             this.reloadToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.R)));
-            this.reloadToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.reloadToolStripMenuItem.Size = new System.Drawing.Size(151, 22);
             this.reloadToolStripMenuItem.Text = "Reload";
             this.reloadToolStripMenuItem.Click += new System.EventHandler(this.reloadToolStripMenuItem_Click);
             // 
@@ -95,7 +95,7 @@
             // 
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
             this.saveToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(151, 22);
             this.saveToolStripMenuItem.Text = "Save";
             this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
             // 
@@ -103,7 +103,7 @@
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
             this.exitToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.F4)));
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(151, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
@@ -156,11 +156,12 @@
             // 
             // toolStripMenuItem1
             // 
+            this.toolStripMenuItem1.CheckOnClick = true;
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
             this.toolStripMenuItem1.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.G)));
             this.toolStripMenuItem1.Size = new System.Drawing.Size(246, 22);
             this.toolStripMenuItem1.Text = "Gussian Blur 2x2";
-            this.toolStripMenuItem1.Click += new System.EventHandler(this.toolStripMenuItem1_Click);
+            this.toolStripMenuItem1.CheckedChanged += new System.EventHandler(this.toolStripMenuItem1_CheckedChanged);
             // 
             // contrastToolStripMenuItem
             // 
@@ -231,7 +232,7 @@
             // 
             this.undoToolStripMenuItem.Name = "undoToolStripMenuItem";
             this.undoToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Z)));
-            this.undoToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.undoToolStripMenuItem.Size = new System.Drawing.Size(144, 22);
             this.undoToolStripMenuItem.Text = "Undo";
             this.undoToolStripMenuItem.Click += new System.EventHandler(this.undoToolStripMenuItem_Click);
             // 
@@ -239,7 +240,7 @@
             // 
             this.redoToolStripMenuItem.Name = "redoToolStripMenuItem";
             this.redoToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Y)));
-            this.redoToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.redoToolStripMenuItem.Size = new System.Drawing.Size(144, 22);
             this.redoToolStripMenuItem.Text = "Redo";
             this.redoToolStripMenuItem.Click += new System.EventHandler(this.redoToolStripMenuItem_Click);
             // 
@@ -261,17 +262,6 @@
             this.statusLabel.Size = new System.Drawing.Size(118, 17);
             this.statusLabel.Text = "toolStripStatusLabel1";
             // 
-            // progressBar
-            // 
-            this.progressBar.BGColor = "#508ef5";
-            this.progressBar.Dock = System.Windows.Forms.DockStyle.Top;
-            this.progressBar.Location = new System.Drawing.Point(0, 24);
-            this.progressBar.Name = "progressBar";
-            this.progressBar.Size = new System.Drawing.Size(1129, 4);
-            this.progressBar.TabIndex = 2;
-            this.progressBar.Text = "lollipopProgressBar1";
-            this.progressBar.Value = 10;
-            // 
             // trackBar1
             // 
             this.trackBar1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -286,36 +276,6 @@
             this.trackBar1.TickStyle = System.Windows.Forms.TickStyle.Both;
             this.trackBar1.Value = 10;
             this.trackBar1.ValueChanged += new System.EventHandler(this.trackBar1_ValueChanged);
-            // 
-            // textBoxPlaceholder1
-            // 
-            this.textBoxPlaceholder1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBoxPlaceholder1.ForeColor = System.Drawing.Color.Gray;
-            this.textBoxPlaceholder1.Location = new System.Drawing.Point(225, 2);
-            this.textBoxPlaceholder1.MaxLength = 3;
-            this.textBoxPlaceholder1.Name = "textBoxPlaceholder1";
-            this.textBoxPlaceholder1.Placeholder = "Weight";
-            this.textBoxPlaceholder1.PlaceholderColor = System.Drawing.Color.Gray;
-            this.textBoxPlaceholder1.Size = new System.Drawing.Size(42, 20);
-            this.textBoxPlaceholder1.TabIndex = 5;
-            this.textBoxPlaceholder1.Text = "Weight";
-            this.textBoxPlaceholder1.Tooltip = "press a to apply, r to redo";
-            this.textBoxPlaceholder1.Visible = false;
-            this.textBoxPlaceholder1.KeyUp += new System.Windows.Forms.KeyEventHandler(this.textBoxPlaceholder1_KeyUp);
-            // 
-            // historamToggle
-            // 
-            this.historamToggle.AutoSize = true;
-            this.historamToggle.EllipseBorderColor = "#3b73d1";
-            this.historamToggle.EllipseColor = "#508ef5";
-            this.historamToggle.Location = new System.Drawing.Point(296, 1);
-            this.historamToggle.Name = "historamToggle";
-            this.historamToggle.Size = new System.Drawing.Size(157, 19);
-            this.historamToggle.TabIndex = 6;
-            this.historamToggle.Text = "show histograms";
-            this.historamToggle.UseVisualStyleBackColor = true;
-            this.historamToggle.Visible = false;
-            this.historamToggle.CheckedChanged += new System.EventHandler(this.historamToggle_CheckedChanged);
             // 
             // listView1
             // 
@@ -333,6 +293,47 @@
             this.imageList1.ColorDepth = System.Windows.Forms.ColorDepth.Depth8Bit;
             this.imageList1.ImageSize = new System.Drawing.Size(16, 16);
             this.imageList1.TransparentColor = System.Drawing.Color.Transparent;
+            // 
+            // historamToggle
+            // 
+            this.historamToggle.AutoSize = true;
+            this.historamToggle.EllipseBorderColor = "#3b73d1";
+            this.historamToggle.EllipseColor = "#508ef5";
+            this.historamToggle.Location = new System.Drawing.Point(296, 1);
+            this.historamToggle.Name = "historamToggle";
+            this.historamToggle.Size = new System.Drawing.Size(157, 19);
+            this.historamToggle.TabIndex = 6;
+            this.historamToggle.Text = "show histograms";
+            this.historamToggle.UseVisualStyleBackColor = true;
+            this.historamToggle.Visible = false;
+            this.historamToggle.CheckedChanged += new System.EventHandler(this.historamToggle_CheckedChanged);
+            // 
+            // textBoxPlaceholder1
+            // 
+            this.textBoxPlaceholder1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBoxPlaceholder1.ForeColor = System.Drawing.Color.Gray;
+            this.textBoxPlaceholder1.Location = new System.Drawing.Point(225, 2);
+            this.textBoxPlaceholder1.MaxLength = 3;
+            this.textBoxPlaceholder1.Name = "textBoxPlaceholder1";
+            this.textBoxPlaceholder1.Placeholder = "Weight";
+            this.textBoxPlaceholder1.PlaceholderColor = System.Drawing.Color.Gray;
+            this.textBoxPlaceholder1.Size = new System.Drawing.Size(42, 20);
+            this.textBoxPlaceholder1.TabIndex = 5;
+            this.textBoxPlaceholder1.Text = "Weight";
+            this.textBoxPlaceholder1.Tooltip = "press a to apply, r to redo";
+            this.textBoxPlaceholder1.Visible = false;
+            this.textBoxPlaceholder1.KeyUp += new System.Windows.Forms.KeyEventHandler(this.textBoxPlaceholder1_KeyUp);
+            // 
+            // progressBar
+            // 
+            this.progressBar.BGColor = "#508ef5";
+            this.progressBar.Dock = System.Windows.Forms.DockStyle.Top;
+            this.progressBar.Location = new System.Drawing.Point(0, 24);
+            this.progressBar.Name = "progressBar";
+            this.progressBar.Size = new System.Drawing.Size(1129, 4);
+            this.progressBar.TabIndex = 2;
+            this.progressBar.Text = "lollipopProgressBar1";
+            this.progressBar.Value = 10;
             // 
             // MainForm
             // 

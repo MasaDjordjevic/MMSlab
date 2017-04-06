@@ -185,7 +185,8 @@ namespace MMSlab
             if (0 == m.Factor) return false;
             int dim2 = dimension / 2;
 
-            Bitmap bSrc = ExtendBitmap((Bitmap)b.Clone(), dim2);
+
+            Bitmap bSrc = inplace ? (Bitmap)b.Clone() : ExtendBitmap((Bitmap)b.Clone(), dim2);
 
             BitmapData bmData = b.LockBits(new Rectangle(0, 0, b.Width, b.Height), ImageLockMode.ReadWrite, PixelFormat.Format24bppRgb);
             BitmapData bmSrc = bSrc.LockBits(new Rectangle(0, 0, bSrc.Width, bSrc.Height), ImageLockMode.ReadWrite, PixelFormat.Format24bppRgb);
@@ -204,7 +205,26 @@ namespace MMSlab
                 int srcOffset = strideSrc - bSrc.Width * 3;
                 int nWidth = b.Width * 3;
                 int nHeight = b.Height;
-                m.Factor = (int)(m.Factor / (3*0.8) * (dimension * 0.8));
+
+                if (inplace)
+                {
+                    nWidth -= dimension - 1;
+                    nHeight -= dimension - 1;
+                }
+
+                int dest = 0;
+                if (inplace)
+                {
+                    dest = 3 * dim2 + stride * dim2;
+                }
+
+
+                if (!inplace)
+                {
+                    srcOffset += +dim2 * 2 * 3;
+                }
+
+                m.Factor = (int)(m.Factor / (3 * 0.8) * (dimension * 0.8));
                 int[,] matrix = m.GetMatix(dimension);
 
                 //Parallel.For(0, nHeight, y =>
@@ -226,14 +246,14 @@ namespace MMSlab
                         if (nPixel < 0) nPixel = 0;
                         if (nPixel > 255) nPixel = 255;
 
-                        p[0] = (byte)nPixel;
+                        p[dest] = (byte)nPixel;
 
 
                         p += 1;
                         pSrc += 1;
                     }
                     p += nOffset;
-                    pSrc += srcOffset + dim2 * 2 * 3;
+                    pSrc += srcOffset;
                 }
 
             }

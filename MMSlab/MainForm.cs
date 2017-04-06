@@ -45,7 +45,7 @@ namespace MMSlab
 
         private void loadImage()
         {
-            this.controller.LoadImage("G:\\mob slike\\5.7. bekstvo\\testSlika.jpg");
+            this.controller.LoadImage(@"C:\Users\student\Downloads\Slike\47239943-landscape-image.png");
             this.listView1.LargeImageList = new ImageList();
             this.listView1.LargeImageList.ImageSize = new Size(70, 70);
             this.listView1.View = View.LargeIcon;
@@ -185,11 +185,7 @@ namespace MMSlab
             this.textBoxPlaceholder1.Visible = true;
         }
 
-        private void toolStripMenuItem1_Click(object sender, EventArgs e)
-        {
-            ((YcbCrView)ycbcrView).Strategy = new GuassianBlurStrategy();
-            this.controller.SetView(this.ycbcrView);
-        }
+       
 
         private void undoToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -205,7 +201,7 @@ namespace MMSlab
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
 
-            openFileDialog.InitialDirectory = "G:\\mob slike\\5.7. bekstvo";
+            openFileDialog.InitialDirectory = @"C:\Users\student\Downloads\Slike";
             openFileDialog.Filter = "Jpeg files (*.jpg)|*.jpg|Bitmap files (*.bmp)|*.bmp|PNG files(*.png)|*.png|All valid files|*.bmp/*.jpg/*.png";
             openFileDialog.FilterIndex = 1;
             openFileDialog.RestoreDirectory = true;
@@ -221,6 +217,20 @@ namespace MMSlab
                 {
                     MessageBox.Show("Error: Could not read file from disk. Original error: " + ex.Message);
                 }
+            }
+        }
+
+        private void toolStripMenuItem1_CheckedChanged(object sender, EventArgs e)
+        {
+            if (toolStripMenuItem1.Checked)
+            {
+                ((YcbCrView)ycbcrView).Strategy = new GuassianBlurStrategy();
+                this.controller.SetView(this.ycbcrView);
+            }
+            else
+            {
+                this.controller.SetView(this.simpleView);
+
             }
         }
     }

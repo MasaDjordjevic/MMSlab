@@ -60,14 +60,17 @@ namespace MMSlab.Controllers
             if (this.model.Bitmap != null)
                 this.DoAction("Load");
 
-            this.model.LoadBitmap(fileLocation);
+            if (!this.model.LoadBitmap(fileLocation))
+                return;
             this.SetImage(this.model.Bitmap);
         }
 
         public void ReloadImage()
         {
             this.DoAction("Reload");
-            this.model.LoadBitmap(this.model.FileLocation);
+            if (!this.model.LoadBitmap(this.model.FileLocation))
+                return;
+           
             this.SetImage(this.model.Bitmap);
         }
 
