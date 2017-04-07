@@ -28,12 +28,35 @@ namespace MMSlab
             list.RemoveAt(0);
             return el;
         }
-
+        public static List<bool> ToBoolList(this string s)
+        {
+            return s.Select(a => a == '0' ? false : true).ToList();
+        }
 
         public static BitArray ToBitArray(this string s)
         {
-            List<bool> list = s.Select(a => a == '0' ? true : false).ToList();          
+            List<bool> list = s.Select(a => a == '0' ? false : true).ToList();          
             return new BitArray(list.ToArray());
+        }
+
+        public static List<bool> ToList(this BitArray array)
+        {
+            List<bool> list = new List<bool>();
+            for(int i = 0; i< array.Count; i++)
+            {
+                list.Add(array[i]);
+            }
+            return list;
+        }
+
+        public static string ToStr(this List<bool> list)
+        {
+           return String.Concat(list.Select(a => a ? '1' : '0'));
+        }
+
+        public static string ToStr(this bool b)
+        {
+            return b ? "1" : "0";
         }
     }
 }

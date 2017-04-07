@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,8 +12,8 @@ namespace MMSlab.Huffman
     public class HuffmanTree
     {
         public HuffmanNode Root { get; set; }
-        public Dictionary<byte, BitArray> ValueDict = new Dictionary<byte, BitArray>();
-        public Dictionary<BitArray, byte> CodeDict = new Dictionary<BitArray, byte>();
+        public Dictionary<byte, List<bool>> ValueDict = new Dictionary<byte, List<bool>>();
+        public Dictionary<string, byte> CodeDict = new Dictionary<string, byte>();
 
 
 
@@ -20,7 +21,7 @@ namespace MMSlab.Huffman
         {
             int[] stats = ColorModels.generateFrequencyStatistics(b);
             List<HuffmanNode> retList = new List<HuffmanNode>();
-            for(int i=0; i<256; i++)
+            for (int i = 0; i < 256; i++)
             {
                 retList.Add(new HuffmanNode((byte)i, stats[i]));
             }
@@ -36,13 +37,13 @@ namespace MMSlab.Huffman
 
         public static HuffmanNode ListToTree(List<HuffmanNode> list)
         {
-            while(list.Count > 1)
+            while (list.Count > 1)
             {
                 list.Add(new HuffmanNode(list[0], list[1]));
                 list.RemoveRange(0, 2);
                 list.Sort();
             }
-            if(list.Count == 1)
+            if (list.Count == 1)
             {
                 return list[0];
             }
@@ -59,19 +60,95 @@ namespace MMSlab.Huffman
 
             if (root == null)
                 return;
-            if(root.left == null && root.right == null)
+            if (root.left == null && root.right == null)
             {
                 root.code = code;
-                BitArray bCode = root.code.ToBitArray();
-                this.ValueDict.Add(root.value, bCode);
-                this.CodeDict.Add(bCode, root.value);
+                this.ValueDict.Add(root.value, root.code.ToBoolList());
+                this.CodeDict.Add(root.code, root.value);
                 return;
             }
             SetCodes(root.left, code + "0");
             SetCodes(root.right, code + "1");
         }
-        
-        
-        
+
+        public BitArray Encode(Bitmap b)
+        {
+            List<bool> result = new List<bool>();
+
+            BitmapData bmData = b.LockBits(new Rectangle(0, 0, b.Width, b.Height), ImageLockMode.ReadWrite, b.PixelFormat);// PixelFormat.Format24bppRgb);
+
+            int stride = bmData.Stride;
+            System.IntPtr Scan0 = bmData.Scan0;
+
+            int[] data = new int[256];
+
+            unsafe
+            {
+                byte* p = (byte*)(void*)Scan0;
+                int nOffset = stride - b.Width * 3;
+                int nWidth = b.Width * 3;
+
+
+                for (int y = 0; y < b.Height; ++y)
+                {
+                    for (int x = 0; x < nWidth; ++x)
+                    {
+                        result.AddRange(this.ValueDict[p[0]]);
+                        p++;
+                    }
+                    p += nOffset;
+                }
+            }
+
+            b.UnlockBits(bmData);
+
+            return new BitArray(result.ToArray());
+        }
+
+        public Bitmap Decode(BitArray bits, int width, int height)
+        {
+            Bitmap b = new Bitmap(width, height, PixelFormat.Format24bppRgb);
+
+            BitmapData bmData = b.LockBits(new Rectangle(0, 0, b.Width, b.Height), ImageLockMode.ReadWrite, b.PixelFormat);// PixelFormat.Format24bppRgb);
+
+            int stride = bmData.Stride;
+            System.IntPtr Scan0 = bmData.Scan0;
+
+            int[] data = new int[256];
+
+            unsafe
+            {
+                byte* p = (byte*)(void*)Scan0;
+                int nOffset = stride - b.Width * 3;
+                int nWidth = b.Width * 3;
+                int widthCounter = 0;
+                
+                string testString = "";
+
+                for (int i = 0; i < bits.Length; i++)
+                {
+                    testString += bits[i].ToStr();
+
+                    if (this.CodeDict.ContainsKey(testString))
+                    {
+                        byte pom = this.CodeDict[testString];
+                        p[0] = pom;
+                        p++;
+                        widthCounter++;
+                        if(widthCounter == nWidth)
+                        {
+                            widthCounter = 0;
+                            p += nOffset;
+                        }
+                        testString = "";
+                    }
+                }
+            }
+
+            b.UnlockBits(bmData);
+
+            return b;
+        }
+
     }
 }
