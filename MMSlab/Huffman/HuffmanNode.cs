@@ -8,14 +8,14 @@ namespace MMSlab.Huffman
 {
     public class HuffmanNode : IComparable<HuffmanNode>
     {
-        public sbyte value;
+        public byte value;
         public int frequency;
         public string code;
         public HuffmanNode left;
         public HuffmanNode right;
 
 
-        public HuffmanNode(sbyte value, int frequency = 1)
+        public HuffmanNode(byte value, int frequency = 1)
         {
             this.value = value;
             this.frequency = frequency;

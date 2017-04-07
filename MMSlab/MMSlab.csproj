@@ -105,6 +105,8 @@
     <Compile Include="Filters\IFilter.cs" />
     <Compile Include="Filters\SimpleFilters.cs" />
     <Compile Include="Extentions.cs" />
+    <Compile Include="Huffman\HuffmanNode.cs" />
+    <Compile Include="Huffman\HuffmanTree.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -137,6 +139,7 @@
     <Compile Include="Views\YcbCrView.Designer.cs">
       <DependentUpon>YcbCrView.cs</DependentUpon>
     </Compile>
+    <Compile Include="YImageFormat\YImageFormat.cs" />
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,7 +11,7 @@ namespace MMSlab
     {
         public static void Push<T>(this List<T> list, T el)
         {
-            if(list.Capacity == list.Count)
+            if (list.Capacity == list.Count)
             {
                 list.RemoveAt(list.Count - 1);
             }
@@ -27,6 +28,12 @@ namespace MMSlab
             list.RemoveAt(0);
             return el;
         }
-        
+
+
+        public static BitArray ToBitArray(this string s)
+        {
+            List<bool> list = s.Select(a => a == '0' ? true : false).ToList();          
+            return new BitArray(list.ToArray());
+        }
     }
 }

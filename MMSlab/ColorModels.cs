@@ -145,10 +145,14 @@ namespace MMSlab
                         green = p[1];
                         red = p[2];
 
-                        YCbCr ycbcr = ColorModels.RGBtoYCbCr(new RGB(red, green, blue));
-                        data[ycbcr.Y]++;
-                        data[ycbcr.Cb]++;
-                        data[ycbcr.Cr]++;
+                        data[blue]++;
+                        data[green]++;
+                        data[red]++;
+
+                        //YCbCr ycbcr = ColorModels.RGBtoYCbCr(new RGB(red, green, blue));
+                        //data[ycbcr.Y]++;
+                        //data[ycbcr.Cb]++;
+                        //data[ycbcr.Cr]++;
 
 
                         p += 3;
