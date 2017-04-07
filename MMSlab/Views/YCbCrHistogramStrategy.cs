@@ -16,7 +16,7 @@ namespace MMSlab.Views
             
         }
 
-        public override int[][] generateCharts(Bitmap b)
+        public override int[][] generateHistogramStatistics(Bitmap b)
         {
             DataPoint[,] channels = new DataPoint[3, 256];
             BitmapData bmData = b.LockBits(new Rectangle(0, 0, b.Width, b.Height), ImageLockMode.ReadWrite, b.PixelFormat);// PixelFormat.Format24bppRgb);

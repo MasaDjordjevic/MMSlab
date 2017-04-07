@@ -14,7 +14,7 @@ namespace MMSlab.Views
         {
             return null;
         }
-        public virtual int[][] generateCharts(Bitmap b)
+        public virtual int[][] generateHistogramStatistics(Bitmap b)
         {
             return null;
         }

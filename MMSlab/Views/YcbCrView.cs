@@ -147,7 +147,7 @@ namespace MMSlab.Views
 
                 g.DrawImage(this.Bitmap, this.rectangles[0]);
 
-                int[][] data = this.Strategy.generateCharts(this.Bitmap);
+                int[][] data = this.Strategy.generateHistogramStatistics(this.Bitmap);
                 for (int j = 0; j < 3; j++)
                 {
                     this.charts[j + 1].Series["s"].Points.Clear();

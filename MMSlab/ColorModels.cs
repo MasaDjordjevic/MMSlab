@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -118,6 +119,47 @@ namespace MMSlab
             byte resCr = (byte)(128 + (0.5 * rgb.R) - (0.418688 * rgb.G) - (0.081312 * rgb.B));
 
             return new YCbCr(resY, resCb, resCr);
+        }
+
+
+        public static int[] generateFrequencyStatistics(Bitmap b)
+        {
+            BitmapData bmData = b.LockBits(new Rectangle(0, 0, b.Width, b.Height), ImageLockMode.ReadWrite, b.PixelFormat);// PixelFormat.Format24bppRgb);
+
+            int stride = bmData.Stride;
+            System.IntPtr Scan0 = bmData.Scan0;
+
+            int[] data = new int[256];
+           
+            unsafe
+            {
+                byte* p = (byte*)(void*)Scan0;
+                int nOffset = stride - b.Width * 3;
+                byte red, green, blue;
+
+                for (int y = 0; y < b.Height; ++y)
+                {
+                    for (int x = 0; x < b.Width; ++x)
+                    {
+                        blue = p[0];
+                        green = p[1];
+                        red = p[2];
+
+                        YCbCr ycbcr = ColorModels.RGBtoYCbCr(new RGB(red, green, blue));
+                        data[ycbcr.Y]++;
+                        data[ycbcr.Cb]++;
+                        data[ycbcr.Cr]++;
+
+
+                        p += 3;
+                    }
+                    p += nOffset;
+                }
+            }
+
+            b.UnlockBits(bmData);
+
+            return data;
         }
 
     }
