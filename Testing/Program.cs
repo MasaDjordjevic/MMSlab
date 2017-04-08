@@ -16,9 +16,7 @@ namespace Testing
     {
         static void Main(string[] args)
         {
-            RGB a = new RGB(20, 200,12);
-            YCbCr y = ColorModels.RGBtoYCbCr(a);
-            RGB aRestored = ColorModels.YCbCrToRGB(y);
+            HuffmanTest();
 
        }
 
@@ -36,7 +34,7 @@ namespace Testing
 
         public static void HuffmanTest()
         {
-            Bitmap test = CreateTestBitmap();
+            byte[] test = new byte[] { 255, 255, 255, 255, 0, 0, 255, 0, 0, 0, 128, 0 };
 
             HuffmanTree tree = new HuffmanTree(test);
             PrintCodes(tree.Root);
@@ -48,14 +46,10 @@ namespace Testing
                     Console.WriteLine("Dict: " + a + " Val: " + tree.CodeDict[a]);
                 }
             }
-            Bitmap decoded = tree.Decode(code, 2, 2);
-
-            Color[] dec = new Color[4];
-            dec[0] = decoded.GetPixel(0, 0);
-            dec[1] = decoded.GetPixel(0, 1);
-            dec[2] = decoded.GetPixel(1, 0);
-            dec[3] = decoded.GetPixel(1, 1);
+            byte[] decoded = tree.Decode(code, 2, 2);           
         }
+
+        
 
         public static Bitmap CreateTestBitmap()
         {

@@ -17,9 +17,9 @@ namespace MMSlab.Huffman
 
 
 
-        public static List<HuffmanNode> GetList(Bitmap b)
+        public static List<HuffmanNode> GetList(byte[] data)
         {
-            int[] stats = ColorModels.generateFrequencyStatistics(b);
+            int[] stats = generateFrequencyStatistics(data);
             List<HuffmanNode> retList = new List<HuffmanNode>();
             for (int i = 0; i < 256; i++)
             {
@@ -29,9 +29,21 @@ namespace MMSlab.Huffman
             return retList;
         }
 
-        public HuffmanTree(Bitmap b)
+        public static int[] generateFrequencyStatistics(byte[] data)
+        {            
+            int[] ret = new int[256];
+
+            for(int i = 0; i < data.Length; i++)
+            {
+                ret[data[i]]++;
+            }  
+                       
+            return ret;
+        }
+
+        public HuffmanTree(byte[] data)
         {
-            this.Root = ListToTree(GetList(b));
+            this.Root = ListToTree(GetList(data));
             this.SetCodes();
         }
 
@@ -71,57 +83,21 @@ namespace MMSlab.Huffman
             SetCodes(root.right, code + "1");
         }
 
-        public BitArray Encode(Bitmap b)
+        public BitArray Encode(byte[] data)
         {
             List<bool> result = new List<bool>();
 
-            BitmapData bmData = b.LockBits(new Rectangle(0, 0, b.Width, b.Height), ImageLockMode.ReadWrite, b.PixelFormat);// PixelFormat.Format24bppRgb);
-
-            int stride = bmData.Stride;
-            System.IntPtr Scan0 = bmData.Scan0;
-
-            int[] data = new int[256];
-
-            unsafe
+            for(int i = 0; i < data.Length; i++)
             {
-                byte* p = (byte*)(void*)Scan0;
-                int nOffset = stride - b.Width * 3;
-                int nWidth = b.Width * 3;
-
-
-                for (int y = 0; y < b.Height; ++y)
-                {
-                    for (int x = 0; x < nWidth; ++x)
-                    {
-                        result.AddRange(this.ValueDict[p[0]]);
-                        p++;
-                    }
-                    p += nOffset;
-                }
+                result.AddRange(this.ValueDict[data[i]]);
             }
-
-            b.UnlockBits(bmData);
 
             return new BitArray(result.ToArray());
         }
 
-        public Bitmap Decode(BitArray bits, int width, int height)
+        public byte[] Decode(BitArray bits, int width, int height)
         {
-            Bitmap b = new Bitmap(width, height, PixelFormat.Format24bppRgb);
-
-            BitmapData bmData = b.LockBits(new Rectangle(0, 0, b.Width, b.Height), ImageLockMode.ReadWrite, b.PixelFormat);// PixelFormat.Format24bppRgb);
-
-            int stride = bmData.Stride;
-            System.IntPtr Scan0 = bmData.Scan0;
-
-            int[] data = new int[256];
-
-            unsafe
-            {
-                byte* p = (byte*)(void*)Scan0;
-                int nOffset = stride - b.Width * 3;
-                int nWidth = b.Width * 3;
-                int widthCounter = 0;
+            List<byte> list = new List<byte>();
                 
                 string testString = "";
 
@@ -131,23 +107,13 @@ namespace MMSlab.Huffman
 
                     if (this.CodeDict.ContainsKey(testString))
                     {
-                        byte pom = this.CodeDict[testString];
-                        p[0] = pom;
-                        p++;
-                        widthCounter++;
-                        if(widthCounter == nWidth)
-                        {
-                            widthCounter = 0;
-                            p += nOffset;
-                        }
+                        list.Add(this.CodeDict[testString]);                       
                         testString = "";
                     }
                 }
-            }
 
-            b.UnlockBits(bmData);
 
-            return b;
+            return list.ToArray();
         }
 
     }
