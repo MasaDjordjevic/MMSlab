@@ -8,9 +8,6 @@ namespace MMSlab.YImageFormat
 {
     public class YImageFormat
     {
-         public void showTree()
-        {
-            return;
-        }
+        
     }
 }

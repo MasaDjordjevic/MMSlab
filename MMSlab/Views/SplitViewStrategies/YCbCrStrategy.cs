@@ -58,16 +58,16 @@ namespace MMSlab.Views
                         Y[0] = ycbcr.Y;
 
                         //Cb
-                        RGB cbRGB = ColorModels.YCbCrToRGB(new YCbCr(ycbcr.Y, ycbcr.Cb, ycbcr.Y));
+                        RGB cbRGB = ColorModels.YCbCrToRGB(new YCbCr(128, ycbcr.Cb, 128));
                         Cb[2] = cbRGB.R;
                         Cb[1] = cbRGB.G;
-                        Cb[0] = (byte)(cbRGB.B + ycbcr.Cb);
+                        Cb[0] = cbRGB.B;
 
                         //Cr
-                        RGB crRGB = ColorModels.YCbCrToRGB(new YCbCr(ycbcr.Y, ycbcr.Y, ycbcr.Cr));
-                        Cr[2] = (byte)(crRGB.R + ycbcr.Cr);
-                        Cr[1] = 0;
-                        Cr[0] = 0;
+                        RGB crRGB = ColorModels.YCbCrToRGB(new YCbCr(128, 128, ycbcr.Cr));
+                        Cr[2] = crRGB.R;
+                        Cr[1] = crRGB.G;
+                        Cr[0] = crRGB.B;
 
 
 

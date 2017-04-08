@@ -122,7 +122,8 @@
     <Compile Include="UIManagers\FontManager.cs" />
     <Compile Include="Action.cs" />
     <Compile Include="Views\CommonControls.cs" />
-    <Compile Include="Views\GuassianBlurStrategy.cs" />
+    <Compile Include="Views\SplitViewStrategies\DownsamplingStrategy.cs" />
+    <Compile Include="Views\SplitViewStrategies\GuassianBlurStrategy.cs" />
     <Compile Include="Views\IView.cs" />
     <Compile Include="Views\SimpleImageView.cs">
       <SubType>UserControl</SubType>
@@ -130,15 +131,16 @@
     <Compile Include="Views\SimpleImageView.Designer.cs">
       <DependentUpon>SimpleImageView.cs</DependentUpon>
     </Compile>
-    <Compile Include="Views\splitViewStrategy.cs" />
-    <Compile Include="Views\YCbCrHistogramStrategy.cs" />
-    <Compile Include="Views\YCbCrStrategy.cs" />
+    <Compile Include="Views\SplitViewStrategies\splitViewStrategy.cs" />
+    <Compile Include="Views\SplitViewStrategies\YCbCrHistogramStrategy.cs" />
+    <Compile Include="Views\SplitViewStrategies\YCbCrStrategy.cs" />
     <Compile Include="Views\YcbCrView.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Views\YcbCrView.Designer.cs">
       <DependentUpon>YcbCrView.cs</DependentUpon>
     </Compile>
+    <Compile Include="YImageFormat\DownsampleFormat.cs" />
     <Compile Include="YImageFormat\YImageFormat.cs" />
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
