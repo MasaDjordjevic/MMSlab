@@ -20,6 +20,8 @@ namespace MMSlab.Views
         private Rectangle[] rectangles = new Rectangle[4];
         private double zoom = 0.2;
         private Chart[] charts = new Chart[4];
+
+        private int selectedChannel = -1;
         #endregion
 
         #region Properties
@@ -35,7 +37,7 @@ namespace MMSlab.Views
                 if (value == null) return;
                 this.AutoScrollMinSize = new Size((int)(value.Width * zoom), (int)(value.Height * zoom));
                 this.bitmap = value;
-                
+                this.channels = this.Strategy.generateImages(this.Bitmap);
                 this.OnResize(null);
             }
         }
@@ -58,6 +60,8 @@ namespace MMSlab.Views
                 {
                     this.charts[i].Visible = false;
                 }
+                this.Click -= this.YcbCrView_Click;
+                this.Click += this.Strategy.isSelectable ? new System.EventHandler(this.YcbCrView_Click) : null;
                 this.OnResize(null);
             }
         }
@@ -135,11 +139,15 @@ namespace MMSlab.Views
                 if (this.Strategy.ImageType)
                 {
                     this.SetRectangles();
-                    this.channels = this.Strategy.generateImages(this.Bitmap);
                     g.DrawImage(this.Bitmap, this.rectangles[0]);
                     g.DrawImage(this.channels[0], this.rectangles[1]);
                     g.DrawImage(this.channels[1], this.rectangles[2]);
                     g.DrawImage(this.channels[2], this.rectangles[3]);
+
+                    if(this.selectedChannel > -1)
+                    {
+                        g.DrawRectangle(new Pen(Color.Red), this.rectangles[this.selectedChannel + 1]);
+                    }
 
                     return;
                 }
@@ -158,5 +166,27 @@ namespace MMSlab.Views
 
         }
 
+        private void YcbCrView_Click(object sender, EventArgs e)
+        {
+            int x = MousePosition.X;
+            int y = MousePosition.Y;
+
+            int width = (this.ClientSize.Width - this.AutoScrollPosition.X) / 2;
+            int height = (this.ClientSize.Height - this.AutoScrollPosition.Y) / 2;
+            if(x < width && y > height)
+            {
+                this.selectedChannel = 1;                
+            }
+            if (x > width && y > height)
+            {
+                this.selectedChannel = 2;
+            }
+            if (x > width && y < height)
+            {
+                this.selectedChannel = 0;
+            }
+
+            Invalidate();
+        }
     }
 }

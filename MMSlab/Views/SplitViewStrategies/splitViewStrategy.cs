@@ -26,5 +26,7 @@ namespace MMSlab.Views
             this.ImageType = imageType;
         }
 
+        public bool isSelectable = false;
+
     }
 }

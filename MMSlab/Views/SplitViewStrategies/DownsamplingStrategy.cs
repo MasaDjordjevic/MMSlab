@@ -9,8 +9,13 @@ using System.Threading.Tasks;
 
 namespace MMSlab.Views
 {
-    public class DownsamplingStrategy : splitViewStrategy 
+    public class DownsamplingStrategy : splitViewStrategy
     {
+        public DownsamplingStrategy()
+        {
+            this.isSelectable = true;
+        }
+
         public override Bitmap[] generateImages(Bitmap b)
         {
             Bitmap[] channels = new Bitmap[3];
