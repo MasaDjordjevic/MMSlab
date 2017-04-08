@@ -16,6 +16,7 @@ namespace MMSlab.Views
         #region Variables
         private Bitmap bitmap = null;
         #endregion
+        public string SelectedChannel { get; set; }
 
         public double Zoom { get; set; }
         #region Properties

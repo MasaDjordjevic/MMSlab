@@ -65,6 +65,39 @@ namespace MMSlab.YImageFormat
             b.UnlockBits(bmData);
         }
 
+        public byte[] DownsampleToByteArray(string channel)
+        {
+            byte[,] Y = this.Y;
+            byte[,] Cb = this.Cb;
+            byte[,] Cr = this.Cr;
+
+            if (channel == "Cb" || channel == "Cr")
+            {
+                byte[,] Ys = Downsample(this.Y);
+                Y = Restore(Ys, this.Bitmap.Width, this.Bitmap.Height);
+            }
+
+            if (channel == "Cr" || channel == "Y")
+            {
+                byte[,] Cbs = Downsample(this.Cb);
+                Cb = Restore(Cbs, this.Bitmap.Width, this.Bitmap.Height);
+            }
+
+            if (channel == "Cb" || channel == "Y")
+            {
+                byte[,] Crs = Downsample(this.Cr);
+                Cr = Restore(Crs, this.Bitmap.Width, this.Bitmap.Height);
+            }
+
+            byte[] ret = new byte[Y.Length + Cb.Length + Cr.Length];
+
+            Buffer.BlockCopy(Y, 0, ret, 0, Y.Length);
+            Buffer.BlockCopy(Cb, 0, ret, ret.Length, Y.Length);
+            Buffer.BlockCopy(Y, 0, ret, ret.Length, Y.Length);
+
+            return ret;
+        }
+
         public Bitmap DownsampleImage(string channel)
         {
 
@@ -76,7 +109,6 @@ namespace MMSlab.YImageFormat
             {
                 byte[,] Ys = Downsample(this.Y);
                 Y = Restore(Ys, this.Bitmap.Width, this.Bitmap.Height);
-
             }
 
             if (channel == "Cr" || channel == "Y")

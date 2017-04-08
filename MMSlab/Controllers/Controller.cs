@@ -52,6 +52,11 @@ namespace MMSlab.Controllers
             this.view.Bitmap = this.model.Bitmap;
             this.view.BringToFront();
         }
+        
+        public string GetSelectedChannel()
+        {
+            return this.view.SelectedChannel;
+        }
 
 
 

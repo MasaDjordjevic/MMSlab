@@ -45,6 +45,21 @@ namespace MMSlab.Views
         //unused
         public double Zoom { get; set; }
 
+        public string SelectedChannel
+        {
+            get
+            {
+                switch(this.selectedChannel)
+                {
+                    case 0: return "Y";
+                    case 1: return "Cb";
+                    case 2: return "Cr";
+                }
+                return null;
+            }
+        }
+
+
         private splitViewStrategy strategy;
         public splitViewStrategy Strategy
         {
@@ -62,6 +77,7 @@ namespace MMSlab.Views
                 }
                 this.Click -= this.YcbCrView_Click;
                 this.Click += this.Strategy.isSelectable ? new System.EventHandler(this.YcbCrView_Click) : null;
+                this.selectedChannel = -1;
                 this.OnResize(null);
             }
         }

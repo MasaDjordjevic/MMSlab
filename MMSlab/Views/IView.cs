@@ -10,6 +10,8 @@ namespace MMSlab.Views
     {
         System.Drawing.Bitmap Bitmap { get; set; }
         double Zoom { get; set; }
+
+        string SelectedChannel {  get; }
         void BringToFront();
     }
 }
