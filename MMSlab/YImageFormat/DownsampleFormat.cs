@@ -21,6 +21,10 @@ namespace MMSlab.YImageFormat
             this.SetChannels();
         }
 
+        public DownsampleFormat()
+        {
+        }
+
         private void SetChannels()
         {
             Bitmap b = this.Bitmap;
@@ -92,10 +96,111 @@ namespace MMSlab.YImageFormat
             byte[] ret = new byte[Y.Length + Cb.Length + Cr.Length];
 
             Buffer.BlockCopy(Y, 0, ret, 0, Y.Length);
-            Buffer.BlockCopy(Cb, 0, ret, ret.Length, Y.Length);
-            Buffer.BlockCopy(Y, 0, ret, ret.Length, Y.Length);
+            Buffer.BlockCopy(Cb, 0, ret, Y.Length, Cb.Length);
+            Buffer.BlockCopy(Cr, 0, ret, Y.Length + Cb.Length, Cr.Length);
 
             return ret;
+        }
+
+        public Bitmap GenerateFromByteArray(byte[] data, string channel, int width, int height)
+        {
+            int regularLenght = width * height;
+            int downsempledLenght = GetDownsampledSize(width, height);
+            int Ylen, Cblen, Crlen, YWidth, CbWidth, CrWidth;
+            Ylen = Cblen = Crlen = downsempledLenght;
+            YWidth = CbWidth = CrWidth = GetDownsampledWidth(width);
+            if (channel == "Y")
+            {
+                Ylen = regularLenght;
+                YWidth = width;
+            }
+            if (channel == "Cb")
+            {
+                Cblen = regularLenght;
+                CbWidth = width;
+            }
+            if (channel == "Cr")
+            {
+                Crlen = regularLenght;
+                CrWidth = width;
+            }
+            
+
+            byte[] y, cb, cr;
+            y = cb = cr = new byte[regularLenght];
+            Array.Copy(data, 0, y, 0, Ylen);
+            Array.Copy(data, Ylen, cb, 0, Cblen);
+            Array.Copy(data, Ylen + Cblen, cr, 0, Crlen);
+
+            this.Y = Pom(y, YWidth, height);
+            this.Cb = Pom(cb, CbWidth, height);
+            this.Cr = Pom(cr, CrWidth, height);
+
+        
+
+            if (channel == "Cb" || channel == "Cr")
+            {
+                this.Y = Restore(this.Y, width, height);
+            }
+
+            if (channel == "Cr" || channel == "Y")
+            {
+                this.Cb = Restore(this.Cb, width, height);
+            }
+
+            if (channel == "Cb" || channel == "Y")
+            {
+                this.Cr = Restore(this.Cr, width, height);
+            }
+
+            this.Bitmap = new Bitmap(width, height, PixelFormat.Format24bppRgb);
+            this.SetBitampFromChannels();
+
+            return this.Bitmap;
+        }
+
+        public static byte[,] Pom(byte[] arr, int width, int height)
+        {
+            byte[,] ret = new byte[height, width];
+            int w = width * sizeof(byte);
+            for(int i = 0; i < height; i++)
+            {
+                Buffer.BlockCopy(arr, i * w, ret, i * w, w);
+            }
+            return ret;
+        }
+
+        public Bitmap SetBitampFromChannels()
+        {
+            Bitmap b = this.Bitmap;
+            BitmapData bmData = b.LockBits(new Rectangle(0, 0, b.Width, b.Height), ImageLockMode.ReadWrite, b.PixelFormat);// PixelFormat.Format24bppRgb);
+
+            int stride = bmData.Stride;
+            System.IntPtr Scan0 = bmData.Scan0;
+
+            unsafe
+            {
+                byte* p = (byte*)(void*)Scan0;
+                int nOffset = stride - b.Width * 3;
+
+                for (int y = 0; y < b.Height; ++y)
+                {
+                    for (int x = 0; x < b.Width; ++x)
+                    {
+                        RGB rgb = ColorModels.YCbCrToRGB(new YCbCr(Y[y, x], Cb[y, x], Cr[y, x]));
+                        p[2] = rgb.R;
+                        p[1] = rgb.G;
+                        p[0] = rgb.B;
+
+                        p += 3;
+                    }
+                    p += nOffset;
+                }
+            }
+
+            b.UnlockBits(bmData);
+
+            return b;
         }
 
         public Bitmap DownsampleImage(string channel)
@@ -154,12 +259,24 @@ namespace MMSlab.YImageFormat
             return b;
         }
 
+        public static int  GetDownsampledSize(int width, int height)
+        {
+            int h2 = height;
+            int w2 = GetDownsampledWidth(width);
+            return w2 * h2;
+        }
+
+        private static int GetDownsampledWidth(int width)
+        {
+            return ((width + 2) / 4) * 2;
+        }
+
         public static byte[,] Downsample(byte[,] bytes)
         {
             int height = bytes.GetLength(0);
             int width = bytes.GetLength(1);
             int h2 = height;
-            int w2 = ((width + 2) / 4) * 2;
+            int w2 = GetDownsampledWidth(width);
             byte[,] ret = new byte[h2, w2];
             for (int i = 0; i < height; i++)
                 for (int j = 0; j < w2 * 2; j++)
@@ -190,6 +307,10 @@ namespace MMSlab.YImageFormat
 
             return ret;
         }
+
+        
+
+         
 
     }
 }

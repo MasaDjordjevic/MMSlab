@@ -3,7 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
+using System.IO;
 using System.Linq;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -15,7 +17,29 @@ namespace MMSlab.Huffman
         public Dictionary<byte, List<bool>> ValueDict = new Dictionary<byte, List<bool>>();
         public Dictionary<string, byte> CodeDict = new Dictionary<string, byte>();
 
+        public byte[] SerializeToBytes()
+        {
+            var formatter = new BinaryFormatter();
+            using (var stream = new MemoryStream())
+            {
+                formatter.Serialize(stream, this.ValueDict);
+                stream.Seek(0, SeekOrigin.Begin);
+                return stream.ToArray();
+            }
+        }
+        public void DeserializeFromBytes(byte[] bytes)
+        {
+            var formatter = new BinaryFormatter();
+            using (var stream = new MemoryStream(bytes))
+            {
+                this.ValueDict = (Dictionary<byte, List<bool>>)formatter.Deserialize(stream);
+            }
 
+            foreach (KeyValuePair<byte, List<bool>> entry in this.ValueDict)
+            {
+                this.CodeDict.Add(entry.Value.ToStr(), entry.Key);
+            }
+        }
 
         public static List<HuffmanNode> GetList(byte[] data)
         {
@@ -45,6 +69,10 @@ namespace MMSlab.Huffman
         {
             this.Root = ListToTree(GetList(data));
             this.SetCodes();
+        }
+
+        public HuffmanTree()
+        {
         }
 
         public static HuffmanNode ListToTree(List<HuffmanNode> list)

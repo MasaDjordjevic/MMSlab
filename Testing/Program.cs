@@ -16,6 +16,8 @@ namespace Testing
     {
         static void Main(string[] args)
         {
+            byte[] test = new byte[] { 1, 2, 3, 4, 5, 6 };
+            byte[,] res = DownsampleFormat.Pom(test, 3, 2);
             HuffmanTest();
 
        }

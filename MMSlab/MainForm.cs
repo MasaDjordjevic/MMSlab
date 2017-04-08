@@ -137,20 +137,25 @@ namespace MMSlab
             {
                 MessageBox.Show(this.controller.GetSelectedChannel());
             }
-            else
+           
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+
+            saveFileDialog.InitialDirectory = "G:\\mob slike\\5.7. bekstvo";
+            saveFileDialog.Filter = "Lab files (*.a)|*.a|Jpeg files (*.jpg)|*.jpg|Bitmap files (*.bmp)|*.bmp|PNG files(*.png)|*.png";
+            saveFileDialog.FilterIndex = 1;
+            saveFileDialog.RestoreDirectory = true;
+
+            if (DialogResult.OK == saveFileDialog.ShowDialog())
             {
-                SaveFileDialog saveFileDialog = new SaveFileDialog();
-
-                saveFileDialog.InitialDirectory = "c:\\";
-                saveFileDialog.Filter = "Jpeg files (*.jpg)|*.jpg|Bitmap files (*.bmp)|*.bmp|PNG files(*.png)|*.png";
-                saveFileDialog.FilterIndex = 1;
-                saveFileDialog.RestoreDirectory = true;
-
-                if (DialogResult.OK == saveFileDialog.ShowDialog())
+                if (this.controller.GetSelectedChannel() != null)
+                {
+                    YImageFormat.YImageFormat.SaveToFile(saveFileDialog.FileName, this.model.Bitmap, this.controller.GetSelectedChannel());
+                } else
                 {
                     this.model.Bitmap.Save(saveFileDialog.FileName);
                 }
             }
+            
 
           
         }
@@ -211,7 +216,7 @@ namespace MMSlab
             OpenFileDialog openFileDialog = new OpenFileDialog();
 
             openFileDialog.InitialDirectory = "G:\\mob slike\\5.7. bekstvo";
-            openFileDialog.Filter = "Jpeg files (*.jpg)|*.jpg|Bitmap files (*.bmp)|*.bmp|PNG files(*.png)|*.png|All valid files|*.bmp/*.jpg/*.png";
+            openFileDialog.Filter = "All valid files|/*.a/*.bmp/*.jpg/*.png|Lab files (*.a)|*.a|Jpeg files (*.jpg)|*.jpg|Bitmap files (*.bmp)|*.bmp|PNG files(*.png)|*.png";
             openFileDialog.FilterIndex = 1;
             openFileDialog.RestoreDirectory = true;
 
@@ -219,7 +224,15 @@ namespace MMSlab
             {
                 try
                 {
-                    this.controller.LoadImage(openFileDialog.FileName);
+                    if(openFileDialog.FileName.EndsWith(".a"))
+                    {
+                        Bitmap b = YImageFormat.YImageFormat.ReadFromFile(openFileDialog.FileName);
+                        this.controller.SetImage(b);
+                    }
+                    else
+                    {
+                        this.controller.LoadImage(openFileDialog.FileName);
+                    }
 
                 }
                 catch (Exception ex)
