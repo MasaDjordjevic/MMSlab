@@ -104,11 +104,11 @@ namespace MMSlab
     {
         public static RGB YCbCrToRGB(YCbCr ycbcr)
         {
-            float r = Math.Max(0.0f, Math.Min(1.0f, (float)(ycbcr.Y + 1.4022 * (ycbcr.Cr - 128))));
-            float g = Math.Max(0.0f, Math.Min(1.0f, (float)(ycbcr.Y - 0.3456 * (ycbcr.Cb - 128) - 0.7145 * (ycbcr.Cr - 128))));
-            float b = Math.Max(0.0f, Math.Min(1.0f, (float)(ycbcr.Y + 1.7710 * (ycbcr.Cb - 128))));
+            float r = Math.Max(0.0f, Math.Min(255f, (float)(ycbcr.Y + 1.402525 * (ycbcr.Cr - 128))));
+            float g = Math.Max(0.0f, Math.Min(255f, (float)(ycbcr.Y - 0.34730 * (ycbcr.Cb - 128) - 0.71440 * (ycbcr.Cr - 128))));
+            float b = Math.Max(0.0f, Math.Min(255f, (float)(ycbcr.Y + 1.769905 * (ycbcr.Cb - 128))));
 
-            return new RGB((byte)(r * 255), (byte)(g * 255), (byte)(b * 255));
+            return new RGB((byte)r, (byte)g, (byte)b);
         }
 
 
