@@ -26,7 +26,21 @@ namespace MMSlab.Huffman
                 stream.Seek(0, SeekOrigin.Begin);
                 return stream.ToArray();
             }
+        }        
+
+        public string SerializeToString()
+        {
+            var formatter = new BinaryFormatter();
+            string[] arr = new string[256];
+            foreach (KeyValuePair<byte, List<bool>> entry in this.ValueDict)
+            {
+                arr[entry.Key] = entry.Value.ToStr();
+            }
+
+            return String.Join(" ", arr);
+
         }
+
         public void DeserializeFromBytes(byte[] bytes)
         {
             var formatter = new BinaryFormatter();
@@ -38,6 +52,15 @@ namespace MMSlab.Huffman
             foreach (KeyValuePair<byte, List<bool>> entry in this.ValueDict)
             {
                 this.CodeDict.Add(entry.Value.ToStr(), entry.Key);
+            }
+        }
+
+        public void DeserializeFromString(string str)
+        {
+            string[] codes = str.Split(' ');
+            for(int i = 0; i< 256; i++)
+            {
+                this.CodeDict.Add(codes[i], (byte)i);
             }
         }
 

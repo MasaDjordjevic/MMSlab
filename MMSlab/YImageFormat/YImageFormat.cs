@@ -26,8 +26,7 @@ namespace MMSlab.YImageFormat
                 byte[] image = bDwn.DownsampleToByteArray(channel);
 
                 HuffmanTree tree = new HuffmanTree(image);
-                byte[] dictionary = tree.SerializeToBytes();
-                writer.Write(dictionary.Length);
+                string dictionary = tree.SerializeToString();               
                 writer.Write(dictionary);
 
                 BitArray encodedImage = tree.Encode(image);
@@ -47,12 +46,11 @@ namespace MMSlab.YImageFormat
             {
                 int width = reader.ReadInt32();
                 int height = reader.ReadInt32();
-                string channel = reader.ReadString();
-                int dictLength = reader.ReadInt32();
-                byte[] dict = reader.ReadBytes(dictLength);
+                string channel = reader.ReadString();              
+                string dict = reader.ReadString();
 
                 HuffmanTree tree = new HuffmanTree();
-                tree.DeserializeFromBytes(dict);
+                tree.DeserializeFromString(dict);
 
                 int imgLength = reader.ReadInt32();
                 int imgBytesLenght = reader.ReadInt32();

@@ -15,9 +15,20 @@ namespace Testing
     class Program
     {
         static void Main(string[] args)
-        {     
+        {
+            byte[] test = new byte[] { 255, 255, 255, 255, 0, 0, 255, 0, 0, 0, 128, 0 };
 
-            
+            HuffmanTree tree = new HuffmanTree(test);
+            PrintCodes(tree.Root);           
+            foreach (var a in tree.CodeDict.Keys)
+            {
+                if (a.Length < 4)
+                {
+                    Console.WriteLine("Dict: " + a + " Val: " + tree.CodeDict[a]);
+                }
+            }
+
+            //byte[] classic = tree.SerializeToBytes();//19636 string: 4133
 
         }
 

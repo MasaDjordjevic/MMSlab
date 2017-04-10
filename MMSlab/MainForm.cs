@@ -141,7 +141,7 @@ namespace MMSlab
             SaveFileDialog saveFileDialog = new SaveFileDialog();
 
             saveFileDialog.InitialDirectory = "G:\\mob slike\\5.7. bekstvo";
-            saveFileDialog.Filter = "Lab files (*.a)|*.a|Jpeg files (*.jpg)|*.jpg|Bitmap files (*.bmp)|*.bmp|PNG files(*.png)|*.png";
+            saveFileDialog.Filter = "Lab files (*.a)|*.a|Jpeg files (*.jpg)|*.jpg|Bitmap files (*.bmp)|*.bmp|PNG files(*.png)|*.png|Bitmap files(*.bmp)|*.bmp";
             saveFileDialog.FilterIndex = 1;
             saveFileDialog.RestoreDirectory = true;
 
@@ -216,7 +216,7 @@ namespace MMSlab
             OpenFileDialog openFileDialog = new OpenFileDialog();
 
             openFileDialog.InitialDirectory = "G:\\mob slike\\5.7. bekstvo";
-            openFileDialog.Filter = "All valid files|/*.a/*.bmp/*.jpg/*.png|Lab files (*.a)|*.a|Jpeg files (*.jpg)|*.jpg|Bitmap files (*.bmp)|*.bmp|PNG files(*.png)|*.png";
+            openFileDialog.Filter = "All valid files|*.a;*.bmp;*.jpg;*.png|Lab files (*.a)|*.a|Jpeg files (*.jpg)|*.jpg|Bitmap files (*.bmp)|*.bmp|PNG files(*.png)|*.png";
             openFileDialog.FilterIndex = 1;
             openFileDialog.RestoreDirectory = true;
 
