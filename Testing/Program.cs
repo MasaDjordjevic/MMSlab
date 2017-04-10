@@ -15,23 +15,16 @@ namespace Testing
     class Program
     {
         static void Main(string[] args)
-        {
-            byte[] test = new byte[] { 1, 2, 3, 4, 5, 6 };
-            byte[,] res = DownsampleFormat.Pom(test, 3, 2);
-            HuffmanTest();
+        {     
 
-       }
+            
+
+        }
 
         public static void DownsampleTest()
         {
-            Bitmap test = CreateTestBitmapLarge();
-            DownsampleFormat down = new DownsampleFormat(test);
-            byte[,] Y = DownsampleFormat.Downsample(down.Y);
-            byte[,] Cb = DownsampleFormat.Downsample(down.Cb);
-            byte[,] Cr = DownsampleFormat.Downsample(down.Cr);
-
-            byte[,] Yrestored = DownsampleFormat.Restore(Y, 8, 8);
-
+            byte[] test = new byte[] { 1, 2, 3, 4, 5, 6 };
+            byte[,] res = DownsampleFormat.Pom(test, 3, 2);
         }
 
         public static void HuffmanTest()

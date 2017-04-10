@@ -76,21 +76,18 @@ namespace MMSlab.YImageFormat
             byte[,] Cr = this.Cr;
 
             if (channel == "Cb" || channel == "Cr")
-            {
-                byte[,] Ys = Downsample(this.Y);
-                Y = Restore(Ys, this.Bitmap.Width, this.Bitmap.Height);
+            {                
+                Y = Downsample(this.Y);
             }
 
             if (channel == "Cr" || channel == "Y")
             {
-                byte[,] Cbs = Downsample(this.Cb);
-                Cb = Restore(Cbs, this.Bitmap.Width, this.Bitmap.Height);
+                Cb = Downsample(this.Cb);
             }
 
             if (channel == "Cb" || channel == "Y")
-            {
-                byte[,] Crs = Downsample(this.Cr);
-                Cr = Restore(Crs, this.Bitmap.Width, this.Bitmap.Height);
+            {               
+                Cr = Downsample(this.Cr);
             }
 
             byte[] ret = new byte[Y.Length + Cb.Length + Cr.Length];
@@ -127,7 +124,9 @@ namespace MMSlab.YImageFormat
             
 
             byte[] y, cb, cr;
-            y = cb = cr = new byte[regularLenght];
+            y = new byte[regularLenght];
+            cb = new byte[regularLenght];
+            cr = new byte[regularLenght];
             Array.Copy(data, 0, y, 0, Ylen);
             Array.Copy(data, Ylen, cb, 0, Cblen);
             Array.Copy(data, Ylen + Cblen, cr, 0, Crlen);
