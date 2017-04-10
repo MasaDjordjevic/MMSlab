@@ -314,5 +314,54 @@ namespace MMSlab.Filters
             return true;
         }
 
+        
+
+        public bool ShiftAndScale(Bitmap b, FilterOptions opt)
+        {
+            BitmapData bmData = b.LockBits(new Rectangle(0, 0, b.Width, b.Height), ImageLockMode.ReadWrite, PixelFormat.Format24bppRgb);
+
+            int stride = bmData.Stride;
+            System.IntPtr Scan0 = bmData.Scan0;
+
+            int nVal = 0;
+            ShiftAndScaleOptions o = opt.ShiftAndScaleOptions;
+
+            unsafe
+            {
+                byte* p = (byte*)(void*)Scan0;
+
+                int nOffset = stride - b.Width * 3;
+                int nWidth = b.Width * 3;
+                int yy, cb, cr;
+
+                for (int y = 0; y < b.Height; ++y)
+                {
+                    for (int x = 0; x < b.Width; ++x)
+                    {
+                        YCbCr ycbcr = ColorModels.RGBtoYCbCr(new RGB(p[2], p[1], p[0]));
+                        yy = (byte)((ycbcr.Y + o.YShift) * o.YScale);
+                        cb = (byte)((ycbcr.Cb + o.CbShift) * o.CbScale);
+                        cr = (byte)((ycbcr.Cr + o.CrShift) * o.CrScale);
+                        ycbcr.Y = (byte)Math.Max(Math.Min(255, yy), 0);
+                        ycbcr.Cb = (byte)Math.Max(Math.Min(255, cb), 0);
+                        ycbcr.Cr = (byte)Math.Max(Math.Min(255, cr), 0);
+
+                        RGB rgb = ColorModels.YCbCrToRGB(ycbcr);
+                        p[0] = rgb.B;
+                        p[1] = rgb.G;
+                        p[2] = rgb.R;
+
+
+                        p +=3;
+                    }
+                    p += nOffset;
+                }
+            }
+
+            b.UnlockBits(bmData);
+
+            return true;
+        }
+
     }
 }

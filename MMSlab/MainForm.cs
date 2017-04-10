@@ -65,6 +65,21 @@ namespace MMSlab
             this.options = new Options(this.controller);
             this.controller.options = this.options;
             loadImage();
+
+            this.SetShiftAndScaleEventHandlers();
+        }
+
+        private void SetShiftAndScaleEventHandlers()
+        {            
+            //Y
+            this.shiftAndScaleInputs1.YShiftChanged += (object sender2, EventArgs e2) => { this.options.ShiftAndScaleOptions.YShift = this.shiftAndScaleInputs1.YShift; };
+            this.shiftAndScaleInputs1.YScaleChanged += (object sender2, EventArgs e2) => { this.options.ShiftAndScaleOptions.YScale = this.shiftAndScaleInputs1.YScale; };
+            //Cb
+            this.shiftAndScaleInputs1.CbShiftChanged += (object sender2, EventArgs e2) => { this.options.ShiftAndScaleOptions.CbShift = this.shiftAndScaleInputs1.CbShift; };
+            this.shiftAndScaleInputs1.CbScaleChanged += (object sender2, EventArgs e2) => { this.options.ShiftAndScaleOptions.CbScale = this.shiftAndScaleInputs1.CbScale; };
+            //Cr
+            this.shiftAndScaleInputs1.CrShiftChanged += (object sender2, EventArgs e2) => { this.options.ShiftAndScaleOptions.CrShift = this.shiftAndScaleInputs1.CrShift; };
+            this.shiftAndScaleInputs1.CrScaleChanged += (object sender2, EventArgs e2) => { this.options.ShiftAndScaleOptions.CrScale = this.shiftAndScaleInputs1.CrScale; };
         }
 
         private void brightnessFilterToolStripMenuItem_Click(object sender, EventArgs e)
@@ -247,6 +262,11 @@ namespace MMSlab
             ((YcbCrView)ycbcrView).Strategy = new DownsamplingStrategy();
             this.controller.SetView(this.ycbcrView);
 
+        }
+
+        private void shiftAndScaleToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.controller.ShiftAndScale();
         }
 
         private void toolStripMenuItem1_CheckedChanged(object sender, EventArgs e)

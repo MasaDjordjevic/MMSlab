@@ -211,5 +211,14 @@ namespace MMSlab.Controllers
 
         }
 
+        public void ShiftAndScale()
+        {
+            this.DoAction("ShiftAndScale");
+            this.ReloadImage();
+            this.currentFilter.ShiftAndScale(this.model.Bitmap, new FilterOptions(this.options.ShiftAndScaleOptions));
+            this.currentFilterFunction = this.currentFilter.ShiftAndScale;
+            this.view.Bitmap = this.model.Bitmap;
+        }
+
     }
 }

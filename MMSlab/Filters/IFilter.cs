@@ -17,6 +17,7 @@ namespace MMSlab.Filters
 
         bool EdgeDetectHorizontal(Bitmap b, FilterOptions opt);
         bool Water(Bitmap b, FilterOptions opt);
+        bool ShiftAndScale(Bitmap b, FilterOptions opt);
 
 
     }

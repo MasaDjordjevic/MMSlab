@@ -12,6 +12,8 @@ namespace MMSlab.Filters
 
         public int Dimension { get; set; }
 
+        public ShiftAndScaleOptions ShiftAndScaleOptions { get; set; }
+
         public FilterOptions(int weight)
         {
             this.Weight = weight;
@@ -22,6 +24,11 @@ namespace MMSlab.Filters
         {
             this.Weight = weight;
             this.Dimension = dimension;
+        }
+
+        public FilterOptions(ShiftAndScaleOptions opt)
+        {
+            this.ShiftAndScaleOptions = opt;
         }
     }
 }

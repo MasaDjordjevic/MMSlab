@@ -209,5 +209,9 @@ namespace MMSlab.Filters
             return true;
         }
 
+        public bool ShiftAndScale(Bitmap b, FilterOptions opt)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

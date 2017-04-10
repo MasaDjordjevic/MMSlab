@@ -51,10 +51,13 @@ namespace MMSlab
             }
         }
         private Controllers.Controller controller;
+        
+        public ShiftAndScaleOptions ShiftAndScaleOptions { get; set;}
 
         public Options(Controllers.Controller controller)
         {
             this.controller = controller;
+            this.ShiftAndScaleOptions = new ShiftAndScaleOptions();
         }
     }
 }

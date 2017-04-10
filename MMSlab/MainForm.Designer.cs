@@ -46,6 +46,7 @@
             this.waterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.win32CoreToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.downsampleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             this.undoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -58,7 +59,8 @@
             this.historamToggle = new LollipopToggleText();
             this.textBoxPlaceholder1 = new MMSlab.Controls.TextBoxPlaceholder();
             this.progressBar = new LollipopProgressBar();
-            this.downsampleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.shiftAndScaleInputs1 = new MMSlab.Controls.ShiftAndScaleInputs();
+            this.shiftAndScaleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.statusStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
@@ -80,7 +82,7 @@
             // 
             this.loadToolStripMenuItem.Name = "loadToolStripMenuItem";
             this.loadToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.L)));
-            this.loadToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.loadToolStripMenuItem.Size = new System.Drawing.Size(151, 22);
             this.loadToolStripMenuItem.Text = "Load";
             this.loadToolStripMenuItem.Click += new System.EventHandler(this.loadToolStripMenuItem_Click);
             // 
@@ -88,7 +90,7 @@
             // 
             this.reloadToolStripMenuItem.Name = "reloadToolStripMenuItem";
             this.reloadToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.R)));
-            this.reloadToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.reloadToolStripMenuItem.Size = new System.Drawing.Size(151, 22);
             this.reloadToolStripMenuItem.Text = "Reload";
             this.reloadToolStripMenuItem.Click += new System.EventHandler(this.reloadToolStripMenuItem_Click);
             // 
@@ -96,7 +98,7 @@
             // 
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
             this.saveToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(151, 22);
             this.saveToolStripMenuItem.Text = "Save";
             this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
             // 
@@ -104,7 +106,7 @@
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
             this.exitToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.F4)));
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(151, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
@@ -118,7 +120,8 @@
             this.toolStripMenuItem1,
             this.contrastToolStripMenuItem,
             this.edgeDetectonHorisontalToolStripMenuItem,
-            this.waterToolStripMenuItem});
+            this.waterToolStripMenuItem,
+            this.shiftAndScaleToolStripMenuItem});
             this.filtersToolStripMenuItem.Name = "filtersToolStripMenuItem";
             this.filtersToolStripMenuItem.Size = new System.Drawing.Size(50, 20);
             this.filtersToolStripMenuItem.Text = "Filters";
@@ -208,6 +211,14 @@
             this.win32CoreToolStripMenuItem.Text = "Win32 core";
             this.win32CoreToolStripMenuItem.Click += new System.EventHandler(this.win32CoreToolStripMenuItem_Click);
             // 
+            // downsampleToolStripMenuItem
+            // 
+            this.downsampleToolStripMenuItem.Name = "downsampleToolStripMenuItem";
+            this.downsampleToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.X)));
+            this.downsampleToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
+            this.downsampleToolStripMenuItem.Text = "Downsample";
+            this.downsampleToolStripMenuItem.Click += new System.EventHandler(this.downsampleToolStripMenuItem_Click);
+            // 
             // menuStrip1
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -234,7 +245,7 @@
             // 
             this.undoToolStripMenuItem.Name = "undoToolStripMenuItem";
             this.undoToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Z)));
-            this.undoToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.undoToolStripMenuItem.Size = new System.Drawing.Size(144, 22);
             this.undoToolStripMenuItem.Text = "Undo";
             this.undoToolStripMenuItem.Click += new System.EventHandler(this.undoToolStripMenuItem_Click);
             // 
@@ -242,7 +253,7 @@
             // 
             this.redoToolStripMenuItem.Name = "redoToolStripMenuItem";
             this.redoToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Y)));
-            this.redoToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.redoToolStripMenuItem.Size = new System.Drawing.Size(144, 22);
             this.redoToolStripMenuItem.Text = "Redo";
             this.redoToolStripMenuItem.Click += new System.EventHandler(this.redoToolStripMenuItem_Click);
             // 
@@ -337,19 +348,30 @@
             this.progressBar.Text = "lollipopProgressBar1";
             this.progressBar.Value = 10;
             // 
-            // downsampleToolStripMenuItem
+            // shiftAndScaleInputs1
             // 
-            this.downsampleToolStripMenuItem.Name = "downsampleToolStripMenuItem";
-            this.downsampleToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.X)));
-            this.downsampleToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
-            this.downsampleToolStripMenuItem.Text = "Downsample";
-            this.downsampleToolStripMenuItem.Click += new System.EventHandler(this.downsampleToolStripMenuItem_Click);
+            this.shiftAndScaleInputs1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.shiftAndScaleInputs1.BackColor = System.Drawing.Color.Transparent;
+            this.shiftAndScaleInputs1.Location = new System.Drawing.Point(790, 1);
+            this.shiftAndScaleInputs1.Name = "shiftAndScaleInputs1";
+            this.shiftAndScaleInputs1.Size = new System.Drawing.Size(234, 23);
+            this.shiftAndScaleInputs1.TabIndex = 8;
+            // 
+            // shiftAndScaleToolStripMenuItem
+            // 
+            this.shiftAndScaleToolStripMenuItem.Name = "shiftAndScaleToolStripMenuItem";
+            this.shiftAndScaleToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
+            | System.Windows.Forms.Keys.S)));
+            this.shiftAndScaleToolStripMenuItem.Size = new System.Drawing.Size(246, 22);
+            this.shiftAndScaleToolStripMenuItem.Text = "Shift and Scale";
+            this.shiftAndScaleToolStripMenuItem.Click += new System.EventHandler(this.shiftAndScaleToolStripMenuItem_Click);
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1129, 605);
+            this.Controls.Add(this.shiftAndScaleInputs1);
             this.Controls.Add(this.listView1);
             this.Controls.Add(this.historamToggle);
             this.Controls.Add(this.textBoxPlaceholder1);
@@ -404,6 +426,8 @@
         private System.Windows.Forms.ListView listView1;
         private System.Windows.Forms.ImageList imageList1;
         private System.Windows.Forms.ToolStripMenuItem downsampleToolStripMenuItem;
+        private Controls.ShiftAndScaleInputs shiftAndScaleInputs1;
+        private System.Windows.Forms.ToolStripMenuItem shiftAndScaleToolStripMenuItem;
     }
 }
 
