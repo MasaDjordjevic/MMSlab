@@ -23,7 +23,7 @@ namespace MMSlab
         public MainForm()
         {
             loadComponents();
-            
+
             InitializeComponent();
         }
 
@@ -50,7 +50,7 @@ namespace MMSlab
             this.listView1.LargeImageList.ImageSize = new Size(70, 70);
             this.listView1.View = View.LargeIcon;
         }
-    
+
 
         private void ycbcrToolStripMenuItem_CheckedChanged(object sender, EventArgs e)
         {
@@ -70,7 +70,7 @@ namespace MMSlab
         }
 
         private void SetShiftAndScaleEventHandlers()
-        {            
+        {
             //Y
             this.shiftAndScaleInputs1.YShiftChanged += (object sender2, EventArgs e2) => { this.options.ShiftAndScaleOptions.YShift = this.shiftAndScaleInputs1.YShift; };
             this.shiftAndScaleInputs1.YScaleChanged += (object sender2, EventArgs e2) => { this.options.ShiftAndScaleOptions.YScale = this.shiftAndScaleInputs1.YScale; };
@@ -110,14 +110,14 @@ namespace MMSlab
                 {
                     val = Convert.ToInt32(textBoxPlaceholder1.Text);
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     MessageBox.Show("Enter a number");
                     textBoxPlaceholder1.Text = "";
                     return;
                 }
 
-                if(e.KeyCode == Keys.A)
+                if (e.KeyCode == Keys.A)
                 {
                     this.controller.ReloadImage();
                 }
@@ -148,31 +148,38 @@ namespace MMSlab
 
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if(this.controller.GetSelectedChannel() != null)
+            if (this.controller.GetSelectedChannel() != null)
             {
                 MessageBox.Show(this.controller.GetSelectedChannel());
             }
-           
+
             SaveFileDialog saveFileDialog = new SaveFileDialog();
 
             saveFileDialog.InitialDirectory = "G:\\mob slike\\5.7. bekstvo";
-            saveFileDialog.Filter = "Lab files (*.a)|*.a|Jpeg files (*.jpg)|*.jpg|Bitmap files (*.bmp)|*.bmp|PNG files(*.png)|*.png|Bitmap files(*.bmp)|*.bmp";
+            saveFileDialog.Filter = "Lab files (*.a)|*.a|Jpeg files (*.jpg)|*.jpg|Bitmap files (*.bmp)|*.bmp|PNG files(*.png)|*.png";
             saveFileDialog.FilterIndex = 1;
             saveFileDialog.RestoreDirectory = true;
 
             if (DialogResult.OK == saveFileDialog.ShowDialog())
             {
-                if (this.controller.GetSelectedChannel() != null)
-                {
-                    YImageFormat.YImageFormat.SaveToFile(saveFileDialog.FileName, this.model.Bitmap, this.controller.GetSelectedChannel());
-                } else
-                {
-                    this.model.Bitmap.Save(saveFileDialog.FileName);
-                }
-            }
-            
+                string f = saveFileDialog.FileName;
 
-          
+                if (this.controller.GetSelectedChannel() != null && f.EndsWith(".a"))
+                    YImageFormat.YImageFormat.SaveToFile(saveFileDialog.FileName, this.model.Bitmap, this.controller.GetSelectedChannel());
+
+                if (f.EndsWith(".jpg"))
+                    this.model.Bitmap.Save(f, System.Drawing.Imaging.ImageFormat.Jpeg);
+
+                if (f.EndsWith(".bmp"))
+                    this.model.Bitmap.Save(f, System.Drawing.Imaging.ImageFormat.Bmp);
+
+                if (f.EndsWith(".png"))
+                    this.model.Bitmap.Save(f, System.Drawing.Imaging.ImageFormat.Png);
+
+            }
+
+
+
         }
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
@@ -192,7 +199,7 @@ namespace MMSlab
 
         private void historamToggle_CheckedChanged(object sender, EventArgs e)
         {
-            if(historamToggle.Checked)
+            if (historamToggle.Checked)
             {
                 ((YcbCrView)ycbcrView).Strategy = new YCbCrHistogramStrategy(false);
                 return;
@@ -214,7 +221,7 @@ namespace MMSlab
             this.textBoxPlaceholder1.Visible = true;
         }
 
-       
+
 
         private void undoToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -239,7 +246,7 @@ namespace MMSlab
             {
                 try
                 {
-                    if(openFileDialog.FileName.EndsWith(".a"))
+                    if (openFileDialog.FileName.EndsWith(".a"))
                     {
                         Bitmap b = YImageFormat.YImageFormat.ReadFromFile(openFileDialog.FileName);
                         this.controller.SetImage(b);
