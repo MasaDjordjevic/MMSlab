@@ -119,7 +119,7 @@ namespace MMSlab
 
                 if (e.KeyCode == Keys.A)
                 {
-                    this.controller.ReloadImage();
+                    this.controller.ReloadImageModel();
                 }
 
                 this.options.Weight = val;

@@ -5,6 +5,7 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -22,6 +23,7 @@ namespace MMSlab.Controllers
         private List<Action> undoList = new List<Action>(5);
         private List<Action> redoListe = new List<Action>(5);
 
+        private Thread workerThread = null;
 
         public Views.CommonControls commonControls { get; set; }
 
@@ -32,7 +34,17 @@ namespace MMSlab.Controllers
             this.view.BringToFront();
             this.commonControls = commonControls;
             this.currentFilter = new Filters.CoreFilters(this.commonControls);
+
         }
+
+        private void ThreadFilter()
+        {
+            Bitmap newBitmap = (Bitmap)this.model.Bitmap.Clone();
+            this.currentFilterFunction(newBitmap, new FilterOptions(this.options.Weight));
+            this.model.Bitmap = newBitmap;
+            this.view.Bitmap = (Bitmap)this.model.Bitmap.Clone();
+        }
+      
 
         public void SetMode()
         {
@@ -79,20 +91,32 @@ namespace MMSlab.Controllers
             this.SetImage(this.model.Bitmap);
         }
 
+        public void ReloadImageModel()
+        {
+            this.model.LoadBitmap(this.model.FileLocation);             
+        }
+
         public void SetImage(System.Drawing.Bitmap bitmap)
         {
             this.model.Bitmap = bitmap;
-            this.view.Bitmap = this.model.Bitmap;
+            this.view.Bitmap = (Bitmap)bitmap.Clone();
             this.commonControls.status = bitmap.Width.ToString() + " x " + bitmap.Height.ToString() + "         " + (this.model.FileSize / 1024).ToString() + "KB";
+        }
+
+        public void FilterModel(string filterName = null)
+        {            
+            this.DoAction(filterName);
+            this.workerThread = new Thread(new ThreadStart(this.ThreadFilter));
+            this.workerThread.Start();
         }
 
         public void BrightnessFilter()
         {
-            this.DoAction("Brightness");
-            this.currentFilter.Brightness(this.model.Bitmap, new FilterOptions(40));
             this.currentFilterFunction = this.currentFilter.Brightness;
-            this.view.Bitmap = this.model.Bitmap;
+            this.options.Weight = 40;
         }
+
+
 
         public void ContrastFilter()
         {
@@ -143,8 +167,7 @@ namespace MMSlab.Controllers
                 MessageBox.Show("Select filter first");
                 return;
             }
-            this.currentFilterFunction(this.model.Bitmap, new FilterOptions(this.options.Weight));
-            this.view.Bitmap = this.model.Bitmap;
+            this.FilterModel();
         }
 
         public void ZoomChanged()
@@ -183,7 +206,7 @@ namespace MMSlab.Controllers
         {
             undoList.Push(new Action((Bitmap)this.model.Bitmap.Clone(), name));
             this.showUndoStack();
-            this.view.Bitmap = this.model.Bitmap;
+            //this.view.Bitmap = this.model.Bitmap;
             this.redoListe.Clear();
         }
 
