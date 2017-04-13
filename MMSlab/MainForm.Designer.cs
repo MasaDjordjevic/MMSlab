@@ -44,6 +44,7 @@
             this.contrastToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.edgeDetectonHorisontalToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.waterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.shiftAndScaleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.win32CoreToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.downsampleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -60,7 +61,6 @@
             this.textBoxPlaceholder1 = new MMSlab.Controls.TextBoxPlaceholder();
             this.progressBar = new LollipopProgressBar();
             this.shiftAndScaleInputs1 = new MMSlab.Controls.ShiftAndScaleInputs();
-            this.shiftAndScaleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.statusStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
@@ -190,6 +190,15 @@
             this.waterToolStripMenuItem.Size = new System.Drawing.Size(246, 22);
             this.waterToolStripMenuItem.Text = "Water";
             this.waterToolStripMenuItem.Click += new System.EventHandler(this.waterToolStripMenuItem_Click);
+            // 
+            // shiftAndScaleToolStripMenuItem
+            // 
+            this.shiftAndScaleToolStripMenuItem.Name = "shiftAndScaleToolStripMenuItem";
+            this.shiftAndScaleToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
+            | System.Windows.Forms.Keys.S)));
+            this.shiftAndScaleToolStripMenuItem.Size = new System.Drawing.Size(246, 22);
+            this.shiftAndScaleToolStripMenuItem.Text = "Shift and Scale";
+            this.shiftAndScaleToolStripMenuItem.Click += new System.EventHandler(this.shiftAndScaleToolStripMenuItem_Click);
             // 
             // optionsToolStripMenuItem
             // 
@@ -346,7 +355,7 @@
             this.progressBar.Size = new System.Drawing.Size(1129, 4);
             this.progressBar.TabIndex = 2;
             this.progressBar.Text = "lollipopProgressBar1";
-            this.progressBar.Value = 10;
+            this.progressBar.Value = 0;
             // 
             // shiftAndScaleInputs1
             // 
@@ -356,15 +365,6 @@
             this.shiftAndScaleInputs1.Name = "shiftAndScaleInputs1";
             this.shiftAndScaleInputs1.Size = new System.Drawing.Size(234, 23);
             this.shiftAndScaleInputs1.TabIndex = 8;
-            // 
-            // shiftAndScaleToolStripMenuItem
-            // 
-            this.shiftAndScaleToolStripMenuItem.Name = "shiftAndScaleToolStripMenuItem";
-            this.shiftAndScaleToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
-            | System.Windows.Forms.Keys.S)));
-            this.shiftAndScaleToolStripMenuItem.Size = new System.Drawing.Size(246, 22);
-            this.shiftAndScaleToolStripMenuItem.Text = "Shift and Scale";
-            this.shiftAndScaleToolStripMenuItem.Click += new System.EventHandler(this.shiftAndScaleToolStripMenuItem_Click);
             // 
             // MainForm
             // 

@@ -27,8 +27,10 @@ namespace MMSlab.Views
             set
             {
                 if (this.progressBar != null && this.progressBar.Value != value)
-                {                    
+                {        
+                    
                     this.progressBar.Value = value;
+                    
                     //this.statusLabel.Text += value.ToString();
                 }
             }

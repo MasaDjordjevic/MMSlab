@@ -29,7 +29,7 @@ namespace MMSlab.Views
 
             set
             {
-                if (value == null) return;                
+                if (value == null) return;
                 this.AutoScrollMinSize = new Size((int)(value.Width * Zoom), (int)(value.Height * Zoom));
                 this.bitmap = value;
                 base.Invalidate();

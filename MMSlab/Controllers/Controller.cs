@@ -44,7 +44,7 @@ namespace MMSlab.Controllers
             this.model.Bitmap = newBitmap;
             this.view.Bitmap = (Bitmap)this.model.Bitmap.Clone();
         }
-      
+
 
         public void SetMode()
         {
@@ -64,7 +64,7 @@ namespace MMSlab.Controllers
             this.view.Bitmap = this.model.Bitmap;
             this.view.BringToFront();
         }
-        
+
         public string GetSelectedChannel()
         {
             return this.view.SelectedChannel;
@@ -87,13 +87,13 @@ namespace MMSlab.Controllers
             this.DoAction("Reload");
             if (!this.model.LoadBitmap(this.model.FileLocation))
                 return;
-           
+
             this.SetImage(this.model.Bitmap);
         }
 
         public void ReloadImageModel()
         {
-            this.model.LoadBitmap(this.model.FileLocation);             
+            this.model.LoadBitmap(this.model.FileLocation);
         }
 
         public void SetImage(System.Drawing.Bitmap bitmap)
@@ -104,7 +104,7 @@ namespace MMSlab.Controllers
         }
 
         public void FilterModel(string filterName = null)
-        {            
+        {
             this.DoAction(filterName);
             this.workerThread = new Thread(new ThreadStart(this.ThreadFilter));
             this.workerThread.Start();
@@ -116,15 +116,10 @@ namespace MMSlab.Controllers
             this.options.Weight = 40;
         }
 
-
-
         public void ContrastFilter()
         {
-            this.DoAction("Contrast");
-
-            this.currentFilter.Contrast(this.model.Bitmap, new FilterOptions(40));
             this.currentFilterFunction = this.currentFilter.Contrast;
-            this.view.Bitmap = this.model.Bitmap;
+            this.options.Weight = 40;
         }
 
         public void GaussianBlur(bool inplace = false)
@@ -140,24 +135,19 @@ namespace MMSlab.Controllers
                 this.currentFilterFunction = this.currentFilter.GaussianBlur;
 
             }
-            this.currentFilterFunction(this.model.Bitmap, new FilterOptions(10));
-            this.view.Bitmap = this.model.Bitmap;
+            this.options.Weight = 10;
         }
 
         public void EdgeDetectionHorizontal()
         {
-            this.DoAction("Edge");
-            this.currentFilter.EdgeDetectHorizontal(this.model.Bitmap, null);
             this.currentFilterFunction = this.currentFilter.EdgeDetectHorizontal;
-            this.view.Bitmap = this.model.Bitmap;
+            this.options.Weight = 0;
         }
 
         public void Water()
         {
-            this.DoAction("Water");
-            this.currentFilter.Water(this.model.Bitmap, new FilterOptions(15));
             this.currentFilterFunction = this.currentFilter.Water;
-            this.view.Bitmap = this.model.Bitmap;
+            this.options.Weight = 15;
         }
 
         public void WeightChangedRedo()
@@ -206,7 +196,6 @@ namespace MMSlab.Controllers
         {
             undoList.Push(new Action((Bitmap)this.model.Bitmap.Clone(), name));
             this.showUndoStack();
-            //this.view.Bitmap = this.model.Bitmap;
             this.redoListe.Clear();
         }
 

@@ -69,9 +69,16 @@ namespace MMSlab
     }
 
 
-    public static class ConvFilters
+    public class ConvFilters
     {
-        public static bool ConvSafe(Bitmap b, ConvMatrix m, int dimension, bool inplace = false)
+        private Views.CommonControls commonControls;
+
+        public ConvFilters(Views.CommonControls commonControls)
+        {
+            this.commonControls = commonControls;
+        }
+
+        public bool ConvSafe(Bitmap b, ConvMatrix m, int dimension, bool inplace = false)
         {
             // Avoid divide by zero errors
             if (0 == m.Factor) return false;
@@ -83,6 +90,9 @@ namespace MMSlab
             int[,] matrix = m.GetMatix(dimension);
             if (matrix == null) return false;
 
+            if (commonControls != null) commonControls.progress = 0;
+            double step = 100.0 / nHeight;
+            double progress = 0;
             for (int y = 0; y < nHeight; ++y)
             {
                 for (int x = 0; x < nWidth; ++x)
@@ -112,6 +122,9 @@ namespace MMSlab
 
                 }
 
+                progress += step;
+                if (commonControls != null) commonControls.progress = (int)(progress);
+
             }
 
             return true;
@@ -138,48 +151,14 @@ namespace MMSlab
                 destPtr += bmRet.Stride;
             }
 
-            //int stride = bmData.Stride;
-            //int retStride = bmRet.Stride;
-            //System.IntPtr Scan0 = bmData.Scan0;
-            //System.IntPtr SrcScan0 = bmRet.Scan0;
-            //unsafe
-            //{
-            //    byte* p = (byte*)(void*)Scan0;
-            //    byte* pRet = (byte*)(void*)SrcScan0;
-            //    int nOffset = stride - b.Width * 3;
-            //    int retOffset = retStride - retVal.Width * 3;
-            //    int nWidth = b.Width * 3;
-
-            //    for (int y = 0; y < b.Height; y++)
-            //    {
-            //        for (int x = 0; x < nWidth; x++)
-            //        {
-            //            byte a = p[0];
-            //            pRet[0] = a;
-
-            //            p++;
-            //            pRet++;
-            //        }
-
-            //        p += nOffset;
-            //        pRet += retOffset;
-            //    }      
-            //}
             b.UnlockBits(bmData);
             retVal.UnlockBits(bmRet);
 
             return retVal;
         }
 
-        public static Bitmap Conv2(Bitmap b, ConvMatrix m, int dimension = 3, bool inplace = false)
-        {
-            int dim2 = dimension / 2;
 
-            Bitmap bSrc = ExtendBitmap(b, dim2);
-            return bSrc;
-        }
-
-        public static bool Conv(Bitmap b, ConvMatrix m, int dimension = 3, bool inplace = false)
+        public bool Conv(Bitmap b, ConvMatrix m, int dimension = 3, bool inplace = false)
         {
             // Avoid divide by zero errors
             if (0 == m.Factor) return false;
@@ -227,6 +206,10 @@ namespace MMSlab
                 m.Factor = (int)(m.Factor / (3 * 0.8) * (dimension * 0.8));
                 int[,] matrix = m.GetMatix(dimension);
 
+
+                if (commonControls != null) commonControls.progress = 0;
+                double step = 100.0 / nHeight;
+                double progress = 0;
                 //Parallel.For(0, nHeight, y =>
                 for (int y = 0; y < nHeight; ++y)
                 {
@@ -254,6 +237,9 @@ namespace MMSlab
                     }
                     p += nOffset;
                     pSrc += srcOffset;
+
+                    progress += step;
+                    if (commonControls != null) commonControls.progress = (int)(progress);
                 }
 
             }
@@ -266,7 +252,7 @@ namespace MMSlab
         }
 
 
-        public static bool Conv3x3(Bitmap b, ConvMatrix m, bool inplace = false)
+        public bool Conv3x3(Bitmap b, ConvMatrix m, bool inplace = false)
         {
             // Avoid divide by zero errors
             if (0 == m.Factor) return false;
@@ -293,6 +279,9 @@ namespace MMSlab
 
                 int nPixel;
 
+                commonControls.progress = 0;
+                double step = 100.0 / nHeight;
+                double progress = 0;
                 for (int y = 0; y < nHeight; ++y)
                 {
                     for (int x = 0; x < nWidth; ++x)
@@ -329,6 +318,9 @@ namespace MMSlab
                     }
                     p += nOffset;
                     pSrc += nOffset;
+
+                    progress += step;
+                    commonControls.progress = (int)(progress);
                 }
             }
 

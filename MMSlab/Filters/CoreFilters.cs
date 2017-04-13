@@ -10,7 +10,7 @@ namespace MMSlab.Filters
 {
     public class CoreFilters : IFilter
     {
-        private Views.CommonControls commonControls;
+        private Views.CommonControls commonControls { get; set; }
 
         public CoreFilters(Views.CommonControls commonControls)
         {
@@ -26,17 +26,6 @@ namespace MMSlab.Filters
             return this.GaussianBlurAlg(b, opt.Weight, opt.Dimension, false);
         }
 
-        public bool GaussianBlurOld(Bitmap b, FilterOptions opt)
-        {
-            int nWeight = opt.Weight;
-            ConvMatrix m = new ConvMatrix();
-            m.SetAll(1);
-            m.e = nWeight;
-            m.b = m.d = m.f = m.h = 2;
-            m.Factor = nWeight + 12;
-
-            return ConvFilters.Conv3x3(b, m, false);
-        }
         public bool GaussianBlurAlg(Bitmap b, int nWeight = 4, int dimension = 3, bool inplace = false)
         {
             ConvMatrix m = new ConvMatrix();
@@ -45,7 +34,8 @@ namespace MMSlab.Filters
             m.b = m.d = m.f = m.h = 2;
             m.Factor = nWeight + 12;
 
-            return ConvFilters.Conv(b, m, dimension, inplace);
+            ConvFilters conv = new ConvFilters(this.commonControls);
+            return conv.Conv(b, m, dimension, inplace);
         }
 
         public bool Brightness(Bitmap b, FilterOptions opt)
@@ -73,6 +63,10 @@ namespace MMSlab.Filters
                 int nOffset = stride - b.Width * 3;
                 int nWidth = b.Width * 3;
 
+
+                commonControls.progress = 0;
+                double step = 100.0 / b.Height;
+                double progress = 0;
                 for (int y = 0; y < b.Height; ++y)
                 {
                     for (int x = 0; x < nWidth; ++x)
@@ -87,6 +81,9 @@ namespace MMSlab.Filters
                         ++p;
                     }
                     p += nOffset;
+
+                    progress += step;
+                    commonControls.progress = (int)(progress);
                 }
             }
 
@@ -179,6 +176,7 @@ namespace MMSlab.Filters
             System.IntPtr Scan0 = bmData.Scan0;
             System.IntPtr Scan02 = bmData2.Scan0;
 
+
             unsafe
             {
                 byte* p = (byte*)(void*)Scan0;
@@ -192,6 +190,9 @@ namespace MMSlab.Filters
                 p += stride;
                 p2 += stride;
 
+                commonControls.progress = 0;
+                double step = 100.0 / b.Height;
+                double progress = 0;
                 for (int y = 1; y < b.Height - 1; ++y)
                 {
                     p += 9;
@@ -225,6 +226,9 @@ namespace MMSlab.Filters
 
                     p += 9 + nOffset;
                     p2 += 9 + nOffset;
+
+                    progress += step;
+                    commonControls.progress = (int)(progress);
                 }
             }
 
@@ -249,7 +253,11 @@ namespace MMSlab.Filters
 
             double newX, newY;
 
+            commonControls.progress = 0;
+            double step = 100.0 / nWidth;
+            double progress = 0;
             for (int x = 0; x < nWidth; ++x)
+            {
                 for (int y = 0; y < nHeight; ++y)
                 {
                     newX = x + ((double)nWave * Math.Sin(2.0 * Math.PI * (float)y / 128.0));
@@ -258,6 +266,9 @@ namespace MMSlab.Filters
                     pt[x, y].X = (newX > 0 && newX < nWidth) ? (int)newX : 0;
                     pt[x, y].Y = (newY > 0 && newY < nHeight) ? (int)newY : 0;
                 }
+                progress += step;
+                commonControls.progress = (int)(progress);
+            }
 
             OffsetFilterAbs(b, pt);
 
@@ -288,6 +299,7 @@ namespace MMSlab.Filters
 
                 int xOffset, yOffset;
 
+
                 for (int y = 0; y < nHeight; ++y)
                 {
                     for (int x = 0; x < nWidth; ++x)
@@ -314,7 +326,7 @@ namespace MMSlab.Filters
             return true;
         }
 
-        
+
 
         public bool ShiftAndScale(Bitmap b, FilterOptions opt)
         {
@@ -334,6 +346,10 @@ namespace MMSlab.Filters
                 int nWidth = b.Width * 3;
                 int yy, cb, cr;
 
+
+                commonControls.progress = 0;
+                double step = 100.0 / b.Height;
+                double progress = 0;
                 for (int y = 0; y < b.Height; ++y)
                 {
                     for (int x = 0; x < b.Width; ++x)
@@ -352,9 +368,12 @@ namespace MMSlab.Filters
                         p[2] = rgb.R;
 
 
-                        p +=3;
+                        p += 3;
                     }
                     p += nOffset;
+
+                    progress += step;
+                    commonControls.progress = (int)(progress);
                 }
             }
 

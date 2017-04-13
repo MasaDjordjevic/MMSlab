@@ -76,7 +76,7 @@ namespace MMSlab.YImageFormat
             byte[,] Cr = this.Cr;
 
             if (channel == "Cb" || channel == "Cr")
-            {                
+            {
                 Y = Downsample(this.Y);
             }
 
@@ -86,7 +86,7 @@ namespace MMSlab.YImageFormat
             }
 
             if (channel == "Cb" || channel == "Y")
-            {               
+            {
                 Cr = Downsample(this.Cr);
             }
 
@@ -121,7 +121,7 @@ namespace MMSlab.YImageFormat
                 Crlen = regularLenght;
                 CrWidth = width;
             }
-            
+
 
             byte[] y, cb, cr;
             y = new byte[regularLenght];
@@ -135,7 +135,7 @@ namespace MMSlab.YImageFormat
             this.Cb = Pom(cb, CbWidth, height);
             this.Cr = Pom(cr, CrWidth, height);
 
-        
+
 
             if (channel == "Cb" || channel == "Cr")
             {
@@ -162,7 +162,7 @@ namespace MMSlab.YImageFormat
         {
             byte[,] ret = new byte[height, width];
             int w = width * sizeof(byte);
-            for(int i = 0; i < height; i++)
+            for (int i = 0; i < height; i++)
             {
                 Buffer.BlockCopy(arr, i * w, ret, i * w, w);
             }
@@ -246,7 +246,7 @@ namespace MMSlab.YImageFormat
                         p[2] = rgb.R;
                         p[1] = rgb.G;
                         p[0] = rgb.B;
-                     
+
                         p += 3;
                     }
                     p += nOffset;
@@ -258,7 +258,7 @@ namespace MMSlab.YImageFormat
             return b;
         }
 
-        public static int  GetDownsampledSize(int width, int height)
+        public static int GetDownsampledSize(int width, int height)
         {
             int h2 = height;
             int w2 = GetDownsampledWidth(width);
@@ -267,7 +267,7 @@ namespace MMSlab.YImageFormat
 
         private static int GetDownsampledWidth(int width)
         {
-            return ((width + 2) / 4) * 2;
+            return ((width + 1) / 4) * 2;
         }
 
         public static byte[,] Downsample(byte[,] bytes)
@@ -297,7 +297,7 @@ namespace MMSlab.YImageFormat
                 for (int j = 0; j < bW; j++)
                 {
                     int x = j / 2 * 4 + j % 2;
-                    ret[i,x] = bytes[i, j];
+                    ret[i, x] = bytes[i, j];
                     if (x + 2 < width)
                     {
                         ret[i, x + 2] = bytes[i, j];
@@ -307,9 +307,9 @@ namespace MMSlab.YImageFormat
             return ret;
         }
 
-        
 
-         
+
+
 
     }
 }

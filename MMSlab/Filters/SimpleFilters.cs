@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace MMSlab.Filters
 {
@@ -33,8 +34,9 @@ namespace MMSlab.Filters
             m.e = nWeight;
             m.b = m.d = m.f = m.h = 2;
             m.Factor = nWeight + 12;
-          
-            return ConvFilters.ConvSafe(b, m, 3, inplace);
+
+            ConvFilters conv = new ConvFilters(this.commonControls);
+            return conv.ConvSafe(b, m, 3, inplace);
         }
 
         public bool GaussianBlur(Bitmap b, FilterOptions opt)
@@ -116,7 +118,9 @@ namespace MMSlab.Filters
         {
             Bitmap bmTemp = (Bitmap)b.Clone();
 
-
+            commonControls.progress = 0;
+            double step = 100.0 / b.Height;
+            double progress = 0;
             for (int y = 1; y < b.Height - 1; ++y)
             {
                 for (int x = 3; x < b.Width - 3; ++x)
@@ -143,6 +147,8 @@ namespace MMSlab.Filters
 
                     b.SetPixel(x, y + 1, Color.FromArgb(fixedPixel.R, fixedPixel.G, fixedPixel.B));
                 }
+                progress += step;
+                commonControls.progress = (int)(progress);
             }
 
 
@@ -169,7 +175,11 @@ namespace MMSlab.Filters
 
             double newX, newY;
 
+            commonControls.progress = 0;
+            double step = 100.0 / b.Width;
+            double progress = 0;
             for (int x = 0; x < nWidth; ++x)
+            {
                 for (int y = 0; y < nHeight; ++y)
                 {
                     newX = x + ((double)nWave * Math.Sin(2.0 * Math.PI * (float)y / 128.0));
@@ -179,18 +189,24 @@ namespace MMSlab.Filters
                     pt[x, y].Y = (newY > 0 && newY < nHeight) ? (int)newY : 0;
                 }
 
+                progress += step;
+                commonControls.progress = (int)(progress);
+            }
+               
             OffsetFilterAbs(b, pt);
 
             return true;
         }
 
-        public static bool OffsetFilterAbs(Bitmap b, Point[,] offset)
+        public bool OffsetFilterAbs(Bitmap b, Point[,] offset)
         {
             Bitmap bSrc = (Bitmap)b.Clone();
 
             int xOffset, yOffset;
 
-
+            commonControls.progress = 0;
+            double step = 100.0 / b.Height;
+            double progress = 0;
             for (int y = 0; y < b.Height; ++y)
             {
                 for (int x = 0; x < b.Width; ++x)
@@ -204,6 +220,8 @@ namespace MMSlab.Filters
                     }
                     
                 }
+                progress += step;
+                commonControls.progress = (int)(progress);
             }
 
             return true;
@@ -211,7 +229,8 @@ namespace MMSlab.Filters
 
         public bool ShiftAndScale(Bitmap b, FilterOptions opt)
         {
-            throw new NotImplementedException();
+            MessageBox.Show("Ovaj filter nije moguc u selektovanom rezimu rada.");
+            return true;
         }
     }
 }

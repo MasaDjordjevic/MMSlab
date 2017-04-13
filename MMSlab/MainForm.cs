@@ -41,6 +41,8 @@ namespace MMSlab
             ycbcrView.Name = "ycbcr view";
             ((YcbCrView)ycbcrView).Strategy = new YCbCrStrategy();
             Controls.Add(ycbcrView);
+
+            LollipopToggleText.CheckForIllegalCrossThreadCalls = false;
         }
 
         private void loadImage()

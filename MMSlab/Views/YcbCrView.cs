@@ -49,7 +49,7 @@ namespace MMSlab.Views
         {
             get
             {
-                switch(this.selectedChannel)
+                switch (this.selectedChannel)
                 {
                     case 0: return "Y";
                     case 1: return "Cb";
@@ -93,17 +93,16 @@ namespace MMSlab.Views
             this.AutoScroll = true;
             this.AutoSize = true;
             InitializeComponent();
-            
+
             this.charts[1] = this.chart1;
             this.charts[2] = this.chart2;
             this.charts[3] = this.chart3;
-            for(int i = 1; i < 4; i ++)
+            for (int i = 1; i < 4; i++)
             {
                 this.charts[i].Series.Add("s");
                 this.charts[i].Series["s"]["PointWidth"] = "1";
                 this.charts[i].Visible = false;
             }
-
         }
 
 
@@ -139,7 +138,7 @@ namespace MMSlab.Views
                 {
                     this.charts[i].Location = new Point(this.rectangles[i].X, this.rectangles[i].Y);
                     this.charts[i].Size = new Size(this.rectangles[i].Width, this.rectangles[i].Height);
-                }                
+                }
             }
             base.OnResize(e);
             Invalidate();
@@ -160,7 +159,7 @@ namespace MMSlab.Views
                     g.DrawImage(this.channels[1], this.rectangles[2]);
                     g.DrawImage(this.channels[2], this.rectangles[3]);
 
-                    if(this.selectedChannel > -1)
+                    if (this.selectedChannel > -1)
                     {
                         g.DrawRectangle(new Pen(Color.Red), this.rectangles[this.selectedChannel + 1]);
                     }
@@ -189,9 +188,9 @@ namespace MMSlab.Views
 
             int width = (this.ClientSize.Width - this.AutoScrollPosition.X) / 2;
             int height = (this.ClientSize.Height - this.AutoScrollPosition.Y) / 2;
-            if(x < width && y > height)
+            if (x < width && y > height)
             {
-                this.selectedChannel = 1;                
+                this.selectedChannel = 1;
             }
             if (x > width && y > height)
             {
