@@ -63,7 +63,7 @@ namespace MMSlab
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-            this.controller = new Controllers.Controller(this.model, this.simpleView, new CommonControls(this.statusLabel, this.progressBar, this.listView1));
+            this.controller = new Controllers.Controller(this.model, this.simpleView, new CommonControls(this.statusLabel, this.progressBar, this.listView1), this);
             this.options = new Options(this.controller);
             this.controller.options = this.options;
             loadImage();
@@ -264,6 +264,16 @@ namespace MMSlab
                     MessageBox.Show("Error: Could not read file from disk. Original error: " + ex.Message);
                 }
             }
+        }
+
+        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+        {
+            if(this.Enabled)
+            {
+                // All other key messages process as usual
+                return base.ProcessCmdKey(ref msg, keyData);
+            }
+            return false;
         }
 
         private void downsampleToolStripMenuItem_Click(object sender, EventArgs e)
