@@ -27,14 +27,16 @@ namespace MMSlab.Controllers
 
         public Views.CommonControls commonControls { get; set; }
 
-        public Controller(Models.IModel model, Views.IView view, Views.CommonControls commonControls)
+        private Form parent;
+
+        public Controller(Models.IModel model, Views.IView view, Views.CommonControls commonControls, Form parent)
         {
             this.model = model;
             this.view = view;
             this.view.BringToFront();
             this.commonControls = commonControls;
             this.currentFilter = new Filters.CoreFilters(this.commonControls);
-
+            this.parent = parent;
         }
 
         private void ThreadFilter()
@@ -43,6 +45,7 @@ namespace MMSlab.Controllers
             this.currentFilterFunction(newBitmap, new FilterOptions(this.options.Weight));
             this.model.Bitmap = newBitmap;
             this.view.Bitmap = (Bitmap)this.model.Bitmap.Clone();
+            this.parent.Enabled = true;
         }
 
 
@@ -107,6 +110,7 @@ namespace MMSlab.Controllers
         {
             this.DoAction(filterName);
             this.workerThread = new Thread(new ThreadStart(this.ThreadFilter));
+            this.parent.Enabled = false;
             this.workerThread.Start();
         }
 
