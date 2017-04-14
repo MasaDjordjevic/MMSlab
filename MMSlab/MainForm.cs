@@ -16,7 +16,7 @@ namespace MMSlab
     {
 
         Models.IModel model = new Models.Model();
-        private IView simpleView, ycbcrView;
+        private IView simpleView, ycbcrView, wavView;
         private Controllers.Controller controller;
         private Options options;
 
@@ -41,6 +41,12 @@ namespace MMSlab
             ycbcrView.Name = "ycbcr view";
             ((YcbCrView)ycbcrView).Strategy = new YCbCrStrategy();
             Controls.Add(ycbcrView);
+
+            this.wavView = new WAVView();
+            UserControl wavView = (UserControl)this.wavView;
+            wavView.Location = new System.Drawing.Point(0, 0);
+            wavView.Name = "wav view";
+            Controls.Add(wavView);
 
             LollipopToggleText.CheckForIllegalCrossThreadCalls = false;
         }
@@ -240,7 +246,7 @@ namespace MMSlab
             OpenFileDialog openFileDialog = new OpenFileDialog();
 
             openFileDialog.InitialDirectory = "G:\\mob slike\\5.7. bekstvo";
-            openFileDialog.Filter = "All valid files|*.a;*.bmp;*.jpg;*.png|Lab files (*.a)|*.a|Jpeg files (*.jpg)|*.jpg|Bitmap files (*.bmp)|*.bmp|PNG files(*.png)|*.png";
+            openFileDialog.Filter = "All valid files|*.a;*.bmp;*.jpg;*.png;*.wav|Lab files (*.a)|*.a|Jpeg files (*.jpg)|*.jpg|Bitmap files (*.bmp)|*.bmp|PNG files(*.png)|*.png|WAV fiels(*.wav)|*.wav";
             openFileDialog.FilterIndex = 1;
             openFileDialog.RestoreDirectory = true;
 
@@ -248,16 +254,23 @@ namespace MMSlab
             {
                 try
                 {
-                    if (openFileDialog.FileName.EndsWith(".a"))
+                    if (openFileDialog.FileName.EndsWith(".wav"))
                     {
-                        Bitmap b = YImageFormat.YImageFormat.ReadFromFile(openFileDialog.FileName);
-                        this.controller.SetImage(b);
+                        ((WAVView)this.wavView).FileName = openFileDialog.FileName;
+                        this.controller.SetView(this.wavView);
                     }
                     else
                     {
-                        this.controller.LoadImage(openFileDialog.FileName);
+                        if (openFileDialog.FileName.EndsWith(".a"))
+                        {
+                            Bitmap b = YImageFormat.YImageFormat.ReadFromFile(openFileDialog.FileName);
+                            this.controller.SetImage(b);
+                        }
+                        else
+                        {
+                            this.controller.LoadImage(openFileDialog.FileName);
+                        }
                     }
-
                 }
                 catch (Exception ex)
                 {

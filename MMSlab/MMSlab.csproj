@@ -141,6 +141,12 @@
     <Compile Include="Views\SplitViewStrategies\splitViewStrategy.cs" />
     <Compile Include="Views\SplitViewStrategies\YCbCrHistogramStrategy.cs" />
     <Compile Include="Views\SplitViewStrategies\YCbCrStrategy.cs" />
+    <Compile Include="Views\WAVView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Views\WAVView.Designer.cs">
+      <DependentUpon>WAVView.cs</DependentUpon>
+    </Compile>
     <Compile Include="Views\YcbCrView.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -167,6 +173,9 @@
     </Compile>
     <EmbeddedResource Include="Views\SimpleImageView.resx">
       <DependentUpon>SimpleImageView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\WAVView.resx">
+      <DependentUpon>WAVView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\YcbCrView.resx">
       <DependentUpon>YcbCrView.cs</DependentUpon>
