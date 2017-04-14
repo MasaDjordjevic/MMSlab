@@ -77,6 +77,7 @@ namespace MMSlab
             loadImage();
 
             this.SetShiftAndScaleEventHandlers();
+            this.SetSeamCravingEventHandlers();
         }
 
         private void SetShiftAndScaleEventHandlers()
@@ -90,6 +91,24 @@ namespace MMSlab
             //Cr
             this.shiftAndScaleInputs1.CrShiftChanged += (object sender2, EventArgs e2) => { this.options.ShiftAndScaleOptions.CrShift = this.shiftAndScaleInputs1.CrShift; };
             this.shiftAndScaleInputs1.CrScaleChanged += (object sender2, EventArgs e2) => { this.options.ShiftAndScaleOptions.CrScale = this.shiftAndScaleInputs1.CrScale; };
+        }
+
+        private void SetSeamCravingEventHandlers()
+        {
+            //Y
+            this.shiftAndScaleInputs1.YShiftChanged += (object sender2, EventArgs e2) => {
+                if (((YcbCrView)ycbcrView).Strategy is SeamCravingStrategy)
+                {
+                    ((SeamCravingStrategy)((YcbCrView)ycbcrView).Strategy).repetition = this.shiftAndScaleInputs1.YShift;
+                }
+            };
+            this.shiftAndScaleInputs1.YScaleChanged += (object sender2, EventArgs e2) => {
+                if (((YcbCrView)ycbcrView).Strategy is SeamCravingStrategy)
+                {
+                    ((SeamCravingStrategy)((YcbCrView)ycbcrView).Strategy).alg = (short)this.shiftAndScaleInputs1.YScale;
+                }
+               
+            };
         }
 
         private void brightnessFilterToolStripMenuItem_Click(object sender, EventArgs e)
@@ -281,6 +300,8 @@ namespace MMSlab
             }
         }
 
+
+
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
         {
             if(this.Enabled)
@@ -306,7 +327,7 @@ namespace MMSlab
             }
             else
             {
-                ((YcbCrView)ycbcrView).Strategy = new SeamCravingStrategy((YcbCrView)ycbcrView);
+                ((YcbCrView)ycbcrView).Strategy = new SeamCravingStrategy((YcbCrView)ycbcrView, this.controller.commonControls, this);
                 this.controller.SetView(this.ycbcrView);
             }
            

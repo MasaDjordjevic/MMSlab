@@ -6,72 +6,92 @@ using System.Drawing.Imaging;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace MMSlab.Views.SplitViewStrategies
 {
     public class SeamCravingStrategy : splitViewStrategy
     {
         private YcbCrView view;
-        public SeamCravingStrategy(YcbCrView view)
+        private CommonControls commonControls;
+        public int repetition = 40;
+        public short alg = 0;
+        private Thread workerThread = null;
+        private Form form;
+
+
+        public SeamCravingStrategy(YcbCrView view, CommonControls commonControls, Form form)
         {
             this.view = view;
+            this.commonControls = commonControls;
+            this.form = form;
         }
         public void Redo()
+        {           
+            this.RedoChannels();
+        }
+
+        private void RedoChannelsWorker()
         {
             ConvFilters conv = new ConvFilters(null);
-            ConvMatrix m = new ConvMatrix();
-            m.SetAll(-1);
-            m.e = 24;
-            m.Factor = 1;
-            for (int i = 0; i < 10; i++)
+
+            this.commonControls.progress = 0;
+            double step = 100.0 / repetition;
+            double progress = 0;
+            for (int i = 0; i < repetition; i++)
             {
                 Bitmap c2 = (Bitmap)this.view.channels[0].Clone();
-                CoreFilters.ToGrayscale(c2);               
-                conv.Conv(c2, m, 5);
+                CoreFilters.ToGrayscale(c2);
+
+                conv.EdgeDetectConvolution(c2, this.alg);
                 this.view.channels[2] = c2;
                 this.view.channels[0] = seams(this.view.channels[2], this.view.channels[0], i % 2);
+
+
+                progress += step;
+                commonControls.progress = (int)(progress);
             }
+            this.repetition = 10;
+            this.form.Enabled = true;
             this.view.Invalidate();
         }
+
+        private void RedoChannels()
+        {
+            this.form.Enabled = false;
+            this.workerThread = new Thread(new ThreadStart(this.RedoChannelsWorker));
+            this.workerThread.Start();
+        }
+      
+
+
         public override Bitmap[] generateImages(Bitmap b)
         {
             Bitmap g = (Bitmap)b.Clone();
             CoreFilters.ToGrayscale(g);
-            Bitmap[] channels = new Bitmap[3];
             for (int i = 0; i < 3; i++)
             {
-                channels[i] = (Bitmap)g.Clone();
+                this.view.channels[i] = (Bitmap)g.Clone();
             }
 
-            ConvMatrix m = new ConvMatrix();
-            m.SetAll(-1);
-            m.e = 8;
-            m.Factor = 1;
+
             ConvFilters conv = new ConvFilters(null);
-            conv.Conv(channels[0], m);
-            m.e = 24;
-            conv.Conv(channels[1], m, 5);
 
-            channels[0] = (Bitmap)b.Clone();
-            channels[2] = (Bitmap)channels[1].Clone();
-            for (int i = 0; i < 42; i++)
-            {
-                Bitmap c2 = (Bitmap)channels[0].Clone();
-                CoreFilters.ToGrayscale(c2);             
-                
-                conv.Conv(c2, m, 5);
-                channels[2] = c2;
-                channels[0] = seams(channels[2], channels[0], i%2);               
-            }
+            conv.EdgeDetectConvolution(this.view.channels[1], 0);
+            this.view.channels[0] = (Bitmap)b.Clone();
+           // this.view.channels[2] = (Bitmap)this.view.channels[1].Clone();
 
-            return channels;
+            this.RedoChannels();
+
+            return this.view.channels;
         }
 
         public Bitmap seams(Bitmap b, Bitmap original, int direction = 0)
         {
             Bitmap ext = ConvFilters.ExtendBitmap((Bitmap)b.Clone(), 1, Color.White);
-            
+
             BitmapData bmData = ext.LockBits(new Rectangle(0, 0, ext.Width, ext.Height), ImageLockMode.ReadWrite, PixelFormat.Format24bppRgb);
 
 
@@ -99,7 +119,7 @@ namespace MMSlab.Views.SplitViewStrategies
                 p += nOffset;
 
                 p = (byte*)(void*)Scan0;
-                p += stride*2;
+                p += stride * 2;
 
                 for (int y = 1; y < b.Height; y++)
                 {
