@@ -138,6 +138,7 @@
     <Compile Include="Views\SimpleImageView.Designer.cs">
       <DependentUpon>SimpleImageView.cs</DependentUpon>
     </Compile>
+    <Compile Include="Views\SplitViewStrategies\SeamCravingStrategy.cs" />
     <Compile Include="Views\SplitViewStrategies\splitViewStrategy.cs" />
     <Compile Include="Views\SplitViewStrategies\YCbCrHistogramStrategy.cs" />
     <Compile Include="Views\SplitViewStrategies\YCbCrStrategy.cs" />

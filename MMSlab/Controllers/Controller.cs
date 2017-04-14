@@ -81,7 +81,8 @@ namespace MMSlab.Controllers
                 this.DoAction("Load");
 
             if (!this.model.LoadBitmap(fileLocation))
-                return;
+                return;           
+
             this.SetImage(this.model.Bitmap);
         }
 

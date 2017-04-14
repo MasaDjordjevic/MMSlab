@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using MMSlab.Views;
 using System.IO;
+using MMSlab.Views.SplitViewStrategies;
 
 namespace MMSlab
 {
@@ -53,7 +54,8 @@ namespace MMSlab
 
         private void loadImage()
         {
-            this.controller.LoadImage("G:\\mob slike\\5.7. bekstvo\\testSlika.jpg");
+            this.controller.LoadImage("G:\\mob slike\\5.7. bekstvo\\BroadwayTowerSeamCarvingA.png");
+
             this.listView1.LargeImageList = new ImageList();
             this.listView1.LargeImageList.ImageSize = new Size(70, 70);
             this.listView1.View = View.LargeIcon;
@@ -294,6 +296,20 @@ namespace MMSlab
             ((YcbCrView)ycbcrView).Strategy = new DownsamplingStrategy();
             this.controller.SetView(this.ycbcrView);
 
+        }
+
+        private void seamCravingResizeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if( ((YcbCrView)ycbcrView).Strategy is SeamCravingStrategy)
+            {
+                ((SeamCravingStrategy)((YcbCrView)ycbcrView).Strategy).Redo();
+            }
+            else
+            {
+                ((YcbCrView)ycbcrView).Strategy = new SeamCravingStrategy((YcbCrView)ycbcrView);
+                this.controller.SetView(this.ycbcrView);
+            }
+           
         }
 
         private void shiftAndScaleToolStripMenuItem_Click(object sender, EventArgs e)

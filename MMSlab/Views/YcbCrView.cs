@@ -16,7 +16,7 @@ namespace MMSlab.Views
     {
         #region Variables
         private Bitmap bitmap = null;
-        private Bitmap[] channels = new Bitmap[3];
+        public Bitmap[] channels = new Bitmap[3];
         private Rectangle[] rectangles = new Rectangle[4];
         private double zoom = 0.2;
         private Chart[] charts = new Chart[4];
@@ -154,10 +154,18 @@ namespace MMSlab.Views
                 if (this.Strategy.ImageType)
                 {
                     this.SetRectangles();
+
+                    int width = (this.ClientSize.Width - this.AutoScrollPosition.X) / 2;
+                    int height = (this.ClientSize.Height - this.AutoScrollPosition.Y) / 2;
+
+                    double scale = Math.Min((double)width / (double)this.Bitmap.Width, (double)height / (double)this.Bitmap.Height);
+
+                   // g.DrawRectangle(new Pen(Color.Green), this.rectangles[1]);
                     g.DrawImage(this.Bitmap, this.rectangles[0]);
-                    g.DrawImage(this.channels[0], this.rectangles[1]);
-                    g.DrawImage(this.channels[1], this.rectangles[2]);
-                    g.DrawImage(this.channels[2], this.rectangles[3]);
+                    g.DrawImage(this.channels[0], this.rectangles[1].X, this.rectangles[1].Y, (float)(this.channels[0].Width*scale), (float)(this.channels[0].Height*scale));
+                    g.DrawImage(this.channels[1], this.rectangles[2].X, this.rectangles[2].Y, (float)(this.channels[1].Width*scale), (float)(this.channels[1].Height*scale));
+                    g.DrawImage(this.channels[2], this.rectangles[3].X, this.rectangles[3].Y, (float)(this.channels[2].Width*scale), (float)(this.channels[2].Height*scale));
+                   
 
                     if (this.selectedChannel > -1)
                     {

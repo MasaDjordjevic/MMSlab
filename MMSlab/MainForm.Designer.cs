@@ -52,6 +52,7 @@
             this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             this.undoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.redoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.seamCravingResizeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.statusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.trackBar1 = new System.Windows.Forms.TrackBar();
@@ -245,7 +246,8 @@
             // 
             this.toolStripMenuItem2.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.undoToolStripMenuItem,
-            this.redoToolStripMenuItem});
+            this.redoToolStripMenuItem,
+            this.seamCravingResizeToolStripMenuItem});
             this.toolStripMenuItem2.Name = "toolStripMenuItem2";
             this.toolStripMenuItem2.Size = new System.Drawing.Size(39, 20);
             this.toolStripMenuItem2.Text = "Edit";
@@ -254,7 +256,7 @@
             // 
             this.undoToolStripMenuItem.Name = "undoToolStripMenuItem";
             this.undoToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Z)));
-            this.undoToolStripMenuItem.Size = new System.Drawing.Size(144, 22);
+            this.undoToolStripMenuItem.Size = new System.Drawing.Size(251, 22);
             this.undoToolStripMenuItem.Text = "Undo";
             this.undoToolStripMenuItem.Click += new System.EventHandler(this.undoToolStripMenuItem_Click);
             // 
@@ -262,9 +264,18 @@
             // 
             this.redoToolStripMenuItem.Name = "redoToolStripMenuItem";
             this.redoToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Y)));
-            this.redoToolStripMenuItem.Size = new System.Drawing.Size(144, 22);
+            this.redoToolStripMenuItem.Size = new System.Drawing.Size(251, 22);
             this.redoToolStripMenuItem.Text = "Redo";
             this.redoToolStripMenuItem.Click += new System.EventHandler(this.redoToolStripMenuItem_Click);
+            // 
+            // seamCravingResizeToolStripMenuItem
+            // 
+            this.seamCravingResizeToolStripMenuItem.Name = "seamCravingResizeToolStripMenuItem";
+            this.seamCravingResizeToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
+            | System.Windows.Forms.Keys.A)));
+            this.seamCravingResizeToolStripMenuItem.Size = new System.Drawing.Size(251, 22);
+            this.seamCravingResizeToolStripMenuItem.Text = "Seam craving resize";
+            this.seamCravingResizeToolStripMenuItem.Click += new System.EventHandler(this.seamCravingResizeToolStripMenuItem_Click);
             // 
             // statusStrip
             // 
@@ -428,6 +439,7 @@
         private System.Windows.Forms.ToolStripMenuItem downsampleToolStripMenuItem;
         private Controls.ShiftAndScaleInputs shiftAndScaleInputs1;
         private System.Windows.Forms.ToolStripMenuItem shiftAndScaleToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem seamCravingResizeToolStripMenuItem;
     }
 }
 

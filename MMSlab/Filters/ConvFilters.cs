@@ -130,11 +130,16 @@ namespace MMSlab
             return true;
         }
 
-        public static Bitmap ExtendBitmap(Bitmap b, int pixelCount)
+        public static Bitmap ExtendBitmap(Bitmap b, int pixelCount, Color color)
         {
-            var white = new Bitmap(1, 1);
-            white.SetPixel(0, 0, Color.White);
-            Bitmap retVal = new Bitmap(white, b.Width + pixelCount * 2, b.Height + pixelCount * 2);
+            Bitmap retVal = new Bitmap(b.Width + pixelCount * 2, b.Height + pixelCount * 2);
+
+            using (Graphics gfx = Graphics.FromImage(retVal))
+            using (SolidBrush brush = new SolidBrush(color))
+            {
+                gfx.FillRectangle(brush, 0, 0, retVal.Width, retVal.Height);
+            }
+
             BitmapData bmData = b.LockBits(new Rectangle(0, 0, b.Width, b.Height), ImageLockMode.ReadWrite, PixelFormat.Format24bppRgb);
             BitmapData bmRet = retVal.LockBits(new Rectangle(pixelCount, pixelCount, b.Width, b.Height), ImageLockMode.ReadWrite, PixelFormat.Format24bppRgb);
 
@@ -142,10 +147,11 @@ namespace MMSlab
             IntPtr srcPtr = bmData.Scan0;
             IntPtr destPtr = bmRet.Scan0;
             byte[] buffer = new byte[bmData.Stride];
+            int len = b.Width * 3;
             for (int i = 0; i < bmData.Height; ++i)
             {
-                Marshal.Copy(srcPtr, buffer, 0, buffer.Length);
-                Marshal.Copy(buffer, 0, destPtr, buffer.Length);
+                Marshal.Copy(srcPtr, buffer, 0, len);
+                Marshal.Copy(buffer, 0, destPtr, len);
 
                 srcPtr += bmData.Stride;
                 destPtr += bmRet.Stride;
@@ -165,7 +171,7 @@ namespace MMSlab
             int dim2 = dimension / 2;
 
 
-            Bitmap bSrc = inplace ? (Bitmap)b.Clone() : ExtendBitmap((Bitmap)b.Clone(), dim2);
+            Bitmap bSrc = inplace ? (Bitmap)b.Clone() : ExtendBitmap((Bitmap)b.Clone(), dim2, Color.White);
 
             BitmapData bmData = b.LockBits(new Rectangle(0, 0, b.Width, b.Height), ImageLockMode.ReadWrite, PixelFormat.Format24bppRgb);
             BitmapData bmSrc = bSrc.LockBits(new Rectangle(0, 0, bSrc.Width, bSrc.Height), ImageLockMode.ReadWrite, PixelFormat.Format24bppRgb);
@@ -326,6 +332,106 @@ namespace MMSlab
 
             b.UnlockBits(bmData);
             bSrc.UnlockBits(bmSrc);
+
+            return true;
+        }
+
+
+        public bool EdgeDetectConvolution(Bitmap b, short nType, byte nThreshold = 0)
+        {
+            ConvMatrix m = new ConvMatrix();
+
+            // I need to make a copy of this bitmap BEFORE I alter it 80)
+            Bitmap bTemp = (Bitmap)b.Clone();
+
+            switch (nType)
+            {
+                case 0:
+                    m.SetAll(0);
+                    m.a = m.g = 1;
+                    m.c = m.i = -1;
+                    m.d = 2;
+                    m.f = -2;
+                    m.Offset = 0;
+                    break;
+                case 1:
+                    m.SetAll(0);
+                    m.a = m.d = m.g = -1;
+                    m.c = m.f = m.i = 1;
+                    m.Offset = 0;
+                    break;
+                case 2:
+                    m.SetAll(-3);
+                    m.e = 0;
+                    m.a = m.d = m.g = 5;
+                    m.Offset = 0;
+                    break;
+            }
+
+            this.Conv(b, m);
+
+            switch (nType)
+            {
+                case 0:
+                    m.SetAll(0);
+                    m.a = m.c = 1;
+                    m.g = m.i = -1;
+                    m.b = 2;
+                    m.h = -2;
+                    m.Offset = 0;
+                    break;
+                case 1:
+                    m.SetAll(0);
+                    m.g = m.h = m.i = -1;
+                    m.a = m.b = m.c = 1;
+                    m.Offset = 0;
+                    break;
+                case 2:
+                    m.SetAll(-3);
+                    m.e = 0;
+                    m.g = m.h = m.i = 5;
+                    m.Offset = 0;
+                    break;
+            }
+
+            this.Conv(bTemp, m);
+
+            // GDI+ still lies to us - the return format is BGR, NOT RGB.
+            BitmapData bmData = b.LockBits(new Rectangle(0, 0, b.Width, b.Height), ImageLockMode.ReadWrite, PixelFormat.Format24bppRgb);
+            BitmapData bmData2 = bTemp.LockBits(new Rectangle(0, 0, b.Width, b.Height), ImageLockMode.ReadWrite, PixelFormat.Format24bppRgb);
+
+            int stride = bmData.Stride;
+            System.IntPtr Scan0 = bmData.Scan0;
+            System.IntPtr Scan02 = bmData2.Scan0;
+
+            unsafe
+            {
+                byte* p = (byte*)(void*)Scan0;
+                byte* p2 = (byte*)(void*)Scan02;
+
+                int nOffset = stride - b.Width * 3;
+                int nWidth = b.Width * 3;
+
+                int nPixel = 0;
+
+                for (int y = 0; y < b.Height; ++y)
+                {
+                    for (int x = 0; x < nWidth; ++x)
+                    {
+                        nPixel = (int)Math.Sqrt((p[0] * p[0]) + (p2[0] * p2[0]));
+                        if (nPixel < nThreshold) nPixel = nThreshold;
+                        if (nPixel > 255) nPixel = 255;
+                        p[0] = (byte)nPixel;
+                        ++p;
+                        ++p2;
+                    }
+                    p += nOffset;
+                    p2 += nOffset;
+                }
+            }
+
+            b.UnlockBits(bmData);
+            bTemp.UnlockBits(bmData2);
 
             return true;
         }
