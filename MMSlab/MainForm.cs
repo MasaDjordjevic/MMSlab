@@ -54,7 +54,7 @@ namespace MMSlab
 
         private void loadImage()
         {
-            this.controller.LoadImage("G:\\mob slike\\5.7. bekstvo\\BroadwayTowerSeamCarvingA.png");
+            this.controller.LoadImage(@"C:\Users\Masa\Documents\test slike\drvce.jpg");
 
             this.listView1.LargeImageList = new ImageList();
             this.listView1.LargeImageList.ImageSize = new Size(70, 70);

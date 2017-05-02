@@ -76,14 +76,14 @@
             this.exitToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
-            this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
+            this.fileToolStripMenuItem.Size = new System.Drawing.Size(44, 24);
             this.fileToolStripMenuItem.Text = "File";
             // 
             // loadToolStripMenuItem
             // 
             this.loadToolStripMenuItem.Name = "loadToolStripMenuItem";
             this.loadToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.L)));
-            this.loadToolStripMenuItem.Size = new System.Drawing.Size(151, 22);
+            this.loadToolStripMenuItem.Size = new System.Drawing.Size(182, 26);
             this.loadToolStripMenuItem.Text = "Load";
             this.loadToolStripMenuItem.Click += new System.EventHandler(this.loadToolStripMenuItem_Click);
             // 
@@ -91,7 +91,7 @@
             // 
             this.reloadToolStripMenuItem.Name = "reloadToolStripMenuItem";
             this.reloadToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.R)));
-            this.reloadToolStripMenuItem.Size = new System.Drawing.Size(151, 22);
+            this.reloadToolStripMenuItem.Size = new System.Drawing.Size(182, 26);
             this.reloadToolStripMenuItem.Text = "Reload";
             this.reloadToolStripMenuItem.Click += new System.EventHandler(this.reloadToolStripMenuItem_Click);
             // 
@@ -99,7 +99,7 @@
             // 
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
             this.saveToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(151, 22);
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(182, 26);
             this.saveToolStripMenuItem.Text = "Save";
             this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
             // 
@@ -107,7 +107,7 @@
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
             this.exitToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.F4)));
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(151, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(182, 26);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
@@ -124,7 +124,7 @@
             this.waterToolStripMenuItem,
             this.shiftAndScaleToolStripMenuItem});
             this.filtersToolStripMenuItem.Name = "filtersToolStripMenuItem";
-            this.filtersToolStripMenuItem.Size = new System.Drawing.Size(50, 20);
+            this.filtersToolStripMenuItem.Size = new System.Drawing.Size(60, 24);
             this.filtersToolStripMenuItem.Text = "Filters";
             // 
             // ycbcrToolStripMenuItem
@@ -132,7 +132,7 @@
             this.ycbcrToolStripMenuItem.CheckOnClick = true;
             this.ycbcrToolStripMenuItem.Name = "ycbcrToolStripMenuItem";
             this.ycbcrToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.D)));
-            this.ycbcrToolStripMenuItem.Size = new System.Drawing.Size(246, 22);
+            this.ycbcrToolStripMenuItem.Size = new System.Drawing.Size(301, 26);
             this.ycbcrToolStripMenuItem.Text = "YcbCr";
             this.ycbcrToolStripMenuItem.CheckedChanged += new System.EventHandler(this.ycbcrToolStripMenuItem_CheckedChanged);
             this.ycbcrToolStripMenuItem.Click += new System.EventHandler(this.ycbcrToolStripMenuItem_Click);
@@ -141,21 +141,21 @@
             // 
             this.brightnessFilterToolStripMenuItem.Name = "brightnessFilterToolStripMenuItem";
             this.brightnessFilterToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.B)));
-            this.brightnessFilterToolStripMenuItem.Size = new System.Drawing.Size(246, 22);
+            this.brightnessFilterToolStripMenuItem.Size = new System.Drawing.Size(301, 26);
             this.brightnessFilterToolStripMenuItem.Text = "Brightness filter";
             this.brightnessFilterToolStripMenuItem.Click += new System.EventHandler(this.brightnessFilterToolStripMenuItem_Click);
             // 
             // guassianBlurToolStripMenuItem
             // 
             this.guassianBlurToolStripMenuItem.Name = "guassianBlurToolStripMenuItem";
-            this.guassianBlurToolStripMenuItem.Size = new System.Drawing.Size(246, 22);
+            this.guassianBlurToolStripMenuItem.Size = new System.Drawing.Size(301, 26);
             this.guassianBlurToolStripMenuItem.Text = "Guassian Blur";
             this.guassianBlurToolStripMenuItem.Click += new System.EventHandler(this.guassialBlurToolStripMenuItem_Click);
             // 
             // guassianBlurInplaceToolStripMenuItem
             // 
             this.guassianBlurInplaceToolStripMenuItem.Name = "guassianBlurInplaceToolStripMenuItem";
-            this.guassianBlurInplaceToolStripMenuItem.Size = new System.Drawing.Size(246, 22);
+            this.guassianBlurInplaceToolStripMenuItem.Size = new System.Drawing.Size(301, 26);
             this.guassianBlurInplaceToolStripMenuItem.Text = "Guassian Blur inplace";
             this.guassianBlurInplaceToolStripMenuItem.Click += new System.EventHandler(this.guassianBlurInplaceToolStripMenuItem_Click);
             // 
@@ -164,7 +164,7 @@
             this.toolStripMenuItem1.CheckOnClick = true;
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
             this.toolStripMenuItem1.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.G)));
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(246, 22);
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(301, 26);
             this.toolStripMenuItem1.Text = "Gussian Blur 2x2";
             this.toolStripMenuItem1.CheckedChanged += new System.EventHandler(this.toolStripMenuItem1_CheckedChanged);
             // 
@@ -172,7 +172,7 @@
             // 
             this.contrastToolStripMenuItem.Name = "contrastToolStripMenuItem";
             this.contrastToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.C)));
-            this.contrastToolStripMenuItem.Size = new System.Drawing.Size(246, 22);
+            this.contrastToolStripMenuItem.Size = new System.Drawing.Size(301, 26);
             this.contrastToolStripMenuItem.Text = "Contrast";
             this.contrastToolStripMenuItem.Click += new System.EventHandler(this.contrastToolStripMenuItem_Click);
             // 
@@ -180,7 +180,7 @@
             // 
             this.edgeDetectonHorisontalToolStripMenuItem.Name = "edgeDetectonHorisontalToolStripMenuItem";
             this.edgeDetectonHorisontalToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.E)));
-            this.edgeDetectonHorisontalToolStripMenuItem.Size = new System.Drawing.Size(246, 22);
+            this.edgeDetectonHorisontalToolStripMenuItem.Size = new System.Drawing.Size(301, 26);
             this.edgeDetectonHorisontalToolStripMenuItem.Text = "Edge detecton horisontal";
             this.edgeDetectonHorisontalToolStripMenuItem.Click += new System.EventHandler(this.edgeDetectonHorisontalToolStripMenuItem_Click);
             // 
@@ -188,7 +188,7 @@
             // 
             this.waterToolStripMenuItem.Name = "waterToolStripMenuItem";
             this.waterToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.W)));
-            this.waterToolStripMenuItem.Size = new System.Drawing.Size(246, 22);
+            this.waterToolStripMenuItem.Size = new System.Drawing.Size(301, 26);
             this.waterToolStripMenuItem.Text = "Water";
             this.waterToolStripMenuItem.Click += new System.EventHandler(this.waterToolStripMenuItem_Click);
             // 
@@ -197,7 +197,7 @@
             this.shiftAndScaleToolStripMenuItem.Name = "shiftAndScaleToolStripMenuItem";
             this.shiftAndScaleToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
             | System.Windows.Forms.Keys.S)));
-            this.shiftAndScaleToolStripMenuItem.Size = new System.Drawing.Size(246, 22);
+            this.shiftAndScaleToolStripMenuItem.Size = new System.Drawing.Size(301, 26);
             this.shiftAndScaleToolStripMenuItem.Text = "Shift and Scale";
             this.shiftAndScaleToolStripMenuItem.Click += new System.EventHandler(this.shiftAndScaleToolStripMenuItem_Click);
             // 
@@ -207,7 +207,7 @@
             this.win32CoreToolStripMenuItem,
             this.downsampleToolStripMenuItem});
             this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
-            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
+            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(73, 24);
             this.optionsToolStripMenuItem.Text = "Options";
             // 
             // win32CoreToolStripMenuItem
@@ -217,7 +217,7 @@
             this.win32CoreToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.win32CoreToolStripMenuItem.Name = "win32CoreToolStripMenuItem";
             this.win32CoreToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Q)));
-            this.win32CoreToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
+            this.win32CoreToolStripMenuItem.Size = new System.Drawing.Size(222, 26);
             this.win32CoreToolStripMenuItem.Text = "Win32 core";
             this.win32CoreToolStripMenuItem.Click += new System.EventHandler(this.win32CoreToolStripMenuItem_Click);
             // 
@@ -225,12 +225,13 @@
             // 
             this.downsampleToolStripMenuItem.Name = "downsampleToolStripMenuItem";
             this.downsampleToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.X)));
-            this.downsampleToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
+            this.downsampleToolStripMenuItem.Size = new System.Drawing.Size(222, 26);
             this.downsampleToolStripMenuItem.Text = "Downsample";
             this.downsampleToolStripMenuItem.Click += new System.EventHandler(this.downsampleToolStripMenuItem_Click);
             // 
             // menuStrip1
             // 
+            this.menuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
             this.toolStripMenuItem2,
@@ -238,7 +239,8 @@
             this.optionsToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1129, 24);
+            this.menuStrip1.Padding = new System.Windows.Forms.Padding(8, 2, 0, 2);
+            this.menuStrip1.Size = new System.Drawing.Size(1505, 28);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -249,14 +251,14 @@
             this.redoToolStripMenuItem,
             this.seamCravingResizeToolStripMenuItem});
             this.toolStripMenuItem2.Name = "toolStripMenuItem2";
-            this.toolStripMenuItem2.Size = new System.Drawing.Size(39, 20);
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(47, 24);
             this.toolStripMenuItem2.Text = "Edit";
             // 
             // undoToolStripMenuItem
             // 
             this.undoToolStripMenuItem.Name = "undoToolStripMenuItem";
             this.undoToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Z)));
-            this.undoToolStripMenuItem.Size = new System.Drawing.Size(251, 22);
+            this.undoToolStripMenuItem.Size = new System.Drawing.Size(307, 26);
             this.undoToolStripMenuItem.Text = "Undo";
             this.undoToolStripMenuItem.Click += new System.EventHandler(this.undoToolStripMenuItem_Click);
             // 
@@ -264,7 +266,7 @@
             // 
             this.redoToolStripMenuItem.Name = "redoToolStripMenuItem";
             this.redoToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Y)));
-            this.redoToolStripMenuItem.Size = new System.Drawing.Size(251, 22);
+            this.redoToolStripMenuItem.Size = new System.Drawing.Size(307, 26);
             this.redoToolStripMenuItem.Text = "Redo";
             this.redoToolStripMenuItem.Click += new System.EventHandler(this.redoToolStripMenuItem_Click);
             // 
@@ -273,17 +275,19 @@
             this.seamCravingResizeToolStripMenuItem.Name = "seamCravingResizeToolStripMenuItem";
             this.seamCravingResizeToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
             | System.Windows.Forms.Keys.A)));
-            this.seamCravingResizeToolStripMenuItem.Size = new System.Drawing.Size(251, 22);
+            this.seamCravingResizeToolStripMenuItem.Size = new System.Drawing.Size(307, 26);
             this.seamCravingResizeToolStripMenuItem.Text = "Seam craving resize";
             this.seamCravingResizeToolStripMenuItem.Click += new System.EventHandler(this.seamCravingResizeToolStripMenuItem_Click);
             // 
             // statusStrip
             // 
+            this.statusStrip.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.statusLabel});
-            this.statusStrip.Location = new System.Drawing.Point(0, 583);
+            this.statusStrip.Location = new System.Drawing.Point(0, 720);
             this.statusStrip.Name = "statusStrip";
-            this.statusStrip.Size = new System.Drawing.Size(1129, 22);
+            this.statusStrip.Padding = new System.Windows.Forms.Padding(1, 0, 19, 0);
+            this.statusStrip.Size = new System.Drawing.Size(1505, 25);
             this.statusStrip.TabIndex = 1;
             this.statusStrip.Text = "statusStrip";
             // 
@@ -292,17 +296,18 @@
             this.statusLabel.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.statusLabel.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.statusLabel.Name = "statusLabel";
-            this.statusLabel.Size = new System.Drawing.Size(118, 17);
+            this.statusLabel.Size = new System.Drawing.Size(151, 20);
             this.statusLabel.Text = "toolStripStatusLabel1";
             // 
             // trackBar1
             // 
             this.trackBar1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.trackBar1.Location = new System.Drawing.Point(1022, 0);
+            this.trackBar1.Location = new System.Drawing.Point(1363, 0);
+            this.trackBar1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.trackBar1.Maximum = 20;
             this.trackBar1.Minimum = 1;
             this.trackBar1.Name = "trackBar1";
-            this.trackBar1.Size = new System.Drawing.Size(107, 45);
+            this.trackBar1.Size = new System.Drawing.Size(143, 56);
             this.trackBar1.SmallChange = 10;
             this.trackBar1.TabIndex = 4;
             this.trackBar1.TickFrequency = 2;
@@ -315,9 +320,10 @@
             this.listView1.BackColor = System.Drawing.SystemColors.ButtonFace;
             this.listView1.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.listView1.Dock = System.Windows.Forms.DockStyle.Right;
-            this.listView1.Location = new System.Drawing.Point(1008, 28);
+            this.listView1.Location = new System.Drawing.Point(1344, 33);
+            this.listView1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(121, 555);
+            this.listView1.Size = new System.Drawing.Size(161, 687);
             this.listView1.TabIndex = 7;
             this.listView1.UseCompatibleStateImageBehavior = false;
             // 
@@ -332,9 +338,10 @@
             this.historamToggle.AutoSize = true;
             this.historamToggle.EllipseBorderColor = "#3b73d1";
             this.historamToggle.EllipseColor = "#508ef5";
-            this.historamToggle.Location = new System.Drawing.Point(296, 1);
+            this.historamToggle.Location = new System.Drawing.Point(395, 1);
+            this.historamToggle.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.historamToggle.Name = "historamToggle";
-            this.historamToggle.Size = new System.Drawing.Size(157, 19);
+            this.historamToggle.Size = new System.Drawing.Size(185, 19);
             this.historamToggle.TabIndex = 6;
             this.historamToggle.Text = "show histograms";
             this.historamToggle.UseVisualStyleBackColor = true;
@@ -345,12 +352,13 @@
             // 
             this.textBoxPlaceholder1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.textBoxPlaceholder1.ForeColor = System.Drawing.Color.Gray;
-            this.textBoxPlaceholder1.Location = new System.Drawing.Point(225, 2);
+            this.textBoxPlaceholder1.Location = new System.Drawing.Point(300, 2);
+            this.textBoxPlaceholder1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.textBoxPlaceholder1.MaxLength = 3;
             this.textBoxPlaceholder1.Name = "textBoxPlaceholder1";
             this.textBoxPlaceholder1.Placeholder = "Weight";
             this.textBoxPlaceholder1.PlaceholderColor = System.Drawing.Color.Gray;
-            this.textBoxPlaceholder1.Size = new System.Drawing.Size(42, 20);
+            this.textBoxPlaceholder1.Size = new System.Drawing.Size(55, 23);
             this.textBoxPlaceholder1.TabIndex = 5;
             this.textBoxPlaceholder1.Text = "Weight";
             this.textBoxPlaceholder1.Tooltip = "press a to apply, r to redo";
@@ -361,9 +369,10 @@
             // 
             this.progressBar.BGColor = "#508ef5";
             this.progressBar.Dock = System.Windows.Forms.DockStyle.Top;
-            this.progressBar.Location = new System.Drawing.Point(0, 24);
+            this.progressBar.Location = new System.Drawing.Point(0, 28);
+            this.progressBar.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.progressBar.Name = "progressBar";
-            this.progressBar.Size = new System.Drawing.Size(1129, 4);
+            this.progressBar.Size = new System.Drawing.Size(1505, 5);
             this.progressBar.TabIndex = 2;
             this.progressBar.Text = "lollipopProgressBar1";
             this.progressBar.Value = 0;
@@ -372,16 +381,17 @@
             // 
             this.shiftAndScaleInputs1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.shiftAndScaleInputs1.BackColor = System.Drawing.Color.Transparent;
-            this.shiftAndScaleInputs1.Location = new System.Drawing.Point(790, 1);
+            this.shiftAndScaleInputs1.Location = new System.Drawing.Point(1053, 1);
+            this.shiftAndScaleInputs1.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
             this.shiftAndScaleInputs1.Name = "shiftAndScaleInputs1";
-            this.shiftAndScaleInputs1.Size = new System.Drawing.Size(234, 23);
+            this.shiftAndScaleInputs1.Size = new System.Drawing.Size(312, 28);
             this.shiftAndScaleInputs1.TabIndex = 8;
             // 
             // MainForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1129, 605);
+            this.ClientSize = new System.Drawing.Size(1505, 745);
             this.Controls.Add(this.shiftAndScaleInputs1);
             this.Controls.Add(this.listView1);
             this.Controls.Add(this.historamToggle);
@@ -392,6 +402,7 @@
             this.Controls.Add(this.menuStrip1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "MainForm";
             this.Text = "MMS lab";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
